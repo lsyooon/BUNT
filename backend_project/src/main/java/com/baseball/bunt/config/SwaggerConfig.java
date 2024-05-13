@@ -16,7 +16,7 @@ public class SwaggerConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.select()
-			.apis(RequestHandlerSelectors.basePackage("com.ssafy.ssaccer.controller"))
+			.apis(RequestHandlerSelectors.basePackage("com.baseball.bunt.controller"))
 			.paths(PathSelectors.ant("/**"))
 			.build()
 			.apiInfo(apiInfo());
@@ -24,9 +24,9 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-			.title("SSACCER REST API SWAGGER")
-			.description("SSACCER Project REST API")
-			.version("0.2")
+			.title("BUNT SWAGGER")
+			.description("BUNT Project REST API")
+			.version("1")
 			.build();
 	}
 }
