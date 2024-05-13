@@ -27,7 +27,7 @@
         FROM users
     </select>
 
-    <update id="modifyUser" parameterType="User">
+    <update id="updateUser" parameterType="User">
         UPDATE users
         SET password=#{password},
             email=#{email},
@@ -35,16 +35,17 @@
             nickname=#{nickname},
             age=#{age},
             phone_number=#{phoneNumber},
-            address=#{address}
+            address=#{address},
+            mod_date=NOW()
         WHERE user_id = #{userId}
     </update>
 
-    <delete id="removeUserById" parameterType="String">
+    <delete id="deleteUserById" parameterType="String">
         DELETE FROM users
         WHERE id = #{id}
     </delete>
 
-    <delete id="removeUserByUserId" parameterType="Integer">
+    <delete id="deleteUserByUserId" parameterType="Integer">
         DELETE FROM users
         WHERE user_id = #{userId}
     </delete>
