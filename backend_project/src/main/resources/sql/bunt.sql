@@ -4,7 +4,7 @@ USE `bunt`;
 DROP TABLE IF EXISTS `USERS`;
 CREATE TABLE `USERS`
 (
-    `user_id`      INT          NOT NULL,
+    `user_id`      INT          NOT NULL AUTO_INCREMENT,
     `id`           VARCHAR(20)  NOT NULL,
     `password`     VARCHAR(30)  NOT NULL,
     `email`        VARCHAR(40)  NOT NULL,
@@ -13,46 +13,50 @@ CREATE TABLE `USERS`
     `age`          INT          NOT NULL,
     `phone_number` VARCHAR(50)  NOT NULL,
     `address`      VARCHAR(100) NOT NULL,
-    `join_date`    TIMESTAMP    NOT NULL DEFAULT NOW(),
-    `mod_date`     TIMESTAMP    NOT NULL DEFAULT NOW()
+    `join_date`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user_id`)
 );
 
 DROP TABLE IF EXISTS `ORDERS`;
 CREATE TABLE `ORDERS`
 (
-    `order_id`    INT         NOT NULL,
+    `order_id`    INT         NOT NULL AUTO_INCREMENT,
     `user_id`     INT         NOT NULL,
     `delivery_id` INT         NOT NULL,
-    `order_date`   TIMESTAMP   NOT NULL,
+    `orderdate`   TIMESTAMP   NOT NULL,
     `status`      VARCHAR(10) NOT NULL,
-    `total_price` INT         NOT NULL
+    `total_price` INT         NOT NULL,
+    PRIMARY KEY (`order_id`)
 );
 
 DROP TABLE IF EXISTS `DELIVERY`;
 CREATE TABLE `DELIVERY`
 (
-    `delivery_id`      INT          NOT NULL,
+    `delivery_id`      INT          NOT NULL AUTO_INCREMENT,
     `status`           VARCHAR(10)  NOT NULL,
     `city`             VARCHAR(20)  NOT NULL,
     `street`           VARCHAR(20)  NOT NULL,
     `zipcode`          VARCHAR(10)  NOT NULL,
-    `delivery_request` VARCHAR(100) NOT NULL
+    `delivery_request` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`delivery_id`)
 );
 
 DROP TABLE IF EXISTS `ORDER_ITEM`;
 CREATE TABLE `ORDER_ITEM`
 (
-    `order_item_id` INT NOT NULL,
+    `order_item_id` INT NOT NULL AUTO_INCREMENT,
     `order_id`      INT NOT NULL,
     `item_id`       INT NOT NULL,
     `quantity`      INT NOT NULL,
-    `price`         INT NOT NULL
+    `price`         INT NOT NULL,
+    PRIMARY KEY (`order_item_id`)
 );
 
 DROP TABLE IF EXISTS `ITEM`;
 CREATE TABLE `ITEM`
 (
-    `item_id`        INT          NOT NULL,
+    `item_id`        INT          NOT NULL AUTO_INCREMENT,
     `team_id`        INT          NOT NULL,
     `name`           VARCHAR(20)  NOT NULL,
     `price`          INT          NOT NULL,
@@ -60,160 +64,140 @@ CREATE TABLE `ITEM`
     `image_path`     VARCHAR(100) NOT NULL,
     `category`       VARCHAR(10)  NOT NULL,
     `item_detail`    TEXT         NOT NULL,
-    `reg_date`       TIMESTAMP    NOT NULL DEFAULT NOW(),
-    `mod_date`       TIMESTAMP    NOT NULL DEFAULT NOW()
+    `reg_date`       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`item_id`)
 );
 
 DROP TABLE IF EXISTS `REVIEW`;
 CREATE TABLE `REVIEW`
 (
-    `review_id`  INT          NOT NULL,
+    `review_id`  INT          NOT NULL AUTO_INCREMENT,
     `user_id`    INT          NOT NULL,
     `item_id`    INT          NOT NULL,
     `title`      VARCHAR(100) NOT NULL,
     `content`    TEXT         NOT NULL,
     `image_path` VARCHAR(100) NOT NULL,
-    `reg_date`   TIMESTAMP    NOT NULL DEFAULT NOW(),
-    `mod_date`   TIMESTAMP    NOT NULL DEFAULT NOW()
+    `reg_date`   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`review_id`)
 );
 
 DROP TABLE IF EXISTS `REVIEW_COMMENT`;
 CREATE TABLE `REVIEW_COMMENT`
 (
-    `review_comment_id` INT       NOT NULL,
+    `review_comment_id` INT       NOT NULL AUTO_INCREMENT,
     `user_id`           INT       NOT NULL,
     `board_id`          INT       NOT NULL,
     `content`           TEXT      NOT NULL,
-    `reg_date`          TIMESTAMP NOT NULL DEFAULT NOW(),
-    `mod_date`          TIMESTAMP NOT NULL DEFAULT NOW()
+    `reg_date`          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`review_comment_id`)
 );
 
 DROP TABLE IF EXISTS `INQUIRY`;
 CREATE TABLE `INQUIRY`
 (
-    `inquiry_id` INT          NOT NULL,
+    `inquiry_id` INT          NOT NULL AUTO_INCREMENT,
     `user_id`    INT          NOT NULL,
     `item_id`    INT          NOT NULL,
     `title`      VARCHAR(100) NOT NULL,
     `content`    TEXT         NOT NULL,
-    `reg_date`   TIMESTAMP    NOT NULL DEFAULT NOW(),
-    `mod_date`   TIMESTAMP    NOT NULL DEFAULT NOW()
+    `reg_date`   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`inquiry_id`)
 );
 
 DROP TABLE IF EXISTS `INQUIRY_COMMENT`;
 CREATE TABLE `INQUIRY_COMMENT`
 (
-    `inquiry_comment_id` INT       NOT NULL,
+    `inquiry_comment_id` INT       NOT NULL AUTO_INCREMENT,
     `user_id`            INT       NOT NULL,
     `board_id`           INT       NOT NULL,
     `content`            TEXT      NOT NULL,
-    `reg_date`           TIMESTAMP NOT NULL DEFAULT NOW(),
-    `mod_date`           TIMESTAMP NOT NULL DEFAULT NOW()
+    `reg_date`           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`           TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`inquiry_comment_id`)
 );
 
 DROP TABLE IF EXISTS `CART`;
 CREATE TABLE `CART`
 (
-    `cart_id`      INT        NOT NULL,
+    `cart_id`      INT        NOT NULL AUTO_INCREMENT,
     `user_id`      INT        NOT NULL,
     `item_id`      INT        NOT NULL,
     `quantity`     INT        NOT NULL,
     `order_status` VARCHAR(5) NOT NULL,
-    `reg_date`     TIMESTAMP  NOT NULL DEFAULT NOW()
+    `reg_date`     TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`cart_id`)
 );
 
 DROP TABLE IF EXISTS `TEAM`;
 CREATE TABLE `TEAM`
 (
-    `team_id`   INT          NOT NULL,
+    `team_id`   INT          NOT NULL AUTO_INCREMENT,
     `name`      VARCHAR(20)  NOT NULL,
-    `song_path` VARCHAR(100) NOT NULL
+    `song_path` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`team_id`)
 );
 
 DROP TABLE IF EXISTS `PLAYERS`;
 CREATE TABLE `PLAYERS`
 (
-    `player_id`   INT          NOT NULL,
+    `player_id`   INT          NOT NULL AUTO_INCREMENT,
     `team_id`     INT          NOT NULL,
     `name`        VARCHAR(20)  NOT NULL,
     `age`         INT          NOT NULL,
     `back_number` INT          NOT NULL,
-    `song_path`   VARCHAR(100) NOT NULL
+    `song_path`   VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`player_id`)
 );
 
 DROP TABLE IF EXISTS `ZZIM`;
 CREATE TABLE `ZZIM`
 (
-    `zzim_id` INT         NOT NULL,
+    `zzim_id` INT         NOT NULL AUTO_INCREMENT,
     `user_id` INT         NOT NULL,
     `item_id` INT         NOT NULL,
-    `status`  VARCHAR(10) NOT NULL
+    `status`  VARCHAR(10) NOT NULL,
+    PRIMARY KEY (`zzim_id`)
 );
 
 DROP TABLE IF EXISTS `COMMUNITY`;
 CREATE TABLE `COMMUNITY`
 (
-    `community_id` INT         NOT NULL,
+    `community_id` INT         NOT NULL AUTO_INCREMENT,
     `team_id`      INT         NOT NULL,
     `name`         VARCHAR(20) NOT NULL,
-    `description`  TEXT        NOT NULL
+    `description`  TEXT        NOT NULL,
+    PRIMARY KEY (`community_id`)
 );
 
 DROP TABLE IF EXISTS `COMMUNITY_BOARD`;
 CREATE TABLE `COMMUNITY_BOARD`
 (
-    `community_board_id` INT          NOT NULL,
+    `community_board_id` INT          NOT NULL AUTO_INCREMENT,
     `community_id`       INT          NOT NULL,
     `user_id`            INT          NOT NULL,
     `title`              VARCHAR(100) NOT NULL,
     `content`            TEXT         NOT NULL,
-    `reg_date`           TIMESTAMP    NOT NULL DEFAULT NOW(),
-    `mod_date`           TIMESTAMP    NOT NULL DEFAULT NOW()
+    `reg_date`           TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`           TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`community_board_id`)
 );
 
 DROP TABLE IF EXISTS `COMMUNITY_BOARD_COMMENT`;
 CREATE TABLE `COMMUNITY_BOARD_COMMENT`
 (
-    `community_board_comment_id` INT       NOT NULL,
+    `community_board_comment_id` INT       NOT NULL AUTO_INCREMENT,
     `community_board_id`         INT       NOT NULL,
     `user_id`                    INT       NOT NULL,
     `content`                    TEXT      NOT NULL,
-    `reg_date`                   TIMESTAMP NOT NULL DEFAULT NOW(),
-    `mod_date`                   TIMESTAMP NOT NULL DEFAULT NOW()
+    `reg_date`                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `mod_date`                   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`community_board_comment_id`)
 );
 
-ALTER TABLE `USERS`
-    ADD CONSTRAINT `PK_USERS` PRIMARY KEY (`user_id`);
-ALTER TABLE `ORDERS`
-    ADD CONSTRAINT `PK_ORDERS` PRIMARY KEY (`order_id`);
-ALTER TABLE `DELIVERY`
-    ADD CONSTRAINT `PK_DELIVERY` PRIMARY KEY (`delivery_id`);
-ALTER TABLE `ORDER_ITEM`
-    ADD CONSTRAINT `PK_ORDER_ITEM` PRIMARY KEY (`order_item_id`);
-ALTER TABLE `ITEM`
-    ADD CONSTRAINT `PK_ITEM` PRIMARY KEY (`item_id`);
-ALTER TABLE `REVIEW`
-    ADD CONSTRAINT `PK_REVIEW` PRIMARY KEY (`review_id`);
-ALTER TABLE `REVIEW_COMMENT`
-    ADD CONSTRAINT `PK_REVIEW_COMMENT` PRIMARY KEY (`review_comment_id`);
-ALTER TABLE `INQUIRY`
-    ADD CONSTRAINT `PK_INQUIRY` PRIMARY KEY (`inquiry_id`);
-ALTER TABLE `INQUIRY_COMMENT`
-    ADD CONSTRAINT `PK_INQUIRY_COMMENT` PRIMARY KEY (`inquiry_comment_id`);
-ALTER TABLE `CART`
-    ADD CONSTRAINT `PK_CART` PRIMARY KEY (`cart_id`);
-ALTER TABLE `TEAM`
-    ADD CONSTRAINT `PK_TEAM` PRIMARY KEY (`team_id`);
-ALTER TABLE `PLAYERS`
-    ADD CONSTRAINT `PK_PLAYERS` PRIMARY KEY (`player_id`);
-ALTER TABLE `ZZIM`
-    ADD CONSTRAINT `PK_ZZIM` PRIMARY KEY (`zzim_id`);
-ALTER TABLE `COMMUNITY`
-    ADD CONSTRAINT `PK_COMMUNITY` PRIMARY KEY (`community_id`);
-ALTER TABLE `COMMUNITY_BOARD`
-    ADD CONSTRAINT `PK_COMMUNITY_BOARD` PRIMARY KEY (`community_board_id`);
-ALTER TABLE `COMMUNITY_BOARD_COMMENT`
-    ADD CONSTRAINT `PK_COMMUNITY_BOARD_COMMENT` PRIMARY KEY (`community_board_comment_id`);
 ALTER TABLE `ORDERS`
     ADD CONSTRAINT `FK_USERS_TO_ORDERS_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`user_id`);
 ALTER TABLE `ORDERS`
