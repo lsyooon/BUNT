@@ -1,12 +1,12 @@
 package com.baseball.bunt.model.dto.shop;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@ApiModel(value = "OrderItem DTO")
+@Tag(name = "상품 주문 DTO")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -6,9 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.baseball.bunt.model.dto.shop.Item;
 
-import io.swagger.annotations.ApiModel;
-
-@ApiModel(value = "Item DAO")
 @Repository
 public interface ItemDao {
 

@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import com.baseball.bunt.model.dao.ItemDao;
 import com.baseball.bunt.model.dto.shop.Item;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@ApiModel(value = "Item Service Implementation")
+@Tag(name = "상품 서비스 구현체")
 @RequiredArgsConstructor
 @Service
 public class ItemServiceImpl implements ItemService {

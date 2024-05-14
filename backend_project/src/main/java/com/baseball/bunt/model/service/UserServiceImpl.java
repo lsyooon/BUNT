@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import com.baseball.bunt.model.dao.UserDao;
 import com.baseball.bunt.model.dto.common.User;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@ApiModel(value = "User Service Implementation")
+@Tag(name = "회원 서비스 구현체")
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {

@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.baseball.bunt.model.dto.common.User;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@ApiModel(value = "User Service")
+@Tag(name = "회원 서비스")
 public interface UserService {
 
 	int createUser(User user);

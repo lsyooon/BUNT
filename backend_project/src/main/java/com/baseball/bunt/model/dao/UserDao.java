@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
-import com.baseball.bunt.model.dto.common.User;
-import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "User DAO")
+import com.baseball.bunt.model.dto.common.User;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "회원 DAO")
 @Repository
 public interface UserDao {
 

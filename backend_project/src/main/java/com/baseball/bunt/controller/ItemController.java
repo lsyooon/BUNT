@@ -59,7 +59,7 @@ public class ItemController {
 		}
 	}
 
-	@Operation(summary = "상품 수정", description = "팀번호, 이름, 가격, 재고수량, 이미지, 카테고리, 세부사항 입력")
+	@Operation(summary = "상품 수정", description = "구단 번호, 이름, 가격, 재고수량, 이미지, 카테고리, 세부사항 입력")
 	@PostMapping("/admin/item/modify")
 	public ResponseEntity<?> modifyItem(@RequestBody Item item) {
 		try {
