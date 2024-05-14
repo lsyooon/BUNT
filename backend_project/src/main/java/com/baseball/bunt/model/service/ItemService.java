@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.baseball.bunt.model.dto.shop.Item;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@ApiModel(value = "Item Service")
+@Tag(name = "상품 서비스")
 public interface ItemService {
 
 	int createItem(Item item);

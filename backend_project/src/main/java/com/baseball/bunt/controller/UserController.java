@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "User Controller", description = "회원을 관리하는 컨트롤러")
+@Tag(name = "User Controller", description = "회원 관리하는 컨트롤러")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 	RequestMethod.DELETE})
 @RequiredArgsConstructor
