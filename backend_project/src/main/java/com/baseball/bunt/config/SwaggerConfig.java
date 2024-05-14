@@ -26,7 +26,7 @@ public class SwaggerConfig {
 		return new ApiInfoBuilder()
 			.title("BUNT SWAGGER")
 			.description("BUNT Project REST API")
-			.version("1")
+			.version("0.3")
 			.build();
 	}
 }

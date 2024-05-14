@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baseball.bunt.model.dto.common.User;
 import com.baseball.bunt.model.service.UserService;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@ApiModel(value = "User Controller")
+@Tag(name = "User Controller", description = "회원을 관리하는 컨트롤러")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 	RequestMethod.DELETE})
 @RequiredArgsConstructor
@@ -33,7 +33,7 @@ public class UserController {
 
 	private final UserService userService;
 
-	@ApiOperation(value = "로그인", notes = "id, password를 받아서 로그인 처리")
+	@Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
 	@PostMapping("/login")
 	public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
 		User loginUser = userService.login(user.getId(), user.getPassword());
@@ -44,10 +44,9 @@ public class UserController {
 		return new ResponseEntity<>("로그인 실패", HttpStatus.NOT_FOUND);
 	}
 
-	@ApiOperation(value = "로그아웃")
+	@Operation(summary = "로그아웃")
 	@GetMapping("/logout")
 	public ResponseEntity<?> logout(HttpSession session) {
-
 		try {
 			session.removeAttribute("loginUser");
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -56,7 +55,7 @@ public class UserController {
 		}
 	}
 
-	@ApiOperation(value = "회원가입")
+	@Operation(summary = "회원가입")
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody User user) {
 		try {
@@ -70,7 +69,7 @@ public class UserController {
 		}
 	}
 
-	@ApiOperation(value = "회원 정보 수정")
+	@Operation(summary = "회원 정보 수정", description = "비밀번호, 이메일, 이름, 닉네임, 나이, 전화번호, 주소 입력")
 	@PutMapping("/modify")
 	public ResponseEntity<?> modifyUser(@RequestBody User user) {
 		try {
@@ -84,7 +83,7 @@ public class UserController {
 		}
 	}
 
-	@ApiOperation(value = "회원 탈퇴")
+	@Operation(summary = "회원 탈퇴")
 	@DeleteMapping("/quit/{id}")
 	public ResponseEntity<?> quit(@PathVariable("id") String id) {
 		try {
@@ -98,7 +97,7 @@ public class UserController {
 		}
 	}
 
-	@ApiOperation(value = "회원 아이디로 특정 회원 조회")
+	@Operation(summary = "회원 아이디로 특정 회원 조회")
 	@GetMapping("/read/{userId}")
 	public ResponseEntity<?> selectUserByUserId(@PathVariable("userId") int userId) {
 		try {
@@ -112,7 +111,7 @@ public class UserController {
 		}
 	}
 
-	@ApiOperation(value = "유저 목록 리스트")
+	@Operation(summary = "유저 목록 리스트 조회")
 	@GetMapping("/read/list")
 	public ResponseEntity<?> getUserList() {
 		try {
