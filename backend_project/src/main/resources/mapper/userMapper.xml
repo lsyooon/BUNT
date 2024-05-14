@@ -12,23 +12,23 @@
 
     <select id="selectUserById" parameterType="String" resultType="User">
         SELECT *
-        FROM users
+        FROM USERS
         WHERE id = #{id}
     </select>
 
     <select id="selectUserByUserId" parameterType="int" resultType="User">
         SELECT *
-        FROM users
+        FROM USERS
         WHERE user_id = #{userId}
     </select>
 
     <select id="selectUserList" resultType="User">
         SELECT *
-        FROM users
+        FROM USERS
     </select>
 
     <update id="updateUser" parameterType="User">
-        UPDATE users
+        UPDATE USERS
         SET password=#{password},
             email=#{email},
             name=#{name},
@@ -41,18 +41,18 @@
     </update>
 
     <delete id="deleteUserById" parameterType="String">
-        DELETE FROM users
+        DELETE FROM USERS
         WHERE id = #{id}
     </delete>
 
     <delete id="deleteUserByUserId" parameterType="Integer">
-        DELETE FROM users
+        DELETE FROM USERS
         WHERE user_id = #{userId}
     </delete>
 
     <!-- 로그인 -->
     <select id="login" parameterType="Map" resultType="User">
-        SELECT * FROM users
+        SELECT * FROM USERS
         WHERE id=#{id} AND password=#{password}
     </select>
 
