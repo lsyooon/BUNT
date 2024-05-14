@@ -69,7 +69,7 @@ public class UserController {
 		}
 	}
 
-	@Operation(summary = "회원 정보 수정")
+	@Operation(summary = "회원 정보 수정", description = "비밀번호, 이메일, 이름, 닉네임, 나이, 전화번호, 주소 입력")
 	@PutMapping("/modify")
 	public ResponseEntity<?> modifyUser(@RequestBody User user) {
 		try {

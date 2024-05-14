@@ -29,11 +29,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.baseball.bunt.model.dto.shop.Item;
 import com.baseball.bunt.model.service.ItemService;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@ApiModel(value = "Item Controller")
+@Tag(name = "Item Controller", description = "상품을 관리하는 컨트롤러")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 	RequestMethod.DELETE})
 @RequiredArgsConstructor
@@ -45,6 +45,7 @@ public class ItemController {
 
 	private final ResourceLoader resourceLoader;
 
+	@Operation(summary = "상품 등록")
 	@PostMapping("/admin/item/new")
 	public ResponseEntity<?> createItem(@RequestBody Item item) {
 		try {
@@ -58,6 +59,7 @@ public class ItemController {
 		}
 	}
 
+	@Operation(summary = "상품 수정", description = "팀번호, 이름, 가격, 재고수량, 이미지, 카테고리, 세부사항 입력")
 	@PostMapping("/admin/item/modify")
 	public ResponseEntity<?> modifyItem(@RequestBody Item item) {
 		try {
@@ -71,6 +73,7 @@ public class ItemController {
 		}
 	}
 
+	@Operation(summary = "전체 상품 목록 조회")
 	@GetMapping("/admin/items")
 	public ResponseEntity<?> readItemList() {
 		try {
@@ -84,6 +87,7 @@ public class ItemController {
 		}
 	}
 
+	@Operation(summary = "상품 상세 조회", description = "상품 번호 입력")
 	@GetMapping("/item/{itemId}")
 	public ResponseEntity<?> readItemByItemId(@PathVariable("itemId") int itemId) {
 		try {
@@ -97,6 +101,7 @@ public class ItemController {
 		}
 	}
 
+	@Operation(summary = "상품 삭제", description = "상품 번호 입력")
 	@DeleteMapping("/removeItem/{itemId}")
 	public ResponseEntity<?> removeItem(@PathVariable("itemId") int itemId) {
 		try {
@@ -110,7 +115,7 @@ public class ItemController {
 		}
 	}
 
-	@ApiOperation(value = "아이템 이미지 업로드")
+	@Operation(summary = "아이템 이미지 업로드", description = "상품 번호 입력")
 	@PutMapping("/upload-image/{itemId}")
 	public ResponseEntity<?> uploadImage(@PathVariable int itemId,
 		@RequestParam("img") MultipartFile file) {
@@ -152,6 +157,7 @@ public class ItemController {
 		}
 	}
 
+	@Operation(summary = "이미지 조회")
 	@GetMapping("/display")
 	public ResponseEntity<Resource> display(@RequestParam("itemId") String itemId) throws
 		IOException {
@@ -159,9 +165,9 @@ public class ItemController {
 		Item item = new Item();
 		List<Item> list = itemService.readItemList();
 
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).getItemId() == Integer.parseInt(itemId)) {
-				item = list.get(i);
+		for (Item value : list) {
+			if (value.getItemId() == Integer.parseInt(itemId)) {
+				item = value;
 			}
 		}
 
