@@ -49,7 +49,7 @@ CREATE TABLE `ORDER_ITEM`
     `order_id`      INT NOT NULL,
     `item_id`       INT NOT NULL,
     `quantity`      INT NOT NULL,
-    `price`         INT NOT NULL,
+    `order_price`         INT NOT NULL,
     PRIMARY KEY (`order_item_id`)
 );
 
