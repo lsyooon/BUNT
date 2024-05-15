@@ -2,6 +2,8 @@ package com.baseball.bunt.model.dto.shop;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.baseball.bunt.exception.NotEnoughStockException;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +40,16 @@ public class Item {
 	private String modDate;
 
 	private MultipartFile file;
+
+	public void addStockQuantity(int stockQuantity) {
+		this.stockQuantity += stockQuantity;
+	}
+
+	public void removeQuantity(int stockQuantity) {
+		int restStockQuantity = this.stockQuantity - stockQuantity;
+		if(restStockQuantity < 0) {
+			throw new NotEnoughStockException("재고 수량이 부족합니다.");
+		}
+		this.stockQuantity = restStockQuantity;
+	}
 }
