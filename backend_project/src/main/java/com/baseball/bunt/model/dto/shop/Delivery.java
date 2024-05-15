@@ -14,9 +14,16 @@ import lombok.Setter;
 public class Delivery {
 
 	private int deliveryId;
+
+	private Order order;
+
 	private String status;
+
 	private String city;
+
 	private String street;
+
 	private String zipcode;
+
 	private String deliveryRequest;
 }
