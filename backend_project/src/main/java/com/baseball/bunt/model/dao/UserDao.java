@@ -15,9 +15,9 @@ public interface UserDao {
 
 	int insertUser(User user);
 
-	User selectUserById(String id); //가입한 ID로 조회
-
 	User selectUserByUserId(int userId); //유저 번호로 조회
+
+	List<User> selectUserById(String id); //가입한 ID로 조회
 
 	List<User> selectUserList();
 
