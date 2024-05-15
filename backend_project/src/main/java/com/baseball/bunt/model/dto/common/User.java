@@ -1,5 +1,11 @@
 package com.baseball.bunt.model.dto.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.baseball.bunt.model.dto.shop.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,4 +40,6 @@ public class User {
 	private String joinDate;
 	@Schema(description = "수정날짜")
 	private String modDate;
+	@JsonIgnore
+	private List<Order> orders = new ArrayList<>();
 }
