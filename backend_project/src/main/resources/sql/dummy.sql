@@ -51,10 +51,10 @@ VALUES
     ('팀 A', 'songs/teama.mp3'),
     ('팀 B', 'songs/teamb.mp3');
 
-INSERT INTO `DELIVERY` (`status`, `city`, `street`, `zipcode`, `delivery_request`)
+INSERT INTO `DELIVERY` (`status`, `address`, `delivery_request`)
 VALUES
-    ('배송중', '서울', '강남구 테헤란로 123', '06241', '경비실에 맡겨주세요'),
-    ('배송완료', '부산', '해운대구 우동 456', '48095', '문 앞에 두세요');
+    ('배송중', '서울 강남구 테헤란로 123', '경비실에 맡겨주세요'),
+    ('배송완료', '부산 해운대구 우동 456', '문 앞에 두세요');
 
 INSERT INTO `ITEM` (`team_id`, `name`, `price`, `stock_quantity`, `image_path`, `category`, `item_detail`)
 VALUES

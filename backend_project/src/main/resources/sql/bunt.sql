@@ -35,9 +35,7 @@ CREATE TABLE `DELIVERY`
 (
     `delivery_id`      INT          NOT NULL AUTO_INCREMENT,
     `status`           VARCHAR(10)  NOT NULL,
-    `city`             VARCHAR(20)  NOT NULL,
-    `street`           VARCHAR(20)  NOT NULL,
-    `zipcode`          VARCHAR(10)  NOT NULL,
+    `address`          VARCHAR(100)  NOT NULL,
     `delivery_request` VARCHAR(100) NOT NULL,
     PRIMARY KEY (`delivery_id`)
 );
