@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baseball.bunt.model.dao.OrderDao">
+
+    <!-- 주문 삽입 -->
+    <insert id="insertOrder" parameterType="Order">
+        INSERT INTO orders (user_id, delivery_id, status)
+        VALUES (#{userId}, #{deliveryId}, #{status})
+    </insert>
+
+    <!-- 주문 업데이트 -->
+    <update id="updateOrder" parameterType="Order">
+        UPDATE orders
+        SET status = #{status}
+        WHERE order_id = #{orderId}
+    </update>
+
+    <!-- 주문 아이디로 조회 -->
+    <select id="selectOrderByOrderId" parameterType="int" resultType="Order">
+        SELECT *
+        FROM orders
+        WHERE order_id = #{orderId}
+    </select>
+
+    <!-- 주문 날짜로 조회 -->
+    <select id="selectOrderByOrderDate" parameterType="map" resultType="Order">
+        SELECT *
+        FROM orders
+        WHERE order_date = #{orderDate}
+        ORDER BY order_date
+    </select>
+
+    <!-- 주문 삭제 -->
+    <delete id="deleteOrder" parameterType="int">
+        DELETE FROM orders
+        WHERE order_id = #{orderId}
+    </delete>
+
+    <!-- 전체 주문 가격 조회 -->
+    <select id="getTotalPrice" parameterType="int" resultType="int">
+        SELECT SUM(oi.price * oi.quantity) as total_price
+        FROM order_item oi
+        WHERE oi.order_id = #{orderId}
+    </select>
+
+    <!-- 주문 항목 삽입 -->
+    <insert id="insertOrderItem" parameterType="OrderItem">
+        INSERT INTO order_item (order_id, item_id, quantity, price)
+        VALUES (#{orderId}, #{itemId}, #{quantity}, #{price})
+    </insert>
+
+    <!-- 주문 항목 업데이트 -->
+    <update id="updateOrderItem" parameterType="OrderItem">
+        UPDATE order_item
+        SET quantity = #{quantity}, price = #{price}
+        WHERE order_id = #{orderId} AND item_id = #{itemId}
+    </update>
+
+    <!-- 주문 항목 삭제 -->
+    <delete id="deleteOrderItem" parameterType="map">
+        DELETE FROM order_item
+        WHERE order_id = #{orderId} AND item_id = #{itemId}
+    </delete>
+
+</mapper>
