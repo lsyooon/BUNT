@@ -66,7 +66,7 @@ VALUES
     (1, 1, NOW(), '처리중', 10000),
     (2, 2, NOW(), '배송중', 15000);
 
-INSERT INTO `ORDER_ITEM` (`order_id`, `item_id`, `quantity`, `order_price`)
+INSERT INTO `ORDER_ITEM` (`order_id`, `item_id`, `count`, `order_price`)
 VALUES
     (1, 1, 2, 40000),
     (2, 2, 2, 50000);
