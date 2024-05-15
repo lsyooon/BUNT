@@ -24,7 +24,7 @@ CREATE TABLE `ORDERS`
     `order_id`    INT         NOT NULL AUTO_INCREMENT,
     `user_id`     INT         NOT NULL,
     `delivery_id` INT         NOT NULL,
-    `order_date`   TIMESTAMP   NOT NULL,
+    `order_date`   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `status`      VARCHAR(10) NOT NULL,
     `total_price` INT         NOT NULL,
     PRIMARY KEY (`order_id`)
