@@ -20,7 +20,7 @@ export const useUserStore = defineStore('user', () => {
     }
 
     const logout = () => {
-        axios.post(`${REST_USER_API}`)
+        axios.get(`${REST_USER_API}/logout`)
             .then((response) => {
                 sessionStorage.removeItem('loginUser')
                 router.push({path: "/"})
