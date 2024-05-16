@@ -1,20 +1,16 @@
 package com.baseball.bunt.controller;
 
 import com.baseball.bunt.model.dto.community.CommunityBoard;
-import com.baseball.bunt.model.dto.community.Criteria;
-import com.baseball.bunt.model.dto.community.Page;
+import com.baseball.bunt.model.dto.community.SearchCondition;
 import com.baseball.bunt.model.service.CommunityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Tag(name = "Community Controller", description = "커뮤니티를 관리하는 컨트롤러")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
@@ -28,20 +24,12 @@ public class CommunityController {
 
     @Operation(summary = "게시글 목록")
     @GetMapping("/")
-    public ResponseEntity<?> readBoardList(Criteria cri) {
-        List<CommunityBoard> boardList = communityService.readBoardList(cri);
-        int total = communityService.getTotal(cri);
-        Page pageMaker = new Page(cri, total);  // 123은 총 게시글 수를 예로 든 것
-
+    public ResponseEntity<?> readBoardList(@ModelAttribute SearchCondition searchCondition) {
+        List<CommunityBoard> boardList = communityService.readBoardList(searchCondition);
         if (boardList == null || boardList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("pageMaker", pageMaker);
-        response.put("boardList", boardList);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<List<CommunityBoard>>(boardList, HttpStatus.OK);
     }
 
     @Operation(summary = "게시글 상세 보기")

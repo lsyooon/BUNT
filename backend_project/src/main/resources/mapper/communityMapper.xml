@@ -5,40 +5,19 @@
 
 <mapper namespace="com.baseball.bunt.model.dao.CommunityDao">
 
-    <sql id="criteria">
-        <trim prefix="(" suffix=") AND" prefixOverrides="OR">
-            <foreach collection="typeArr" item="type">
-                <trim prefix="OR">
-                    <choose>
-                        <when test="type=='T'.toString()">
-                            title like '%'||#{keyword}||'%'
-                        </when>
-                        <when test="type=='C'.toString()">
-                            content like '%'||#{keyword}||'%'
-                        </when>
-                    </choose>
-                </trim>
-            </foreach>
-        </trim>
-    </sql>
-
-    <!-- 게시글 리스트(페이징 처리) -->
-    <select id="boardList" resultType="CommunityBoard">
-        <![CDATA[
-        SELECT community_board_id, user_id, content
-        FROM (SELECT community_board_id, user_id, content, ROW_NUMBER() OVER (ORDER BY community_board_id DESC) AS rn FROM COMMUNITY_BOARD
-        ]]>
-        <include refid="criteria" />
-        <![CDATA[
-        ) AS Temp
-        WHERE rn > (#{pageNum} - 1) * #{amount}
-        ]]>
+    <!-- 게시글 리스트 -->
+    <select id="boardList" resultType="CommunityBoard" parameterType="SearchCondition">
+        SELECT community_board_id, content, user_id, title, date_format(reg_date, '%Y-%M-%d') AS reg_date
+        FROM COMMUNITY_BOARD
+        <!-- 동적쿼리(검색 조건) -->
+        <if test="key != 'none'">
+            WHERE ${key} LIKE concat('%', #{word}, '%')
+        </if>
+        <!-- 동적쿼리(정렬 조건) -->
+            ORDER BY community_board_id DESC
     </select>
 
-    <!-- 검색한 게시글 개수 -->
-    <select id="getTotalCount" resultType="int">
-        select count(*) from COMMUNITY_BOARD where <include refid="criteria"></include> community_board_id > 0
-    </select>
+
 
     <!-- 게시글 상세보기 -->
     <select id="getDetail" resultType="CommunityBoard" parameterType="int">

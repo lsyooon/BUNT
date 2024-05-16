@@ -21,17 +21,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int createUser(final User user) {
+		validateDuplicateUser(user);
 		return userDao.insertUser(user);
-	}
-
-	@Override
-	public User readUserById(final String userId) {
-		return userDao.selectUserById(userId);
 	}
 
 	@Override
 	public User readUserByUserId(final int userId) {
 		return userDao.selectUserByUserId(userId);
+	}
+
+	@Override
+	public List<User> readUserById(final String userId) {
+		return userDao.selectUserById(userId);
 	}
 
 	@Override
@@ -60,5 +61,12 @@ public class UserServiceImpl implements UserService {
 		userInfo.put("id", id);
 		userInfo.put("password", password);
 		return userDao.login(userInfo);
+	}
+
+	private void validateDuplicateUser(final User user) {
+		List<User> findUsers = userDao.selectUserById(user.getId());
+		if (!findUsers.isEmpty()) {
+			throw new IllegalStateException("이미 존재하는 회원입니다.");
+		}
 	}
 }

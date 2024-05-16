@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import UserLogin from "@/components/user/UserLogin.vue";
+import UserJoin from "@/components/user/UserJoin.vue";
 import BoardList from "@/components/community/BoardList.vue";
 
 const router = createRouter({
@@ -11,9 +13,22 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/login',
+      name: 'login',
+      component: UserLogin
+    },
+    {
+      path: '/join',
+      name: 'join',
+      component: UserJoin
+    },
+    {
       path: '/community',
       name: 'community',
-      component: BoardList
+      component: BoardList,
+      // children: [{
+      //
+      // }]
     }
   ]
 })

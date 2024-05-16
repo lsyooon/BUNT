@@ -1,7 +1,7 @@
 package com.baseball.bunt.model.dao;
 
 import com.baseball.bunt.model.dto.community.CommunityBoard;
-import com.baseball.bunt.model.dto.community.Criteria;
+import com.baseball.bunt.model.dto.community.SearchCondition;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public interface CommunityDao {
 
     // 게시글 전체 리스트
-    List<CommunityBoard> boardList(Criteria cri);
+    List<CommunityBoard> boardList(SearchCondition searchCondition);
 
     // 게시글 상세 보기
     CommunityBoard getDetail(int communityBoardId);
@@ -23,8 +23,5 @@ public interface CommunityDao {
 
     // 게시글 수정
     int updateBoard(CommunityBoard board);
-
-    // 게시글 개수
-    public int getTotalCount(Criteria cri);
 
 }

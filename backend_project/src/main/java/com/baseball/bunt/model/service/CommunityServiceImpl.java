@@ -2,7 +2,7 @@ package com.baseball.bunt.model.service;
 
 import com.baseball.bunt.model.dao.CommunityDao;
 import com.baseball.bunt.model.dto.community.CommunityBoard;
-import com.baseball.bunt.model.dto.community.Criteria;
+import com.baseball.bunt.model.dto.community.SearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +16,8 @@ public class CommunityServiceImpl implements CommunityService{
     private final CommunityDao dao;
 
     @Override
-    public List<CommunityBoard> readBoardList(Criteria cri) {   // 게시판 리스트
-        return dao.boardList(cri);
+    public List<CommunityBoard> readBoardList(SearchCondition searchCondition) {   // 게시판 리스트
+        return dao.boardList(searchCondition);
     }
 
     @Override
@@ -41,8 +41,4 @@ public class CommunityServiceImpl implements CommunityService{
         return dao.updateBoard(board);
     }
 
-    @Override
-    public int getTotal(Criteria cri) {
-        return dao.getTotalCount(cri);
-    }
 }
