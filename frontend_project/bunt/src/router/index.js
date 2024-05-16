@@ -25,7 +25,10 @@ const router = createRouter({
     {
       path: '/community',
       name: 'community',
-      component: BoardList
+      component: BoardList,
+      // children: [{
+      //
+      // }]
     }
   ]
 })
