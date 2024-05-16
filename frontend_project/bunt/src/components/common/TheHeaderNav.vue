@@ -52,7 +52,7 @@ const GoUserJoin = () => {
         <div class="d-flex justify-content-between">
           <img src="../../assets/image_logo/KBO_logo.png" style="width: 100px" alt="">
           <RouterLink to="">NEWS</RouterLink>
-          <RouterLink to="">COMMUNITY</RouterLink>
+          <RouterLink to="/community">COMMUNITY</RouterLink>
           <RouterLink to="">SHOP</RouterLink>
           <div v-if="loginUser" class="navbar-login">
             <span style="margin-right: 10px">{{ loginUserName }}님 환영합니다</span>

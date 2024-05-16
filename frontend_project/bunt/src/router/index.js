@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
+import BoardList from "@/components/community/BoardList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,11 @@ const router = createRouter({
       name: 'join',
       component: UserJoin
     },
+    {
+      path: '/community',
+      name: 'community',
+      component: BoardList
+    }
   ]
 })
 
