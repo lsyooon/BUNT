@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', () => {
         axios.post(`${REST_USER_API}`)
             .then((response) => {
                 sessionStorage.removeItem('loginUser')
-                router.push({path: "/login"})
+                router.push({path: "/"})
             })
             .catch((err)=> {
                 console.log(err);
