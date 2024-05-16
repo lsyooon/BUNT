@@ -23,7 +23,7 @@ public class CommunityController {
     private final CommunityService communityService;
 
     @Operation(summary = "게시글 목록")
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<?> readBoardList(@ModelAttribute SearchCondition searchCondition) {
         List<CommunityBoard> boardList = communityService.readBoardList(searchCondition);
         if (boardList == null || boardList.isEmpty()) {
@@ -43,7 +43,7 @@ public class CommunityController {
     }
 
     @Operation(summary = "게시글 생성")
-    @PostMapping("/new")
+    @PostMapping()
     public ResponseEntity<?> createBoard(@RequestBody CommunityBoard board) {
         int result = communityService.createBoard(board);
         if (result == -1) {
@@ -53,7 +53,7 @@ public class CommunityController {
     }
 
     @Operation(summary = "게시글 수정")
-    @PutMapping("/modify/{boardId}")
+    @PutMapping()
     public ResponseEntity<Void> modifyBoard(@PathVariable int boardId, @RequestBody CommunityBoard board) {
         board.setCommunityBoardId(boardId);
         int result = communityService.modifyBoardByBoardId(board);
@@ -64,7 +64,7 @@ public class CommunityController {
     }
     
     @Operation(summary = "게시글 삭제")
-    @DeleteMapping("/delete/{boardId}")
+    @DeleteMapping("/{boardId}")
     public ResponseEntity<?> deleteBoard(@PathVariable int boardId) {
         int result = communityService.removeBoardByBoardId(boardId);
         if (result == -1) {
