@@ -2,6 +2,7 @@ package com.baseball.bunt.model.service;
 
 import com.baseball.bunt.model.dto.community.CommunityBoard;
 import com.baseball.bunt.model.dto.community.SearchCondition;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

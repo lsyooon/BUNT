@@ -5,6 +5,9 @@ import UserJoin from "@/components/user/UserJoin.vue";
 import BoardList from "@/components/community/BoardList.vue";
 import BoardCreate from "@/components/community/BoardCreate.vue";
 import BoardDetail from "@/components/community/BoardDetail.vue";
+import MainSamsung from "@/components/main/MainSamsung.vue";
+import MainLotte from "@/components/main/MainLotte.vue";
+import BoardModify from "@/components/community/BoardModify.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,7 +28,7 @@ const router = createRouter({
       component: UserJoin
     },
     {
-      path: '/community',
+      path: '/:teamId/community',
       name: 'community',
       component: BoardList,
       // children: [
@@ -33,14 +36,29 @@ const router = createRouter({
       // ]
     },
     {
-      path: '/community/create',
+      path: '/:teamId/community/create',
       name: 'boardCreate',
       component: BoardCreate
     },
     {
-      path: '/community/:id',
+      path: '/:teamId/community/:id',
       name: 'boardDetail',
       component: BoardDetail
+    },
+    {
+      path: '/:teamId/community/update/:id',
+      name: 'boardModify',
+      component: BoardModify
+    },
+    {
+      path: '/main/samsung/:teamId',
+      name: 'teamSamsung',
+      component: MainSamsung
+    },
+    {
+      path: '/main/lotte/:teamId',
+      name: 'teamLotte',
+      component: MainLotte
     }
   ]
 })

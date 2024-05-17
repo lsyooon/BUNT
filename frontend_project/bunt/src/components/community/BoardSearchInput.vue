@@ -22,16 +22,17 @@
 <script setup>
 import { ref } from "vue";
 import { useCommunityStore } from "@/stores/community";
+import {useRoute} from "vue-router";
 
 const store = useCommunityStore();
 const searchInfo = ref({
     key: "none",
     word: "",
-    orderBy: "none",
-    orderByDir: "asc",
 });
+
+const route = useRoute()
 const searchBoardList = function () {
-    store.searchBoardList(searchInfo.value);
+    store.searchBoardList(searchInfo.value, route.params.teamId);
 };
 
 </script>

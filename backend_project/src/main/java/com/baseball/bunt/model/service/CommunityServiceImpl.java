@@ -16,7 +16,7 @@ public class CommunityServiceImpl implements CommunityService{
     private final CommunityDao dao;
 
     @Override
-    public List<CommunityBoard> readBoardList(SearchCondition searchCondition) {   // 게시판 리스트
+    public List<CommunityBoard> readBoardList(SearchCondition searchCondition) {
         return dao.boardList(searchCondition);
     }
 

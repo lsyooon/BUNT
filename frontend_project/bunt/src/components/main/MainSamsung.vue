@@ -1,4 +1,5 @@
 <template>
+  <TheHeaderNav/>
   <div>
     <div class="row">
       <div class="background-picture col-10">
@@ -88,3 +89,6 @@ h4 {
 }
 
 </style>
+<script setup lang="ts">
+import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
+</script>
