@@ -31,6 +31,7 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
+    @Transactional
     public int removeBoardByBoardId(final int communityBoardId) { // 게시글 삭제
         return dao.deleteBoard(communityBoardId);
     }
