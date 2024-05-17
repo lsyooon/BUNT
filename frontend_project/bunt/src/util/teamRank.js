@@ -1,7 +1,14 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const log = console.log;
+
+// 현재 모듈의 파일 경로와 디렉토리 경로를 계산합니다.
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const getHtml = async () => {
     try {
@@ -45,4 +52,11 @@ const parseHtml = async () => {
     return teamData;
 };
 
-parseHtml().then((data) => log(data));
+const saveDataToJson = async () => {
+    const data = await parseHtml();
+    if (!data) return;
+    const filePath = path.join(__dirname, 'teamData.json');
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+};
+
+saveDataToJson().then(() => log('Data saved to teamData.json'));
