@@ -1,22 +1,3 @@
--- 외래키 제약 조건을 비활성화
-SET FOREIGN_KEY_CHECKS = 0;
-
--- 테이블의 데이터 삭제
-DELETE FROM `COMMUNITY_BOARD_COMMENT`;
-DELETE FROM `COMMUNITY_BOARD`;
-DELETE FROM `COMMUNITY`;
-DELETE FROM `PLAYERS`;
-DELETE FROM `TEAM`;
-DELETE FROM `USERS`;
-
--- AUTO_INCREMENT 값을 초기화
-ALTER TABLE `USERS` AUTO_INCREMENT = 1;
-ALTER TABLE `TEAM` AUTO_INCREMENT = 1;
-ALTER TABLE `PLAYERS` AUTO_INCREMENT = 1;
-ALTER TABLE `COMMUNITY` AUTO_INCREMENT = 1;
-ALTER TABLE `COMMUNITY_BOARD` AUTO_INCREMENT = 1;
-ALTER TABLE `COMMUNITY_BOARD_COMMENT` AUTO_INCREMENT = 1;
-
 -- 외래키 제약 조건을 다시 활성화
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -46,13 +27,17 @@ VALUES
     (2, '삼성 라이온즈 게시판', '그냥 그저 그런 대구 팀');
 
 -- COMMUNITY_BOARD 테이블 더미 데이터 생성
-INSERT INTO `COMMUNITY_BOARD` (`community_id`, `user_id`, `title`, `content`)
+INSERT INTO `COMMUNITY_BOARD` (`team_id`, `user_id`, `title`, `content`)
 VALUES
-    (1, 1, '롯데, 그들은 올라갈 힘을 비축하고 있다', '롯데는 이번 시즌 5등으로 마무리할 것이다. 한화는 까불지 마라.'),
-    (2, 2, '삼성, 어짜피 내려올 거 얼른 내려와', '거기 어울리는 자리 아닌 거 알잖아. 사람이 몸에 맞는 옷을 입어야해. 너넨 8등이 어울려.');
+    (1, 'admin', '롯데, 그들은 올라갈 힘을 비축하고 있다', '롯데는 이번 시즌 5등으로 마무리할 것이다. 한화는 까불지 마라.'),
+    (2, 'admin', '삼성, 어짜피 내려올 거 얼른 내려와', '거기 어울리는 자리 아닌 거 알잖아. 사람이 몸에 맞는 옷을 입어야해. 너넨 8등이 어울려.');
+
+select * from community_board;
+
+SELECT * FROM `community_board` WHERE `community_board_id` IN (1, 2);
 
 -- COMMUNITY_BOARD_COMMENT 테이블 더미 데이터 생성
-INSERT INTO `COMMUNITY_BOARD_COMMENT` (`community_board_id`,`user_id`, `content`)
+INSERT INTO `COMMUNITY_BOARD_COMMENT` (`community_board_id`, `user_id`, `content`)
 VALUES
-    (1, 2, '마 ! 붓 싼 아니가 ~'),
-    (2, 1, '샘송은 뭐;;');
+    (1, 'admin', '마 ! 붓 싼 아니가 ~'),
+    (2, 'admin', '샘송은 뭐;;');

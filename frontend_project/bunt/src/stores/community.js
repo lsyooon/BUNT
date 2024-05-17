@@ -2,8 +2,6 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from "@/router";
-import {useRoute} from "vue-router";
-const route = useRoute();
 
 const REST_BOARD_API = 'http://localhost:8080/api/board'
 

@@ -15,7 +15,7 @@ public class CommunityBoardComment {
 
 	private int communityBoardCommentId;
 	private int communityBoardId;
-	private int userId;
+	private String userId;
 	private String content;
 	private String regDate;
 	private String modDate;
