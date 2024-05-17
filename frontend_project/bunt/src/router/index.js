@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
 import BoardList from "@/components/community/BoardList.vue";
+import BoardCreate from "@/components/community/BoardCreate.vue";
+import BoardDetail from "@/components/community/BoardDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,9 +28,19 @@ const router = createRouter({
       path: '/community',
       name: 'community',
       component: BoardList,
-      // children: [{
+      // children: [
       //
-      // }]
+      // ]
+    },
+    {
+      path: '/community/create',
+      name: 'boardCreate',
+      component: BoardCreate
+    },
+    {
+      path: '/community/:id',
+      name: 'boardDetail',
+      component: BoardDetail
     }
   ]
 })

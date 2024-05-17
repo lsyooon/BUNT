@@ -2,6 +2,7 @@
 import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 import {useCommunityStore} from "@/stores/community.js";
 import {computed, onMounted, ref} from "vue";
+import BoardSearchInput from "@/components/community/BoardSearchInput.vue";
 
 const store = useCommunityStore();
 onMounted(() => {
@@ -30,6 +31,9 @@ const currentPageBoardList = computed(() => {
 <template>
   <TheHeaderNav/>
   <div>
+    <BoardSearchInput />
+
+    <button @click="$router.push('/community/create')">글쓰기</button>
     <table class="table table-hover text-center">
       <th>번호</th>
       <th>제목</th>
@@ -37,7 +41,7 @@ const currentPageBoardList = computed(() => {
       <th>등록일</th>
       <tr v-for="board in currentPageBoardList" :key="board.community_board_id">
         <td>{{ board.communityBoardId }}</td>
-        <td>{{ board.title }}</td>
+        <td><RouterLink :to="`/community/${board.communityBoardId}`">{{board.title}}</RouterLink></td>
         <td>{{ board.userId }}</td>
         <td>{{ board.regDate }}</td>
       </tr>
@@ -75,6 +79,7 @@ const currentPageBoardList = computed(() => {
       </li>
     </ul>
   </nav>
+  <RouterView/>
 </template>
 
 <style scoped>
