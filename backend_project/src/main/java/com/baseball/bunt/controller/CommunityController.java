@@ -45,7 +45,6 @@ public class CommunityController {
     @Operation(summary = "게시글 생성")
     @PostMapping()
     public ResponseEntity<?> createBoard(@RequestBody CommunityBoard board) {
-        System.out.println(board.toString());
         int result = communityService.createBoard(board);
         if (result == -1) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

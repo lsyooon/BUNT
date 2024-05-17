@@ -1,4 +1,5 @@
 <template>
+  <TheHeaderNav/>
   <div class="container">
     <h4>게시글 상세</h4>
     <hr/>
@@ -33,6 +34,7 @@ import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {useCommunityStore} from "@/stores/community";
 import axios from "axios";
+import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 
 const route = useRoute();
 const router = useRouter();
