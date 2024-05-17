@@ -6,7 +6,7 @@
       <div class="card" style="width: 30rem">
         <div class="card-body">
           <div class="mb-3 d-flex justify-content-between align-items-center">
-            <h4 class="card-title">{{ store.board.title }} </h4>
+            <h4 class="card-title">{{ store.board.title }}</h4>
             <div class="d-flex justify-content-end">
               <h6 class="card-subtitle text-body-secondary">{{ store.board.regDate }}</h6>
             </div>
@@ -16,11 +16,11 @@
           </p>
           <div v-if="loginUser !== null">
             <div v-if="loginUserName === store.board.userId">
-            <div class="d-flex justify-content-center">
-              <button class="mx-3 btn btn-outline-success" @click="moveUpdate">수정</button>
-              <button class="mx-3 btn btn-outline-danger" @click="deleteBoard">삭제</button>
-            </div>
+              <div class="d-flex justify-content-center">
+                <button class="mx-3 btn btn-outline-success" @click="moveUpdate">수정</button>
+                <button class="mx-3 btn btn-outline-danger" @click="deleteBoard">삭제</button>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -42,9 +42,9 @@ onMounted(() => {
   store.getBoard(route.params.teamId, route.params.id);
 });
 
-// const moveUpdate = function () {
-//   router.push({ name: "boardUpdate" });
-// };
+const moveUpdate = function () {
+  router.push({name: "boardModify"});
+};
 
 const deleteBoard = function () {
   axios
