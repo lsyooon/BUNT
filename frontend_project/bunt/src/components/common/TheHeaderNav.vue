@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import { useUserStore } from "@/stores/user.js";
-import { useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 
 const store = useUserStore();
 const router = useRouter();
@@ -34,6 +34,11 @@ const goUserLogin = () => {
 const goUserJoin = () => {
   router.push({ name: 'join' }); // 회원가입 페이지로 이동
 };
+
+const route = useRoute();
+const linkToCommunity = computed(() => {
+  return `/${route.params.teamId}/community`;
+});
 </script>
 
 <template>
@@ -52,7 +57,7 @@ const goUserJoin = () => {
               <RouterLink to="" class="nav-link">NEWS</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink to="/community" class="nav-link">COMMUNITY</RouterLink>
+              <RouterLink :to="linkToCommunity" class="nav-link">COMMUNITY</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink to="" class="nav-link">SHOP</RouterLink>

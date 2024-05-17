@@ -3,10 +3,15 @@ import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 import {useCommunityStore} from "@/stores/community.js";
 import {computed, onMounted, ref} from "vue";
 import BoardSearchInput from "@/components/community/BoardSearchInput.vue";
+import {useRoute} from "vue-router";
+import router from "@/router/index";
 
 const store = useCommunityStore();
+
+const route = useRoute();
+
 onMounted(() => {
-  store.getBoardList();
+  store.getBoardList(route.params.teamId);
 });
 
 const perPage = 10;
@@ -26,14 +31,36 @@ const currentPageBoardList = computed(() => {
       currentPage.value * perPage
   );
 });
+
+const loginUser = ref(null);
+const loginUserName = ref('');
+onMounted(() => {
+  const storedUser = sessionStorage.getItem('loginUser');
+  if (storedUser) {
+    loginUser.value = JSON.parse(storedUser);
+    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+  }
+});
+
+const linkToBoardDetail = (communityBoardId) => {
+  return `/${route.params.teamId}/community/${communityBoardId}`;
+};
+
+const linkToBoardCreate = () => {
+  const teamId = route.params.teamId;
+  router.push(`/${teamId}/community/create`);
+};
 </script>
 
 <template>
   <TheHeaderNav/>
-  <div>
-    <BoardSearchInput />
-
-    <button @click="$router.push('/community/create')">글쓰기</button>
+  <div class="container">
+    <div class="">
+      <BoardSearchInput/>
+      <div v-if="loginUser !== null">
+        <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
+      </div>
+    </div>
     <table class="table table-hover text-center">
       <th>번호</th>
       <th>제목</th>
@@ -41,7 +68,9 @@ const currentPageBoardList = computed(() => {
       <th>등록일</th>
       <tr v-for="board in currentPageBoardList" :key="board.community_board_id">
         <td>{{ board.communityBoardId }}</td>
-        <td><RouterLink :to="`/community/${board.communityBoardId}`">{{board.title}}</RouterLink></td>
+        <td>
+          <RouterLink :to="linkToBoardDetail(board.communityBoardId)" class="nav-link">{{ board.title }}</RouterLink>
+        </td>
         <td>{{ board.userId }}</td>
         <td>{{ board.regDate }}</td>
       </tr>
@@ -83,7 +112,7 @@ const currentPageBoardList = computed(() => {
 </template>
 
 <style scoped>
-table, tr, td, th{
+table, tr, td, th {
   border: 1px solid black;
 }
 </style>

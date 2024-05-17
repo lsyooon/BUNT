@@ -14,8 +14,8 @@ import lombok.Setter;
 public class CommunityBoard {
 
 	private int communityBoardId;
-	private int communityId;
-	private int userId;
+	private int teamId;
+	private String userId;
 	private String title;
 	private String content;
 	private String regDate;

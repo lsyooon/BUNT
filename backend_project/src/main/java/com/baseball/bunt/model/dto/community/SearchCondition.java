@@ -8,12 +8,19 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchCondition {
+	private int teamId;
 	private String key = "none";
 	private String word;
-	private String orderBy = "none";
-	private String orderByDir;
 
 	public SearchCondition() {
+	}
+
+	public int getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
 	}
 
 	public String getKey() {
@@ -32,25 +39,12 @@ public class SearchCondition {
 		this.word = word;
 	}
 
-	public String getOrderBy() {
-		return orderBy;
-	}
-
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
-	}
-
-	public String getOrderByDir() {
-		return orderByDir;
-	}
-
-	public void setOrderByDir(String orderByDir) {
-		this.orderByDir = orderByDir;
-	}
-
 	@Override
 	public String toString() {
-		return "SearchCondition [key=" + key + ", word=" + word + ", orderBy=" + orderBy + ", orderByDir=" + orderByDir
-				+ "]";
+		return "SearchCondition{" +
+				"teamId=" + teamId +
+				", key='" + key + '\'' +
+				", word='" + word + '\'' +
+				'}';
 	}
 }

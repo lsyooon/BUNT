@@ -14,9 +14,13 @@
           <p class="card-text ">
             {{ store.board.content }}
           </p>
-          <div class="d-flex justify-content-center">
-            <button class="mx-3 btn btn-outline-success" @click="moveUpdate">수정</button>
-            <button class="mx-3 btn btn-outline-danger" @click="deleteBoard">삭제</button>
+          <div v-if="loginUser !== null">
+            <div v-if="loginUserName === store.board.userId">
+            <div class="d-flex justify-content-center">
+              <button class="mx-3 btn btn-outline-success" @click="moveUpdate">수정</button>
+              <button class="mx-3 btn btn-outline-danger" @click="deleteBoard">삭제</button>
+            </div>
+              </div>
           </div>
         </div>
       </div>
@@ -26,7 +30,7 @@
 
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import {useCommunityStore} from "@/stores/community";
 import axios from "axios";
 
@@ -35,7 +39,7 @@ const router = useRouter();
 const store = useCommunityStore();
 
 onMounted(() => {
-  store.getBoard(route.params.id);
+  store.getBoard(route.params.teamId, route.params.id);
 });
 
 // const moveUpdate = function () {
@@ -44,13 +48,23 @@ onMounted(() => {
 
 const deleteBoard = function () {
   axios
-      .delete(`http://localhost:8080/api/board/${route.params.id}`)
+      .delete(`http://localhost:8080/api/board/${route.params.teamId}/${route.params.id}`)
       .then(() => {
         router.push({name: "community"});
       })
       .catch(() => {
       });
 };
+
+const loginUser = ref(null);
+const loginUserName = ref('');
+onMounted(() => {
+  const storedUser = sessionStorage.getItem('loginUser');
+  if (storedUser) {
+    loginUser.value = JSON.parse(storedUser);
+    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+  }
+});
 </script>
 
 <style scoped></style>

@@ -2,7 +2,9 @@ package com.baseball.bunt.model.dao;
 
 import com.baseball.bunt.model.dto.community.CommunityBoard;
 import com.baseball.bunt.model.dto.community.SearchCondition;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 

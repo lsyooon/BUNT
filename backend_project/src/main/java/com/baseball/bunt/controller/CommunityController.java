@@ -23,7 +23,7 @@ public class CommunityController {
     private final CommunityService communityService;
 
     @Operation(summary = "게시글 목록")
-    @GetMapping()
+    @GetMapping("/{teamId}")
     public ResponseEntity<?> readBoardList(@ModelAttribute SearchCondition searchCondition) {
         List<CommunityBoard> boardList = communityService.readBoardList(searchCondition);
         if (boardList == null || boardList.isEmpty()) {
@@ -33,7 +33,7 @@ public class CommunityController {
     }
 
     @Operation(summary = "게시글 상세 보기")
-    @GetMapping("/{boardId}")
+    @GetMapping("/{teamId}/{boardId}")
     public ResponseEntity<?> readBoard(@PathVariable int boardId) {
         CommunityBoard board = communityService.readBoardDetail(boardId);
         if (board == null) {
@@ -45,6 +45,7 @@ public class CommunityController {
     @Operation(summary = "게시글 생성")
     @PostMapping()
     public ResponseEntity<?> createBoard(@RequestBody CommunityBoard board) {
+        System.out.println(board.toString());
         int result = communityService.createBoard(board);
         if (result == -1) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -53,7 +54,7 @@ public class CommunityController {
     }
 
     @Operation(summary = "게시글 수정")
-    @PutMapping()
+    @PutMapping("/{teamId}")
     public ResponseEntity<Void> modifyBoard(@PathVariable int boardId, @RequestBody CommunityBoard board) {
         board.setCommunityBoardId(boardId);
         int result = communityService.modifyBoardByBoardId(board);
@@ -64,7 +65,7 @@ public class CommunityController {
     }
     
     @Operation(summary = "게시글 삭제")
-    @DeleteMapping("/{boardId}")
+    @DeleteMapping("/{teamId}/{boardId}")
     public ResponseEntity<?> deleteBoard(@PathVariable int boardId) {
         int result = communityService.removeBoardByBoardId(boardId);
         if (result == -1) {
