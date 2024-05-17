@@ -46,7 +46,7 @@ const router = createRouter({
       component: BoardDetail
     },
     {
-      path: '/:teamId/community/update/:id',
+      path: '/:teamId/community/modify/:id',
       name: 'boardModify',
       component: BoardModify
     },

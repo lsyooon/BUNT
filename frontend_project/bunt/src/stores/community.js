@@ -29,7 +29,7 @@ export const useCommunityStore = defineStore('community', () => {
     const createBoard = function (board) {
         axios.post(REST_BOARD_API, board)
             .then(() => {
-                const teamId = router.currentRoute.value.params.teamId; // 현재 라우터의 teamId를 가져옵니다.
+                const teamId = router.currentRoute.value.params.teamId;
                 router.push(`/${teamId}/community`);
             })
             .catch((err) => {
@@ -45,8 +45,16 @@ export const useCommunityStore = defineStore('community', () => {
             })
     }
 
+    const updateBoard = function (id) {
+        const teamId = router.currentRoute.value.params.teamId;
+        axios.put(`${REST_BOARD_API}/${teamId}/${id}`, board.value)
+            .then(() => {
+                router.push(`/${teamId}/community/${id}`);
+            })
+    }
 
 
-    return { boardList, getBoardList, searchBoardList, createBoard, board, getBoard}
+
+    return { boardList, getBoardList, searchBoardList, createBoard, board, getBoard, updateBoard}
 
 })

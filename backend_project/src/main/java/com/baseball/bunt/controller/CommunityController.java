@@ -54,7 +54,7 @@ public class CommunityController {
     }
 
     @Operation(summary = "게시글 수정")
-    @PutMapping("/{teamId}")
+    @PutMapping("/{teamId}/{boardId}")
     public ResponseEntity<Void> modifyBoard(@PathVariable int boardId, @RequestBody CommunityBoard board) {
         board.setCommunityBoardId(boardId);
         int result = communityService.modifyBoardByBoardId(board);
