@@ -1,7 +1,7 @@
 <script setup>
-import {ref, onMounted, computed} from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useUserStore } from "@/stores/user.js";
-import {useRoute, useRouter} from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const store = useUserStore();
 const router = useRouter();
@@ -35,6 +35,15 @@ const goUserJoin = () => {
   router.push({ name: 'join' }); // 회원가입 페이지로 이동
 };
 
+const goMyPage = () => {
+  console.log(loginUserName.value)
+  if (loginUserName.value) {
+    router.push(`/read/${loginUserName.value}`);
+  } else {
+    console.error('loginUserName이 설정되지 않았습니다.');
+  }
+};
+
 const route = useRoute();
 const linkToCommunity = computed(() => {
   return `/${route.params.teamId}/community`;
@@ -48,7 +57,8 @@ const linkToCommunity = computed(() => {
         <a class="navbar-brand" href="#">
           <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="100">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -65,10 +75,12 @@ const linkToCommunity = computed(() => {
           </ul>
           <ul class="navbar-nav ms-auto">
             <li v-if="loginUser" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-expanded="false">
                 {{ loginUserName }}님 환영합니다
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" @click="goMyPage">MyPage</a></li>
                 <li><a class="dropdown-item" @click="logout">Logout</a></li>
               </ul>
             </li>

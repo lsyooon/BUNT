@@ -8,6 +8,7 @@ import BoardDetail from "@/components/community/BoardDetail.vue";
 import MainSamsung from "@/components/main/MainSamsung.vue";
 import MainLotte from "@/components/main/MainLotte.vue";
 import BoardModify from "@/components/community/BoardModify.vue";
+import MyPage from '@/components/user/MyPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/join',
       name: 'join',
       component: UserJoin
+    },
+    {
+      path: '/read/:id',
+      name: 'myPage',
+      component: MyPage
     },
     {
       path: '/:teamId/community',

@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> readUserById(final String userId) {
+	public User readUserById(final String userId) {
 		return userDao.selectUserById(userId);
 	}
 
@@ -64,8 +64,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private void validateDuplicateUser(final User user) {
-		List<User> findUsers = userDao.selectUserById(user.getId());
-		if (!findUsers.isEmpty()) {
+		User findUser = userDao.selectUserById(user.getId());
+		if (findUser != null) {
 			throw new IllegalStateException("이미 존재하는 회원입니다.");
 		}
 	}
