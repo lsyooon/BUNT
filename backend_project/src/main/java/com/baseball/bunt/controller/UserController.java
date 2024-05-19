@@ -98,10 +98,10 @@ public class UserController {
 	}
 
 	@Operation(summary = "회원 아이디로 특정 회원 조회")
-	@GetMapping("/read/{userId}")
-	public ResponseEntity<?> selectUserByUserId(@PathVariable("userId") int userId) {
+	@GetMapping("/read/{id}")
+	public ResponseEntity<?> selectUserByUserId(@PathVariable("id") String id) {
 		try {
-			User user = userService.readUserByUserId(userId);
+			User user = userService.readUserById(id);
 			if (user != null) {
 				return new ResponseEntity<>(user, HttpStatus.OK);
 			}
