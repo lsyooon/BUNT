@@ -19,4 +19,16 @@ public class CommunityBoardComment {
 	private String content;
 	private String regDate;
 	private String modDate;
+
+	@Override
+	public String toString() {
+		return "CommunityBoardComment{" +
+				"communityBoardCommentId=" + communityBoardCommentId +
+				", communityBoardId=" + communityBoardId +
+				", userId='" + userId + '\'' +
+				", content='" + content + '\'' +
+				", regDate='" + regDate + '\'' +
+				", modDate='" + modDate + '\'' +
+				'}';
+	}
 }
