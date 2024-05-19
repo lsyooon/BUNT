@@ -16,13 +16,13 @@ import java.util.List;
         RequestMethod.DELETE})
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/api/board/comment")
 public class CommunityCommentController {
 
     private final CommunityCommentService service;
 
     // 댓글 리스트
-    @GetMapping("/comment/{boardId}")
+    @GetMapping("/{boardId}")
     public ResponseEntity<?> getList(@PathVariable int boardId){
         List<CommunityBoardComment> commentList = service.readCommentList(boardId);
         if (commentList == null || commentList.isEmpty()) {
@@ -32,18 +32,19 @@ public class CommunityCommentController {
     }
 
     // 댓글 상세보기
-    @GetMapping("/comment/{boardId}/{commentId}")
-    public ResponseEntity<?> readComment(@PathVariable int commentId){
-        CommunityBoardComment comment = service.readCommentDetail(commentId);
-        if (comment == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(comment, HttpStatus.OK);
-    }
+//    @GetMapping("/{commentId}")
+//    public ResponseEntity<?> readComment(@PathVariable int commentId){
+//        CommunityBoardComment comment = service.readCommentDetail(commentId);
+//        if (comment == null) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+//        return new ResponseEntity<>(comment, HttpStatus.OK);
+//    }
 
     // 댓글 등록
-    @PostMapping("/comment")
+    @PostMapping()
     public ResponseEntity<?> createComment(@RequestBody CommunityBoardComment comment){
+
         int result = service.createComment(comment);
         if (result == 1) {
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -52,7 +53,7 @@ public class CommunityCommentController {
     }
 
     // 댓글 수정
-    @PutMapping("/comment/{boardId}/{commentId}")
+    @PutMapping("/{commentId}")
     public ResponseEntity<Void> modifyBoard(@PathVariable int commentId, @RequestBody CommunityBoardComment comment){
         comment.setCommunityBoardCommentId(commentId);
         int result = service.modifyComment(comment);
@@ -63,7 +64,7 @@ public class CommunityCommentController {
     }
 
     // 댓글 삭제
-    @DeleteMapping("/comment/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable int commentId){
         int result = service.removeComment(commentId);
         if (result == -1) {

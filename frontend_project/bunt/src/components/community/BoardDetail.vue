@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+  <CommentList />
 </template>
 
 <script setup>
@@ -35,6 +36,7 @@ import {onMounted, ref} from "vue";
 import {useCommunityStore} from "@/stores/community";
 import axios from "axios";
 import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
+import CommentList from "@/components/community/CommentList.vue"
 
 const route = useRoute();
 const router = useRouter();

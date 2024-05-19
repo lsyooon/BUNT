@@ -8,6 +8,7 @@ import BoardDetail from "@/components/community/BoardDetail.vue";
 import MainSamsung from "@/components/main/MainSamsung.vue";
 import MainLotte from "@/components/main/MainLotte.vue";
 import BoardModify from "@/components/community/BoardModify.vue";
+import CommentList from "@/components/community/CommentList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,10 +31,7 @@ const router = createRouter({
     {
       path: '/:teamId/community',
       name: 'community',
-      component: BoardList,
-      // children: [
-      //
-      // ]
+      component: BoardList
     },
     {
       path: '/:teamId/community/create',
@@ -43,7 +41,14 @@ const router = createRouter({
     {
       path: '/:teamId/community/:id',
       name: 'boardDetail',
-      component: BoardDetail
+      component: BoardDetail,
+      children: [
+        {
+          path: '',
+          name: 'commentList',
+          component: CommentList
+        },
+      ]
     },
     {
       path: '/:teamId/community/modify/:id',
