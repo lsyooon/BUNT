@@ -21,7 +21,8 @@
 
     <!-- 게시글 상세보기 -->
     <select id="getDetail" resultType="CommunityBoard" parameterType="int">
-        SELECT * FROM COMMUNITY_BOARD WHERE community_board_id = #{communityBoardId}
+        SELECT community_board_id, team_id, content, user_id, title, date_format(reg_date, '%Y-%M-%d') AS reg_date, date_format(mod_date, '%Y-%M-%d') AS mod_date
+        FROM COMMUNITY_BOARD WHERE community_board_id = #{communityBoardId}
     </select>
 
     <!-- 게시글 등록 -->

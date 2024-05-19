@@ -1,5 +1,4 @@
 <template>
-  <TheHeaderNav/>
   <div class="container">
     <h4>게시글 수정</h4>
     <input type="hidden">
@@ -23,7 +22,6 @@
 import {onMounted } from "vue";
 import { useCommunityStore } from "@/stores/community";
 import {useRoute} from "vue-router";
-import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 
 const route = useRoute();
 const store = useCommunityStore();
