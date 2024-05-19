@@ -25,14 +25,6 @@
 
 <script>
 import replyService from '@/stores/comment.js';
-import { onMounted, ref} from "vue";
-const loginUser = ref(null);
-const loginUserName = ref('');
-
-
-
-
-
 export default {
 
   data() {
