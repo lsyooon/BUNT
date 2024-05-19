@@ -1,32 +1,63 @@
 <template>
-  <div>
-    <button @click="addComment">Add Comment</button>
-    <ul>
-      <li v-for="comment in comments" :key="comment.communityBoardCommentId">
-        {{ comment.content }}
-        <button @click="editComment(comment)">Edit</button>
-        <button @click="deleteComment(comment.communityBoardCommentId)">Delete</button>
-        <button @click="prints()">Delete</button>
-      </li>
-    </ul>
-
-    <div v-if="showModal" class="modal">
-      <div class="modal-content">
-        <span class="close" @click="showModal = false">&times;</span>
-        <h2>{{ editMode ? 'Edit Comment' : 'Add Comment' }}</h2>
-        <textarea v-model="currentComment.content"></textarea>
-        <button @click="saveComment">{{ editMode ? 'Update' : 'Save' }}</button>
+  <div class="container">
+    <div class="reply-title">
+      <h4>댓글 목록</h4>
+      <div v-if="loginUser !== null">
+        <button class="btn btn-outline-primary" @click="addComment">Add Comment</button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+      <div>
+        <ul class="comment-list">
+          <hr>
+          <li v-for="comment in comments" :key="comment.communityBoardCommentId" class="comment-item">
+            <div class="comment-content">
+              <span>{{ comment.content }}</span>
+              <div>
+                <span>|　작성자 : {{ comment.userId }}　|　</span>
+                <span>{{ comment.regDate }}　</span>
+              </div>
+            </div>
+            <div class="writer-bnt" v-if="loginUserName === comment.userId">
+              <button class="btn btn-outline-warning" @click="editComment(comment)">수정</button>
+              <button class="btn btn-outline-danger" @click="deleteComment(comment.communityBoardCommentId)">삭제</button>
+            </div>
+            <hr>
+          </li>
+        </ul>
+      </div>
+      <div v-if="showModal" class="modal">
+        <div class="modal-content">
+          <span class="close" @click="showModal = false">&times;</span>
+          <h2>{{ editMode ? '댓글 수정' : '댓글 작성' }}</h2>
+          <br>
+          <textarea v-model="currentComment.content"></textarea>
+          <br>
+          <button class="btn btn-outline-success" @click="saveComment">{{ editMode ? '수정' : '작성' }}</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
+<script setup>
+import {onMounted, ref} from "vue";
 
+const loginUser = ref(null);
+const loginUserName = ref('');
+onMounted(() => {
+  const storedUser = sessionStorage.getItem('loginUser');
+  if (storedUser) {
+    loginUser.value = JSON.parse(storedUser);
+    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+  }
+});
+</script>
 
 <script>
 import replyService from '@/stores/comment.js';
-export default {
 
+export default {
   data() {
     return {
       comments: [],
@@ -38,21 +69,16 @@ export default {
         communityBoardId: this.boardId,
         userId: ""
       },
-      user_id: JSON.parse(sessionStorage.getItem('loginUser')).id,
+      user_id: sessionStorage.getItem('loginUser') ? JSON.parse(sessionStorage.getItem('loginUser')).id : null,
       boardId: this.$route.params.id
     };
   },
   created() {
     this.fetchComments();
   },
-
   methods: {
-    prints(){
-      console.log()
-
-    },
     fetchComments() {
-      replyService.getList({ boardId: this.boardId }, (replyCnt, list) => {
+      replyService.getList({boardId: this.boardId}, (replyCnt, list) => {
         this.comments = list;
       }, (error) => {
         console.error(error);
@@ -60,12 +86,12 @@ export default {
     },
     addComment() {
       this.editMode = false;
-      this.currentComment = {  content: '', communityBoardId: this.boardId, userId: this.user_id };
+      this.currentComment = {content: '', communityBoardId: this.boardId, userId: this.user_id};
       this.showModal = true;
     },
     editComment(comment) {
       this.editMode = true;
-      this.currentComment = { ...comment };
+      this.currentComment = {...comment};
       this.showModal = true;
     },
     saveComment() {
@@ -130,5 +156,45 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.reply-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 15%;
+  padding-left: 15%;
+}
+
+.comment-list {
+  width: 60rem;
+  padding-right: 3%;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 3%;
+  position: relative;
+}
+
+.comment-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.writer-bnt {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-divider {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
 }
 </style>

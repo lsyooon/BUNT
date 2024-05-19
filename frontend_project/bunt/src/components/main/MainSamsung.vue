@@ -1,5 +1,4 @@
 <template>
-  <TheHeaderNav/>
   <div>
     <div class="row">
       <div class="background-picture col-10">

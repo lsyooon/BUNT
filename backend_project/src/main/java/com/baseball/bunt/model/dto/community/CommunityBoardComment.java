@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Tag(name = "커뮤니티 게시글 댓글 DTO")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,8 +19,8 @@ public class CommunityBoardComment {
 	private int communityBoardId;
 	private String userId;
 	private String content;
-	private String regDate;
-	private String modDate;
+	private Date regDate;
+	private Date modDate;
 
 	@Override
 	public String toString() {

@@ -1,5 +1,4 @@
 <script setup>
-import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 import {useCommunityStore} from "@/stores/community.js";
 import {computed, onMounted, ref} from "vue";
 import BoardSearchInput from "@/components/community/BoardSearchInput.vue";
@@ -53,13 +52,12 @@ const linkToBoardCreate = () => {
 </script>
 
 <template>
-  <TheHeaderNav/>
   <div class="container">
-    <div class="">
-      <BoardSearchInput/>
+    <div class="bar">
       <div v-if="loginUser !== null">
         <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
       </div>
+      <BoardSearchInput/>
     </div>
     <table class="table table-hover text-center">
       <th>번호</th>
@@ -75,39 +73,39 @@ const linkToBoardCreate = () => {
         <td>{{ board.regDate }}</td>
       </tr>
     </table>
+    <nav aria-label="Page navigation">
+      <ul class="pagination d-flex justify-content-center">
+        <li class="page-item">
+          <a
+              class="page-link"
+              @click.prevent="currentPage--"
+              :class="{ disabled: currentPage <= 1 }"
+              href="#"
+          >&lt;</a
+          >
+        </li>
+        <li
+            class="page-item"
+            :class="{ active: currentPage === page }"
+            v-for="page in pageCount"
+            :key="page"
+        >
+          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
+              page
+            }}</a>
+        </li>
+        <li class="page-item">
+          <a
+              class="page-link"
+              @click.prevent="currentPage++"
+              :class="{ disabled: currentPage >= pageCount }"
+              href="#"
+          >&gt;</a
+          >
+        </li>
+      </ul>
+    </nav>
   </div>
-  <nav aria-label="Page navigation">
-    <ul class="pagination d-flex justify-content-center">
-      <li class="page-item">
-        <a
-            class="page-link"
-            @click.prevent="currentPage--"
-            :class="{ disabled: currentPage <= 1 }"
-            href="#"
-        >&lt;</a
-        >
-      </li>
-      <li
-          class="page-item"
-          :class="{ active: currentPage === page }"
-          v-for="page in pageCount"
-          :key="page"
-      >
-        <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
-            page
-          }}</a>
-      </li>
-      <li class="page-item">
-        <a
-            class="page-link"
-            @click.prevent="currentPage++"
-            :class="{ disabled: currentPage >= pageCount }"
-            href="#"
-        >&gt;</a
-        >
-      </li>
-    </ul>
-  </nav>
   <RouterView/>
 </template>
 
@@ -115,4 +113,14 @@ const linkToBoardCreate = () => {
 table, tr, td, th {
   border: 1px solid black;
 }
+
+.container {
+  padding-top: 3%;
+}
+
+.bar {
+  display: flex;
+  justify-content: space-between;
+}
+
 </style>

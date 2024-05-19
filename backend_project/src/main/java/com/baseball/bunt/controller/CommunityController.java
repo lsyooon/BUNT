@@ -29,7 +29,7 @@ public class CommunityController {
         if (boardList == null || boardList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<CommunityBoard>>(boardList, HttpStatus.OK);
+        return new ResponseEntity<>(boardList, HttpStatus.OK);
     }
 
     @Operation(summary = "게시글 상세 보기")
