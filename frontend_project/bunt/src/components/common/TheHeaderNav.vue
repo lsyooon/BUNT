@@ -51,7 +51,7 @@ const linkToCommunity = computed(() => {
 </script>
 
 <template>
-  <header>
+  <header class="header">
     <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -62,15 +62,15 @@ const linkToCommunity = computed(() => {
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="" class="nav-link">NEWS</RouterLink>
+              <RouterLink to="" class="nav-link custom-nav-link">NEWS</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToCommunity" class="nav-link">COMMUNITY</RouterLink>
+              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">COMMUNITY</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink to="" class="nav-link">SHOP</RouterLink>
+              <RouterLink to="/rule" class="nav-link custom-nav-link">RULE</RouterLink>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -96,16 +96,60 @@ const linkToCommunity = computed(() => {
 </template>
 
 <style scoped>
+/* 모든 요소의 기본 여백과 패딩을 제거 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* body와 html 요소의 여백과 패딩 제거 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 150px; /* TheHeaderNav 높이 */
+  background-color: #24418E; /* 헤더 배경색 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
+}
+
 .custom-bg-color {
   background-color: #24418E !important;
 }
 
-.navbar-nav .nav-link {
+.custom-nav-link {
   color: white !important;
+  font-size: 24px; /* 글자 크기 조정 */
+  font-weight: bold; /* 글자 굵게 */
 }
 
-.navbar-nav .nav-link:hover {
+.custom-nav-link:hover {
   color: #ffc107 !important; /* Hover 색상 변경 */
+}
+
+.navbar-nav.nav-fill {
+  width: 50%; /* 링크 항목들을 중앙으로 몰기 위해 넓이 조정 */
+  justify-content: center; /* 가운데 정렬 */
+}
+
+.navbar-nav .nav-item {
+  flex: 1;
+  text-align: center;
+}
+
+.navbar-nav.ms-auto {
+  margin-left: auto;
 }
 
 .navbar-nav .btn {
@@ -138,5 +182,51 @@ const linkToCommunity = computed(() => {
 
 .navbar-nav .btn-outline-light:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown-menu {
+  background-color: white; /* 드롭다운 메뉴 배경색 */
+  border: none; /* 드롭다운 메뉴 테두리 제거 */
+  border-radius: 8px; /* 드롭다운 메뉴 테두리 반경 둥글게 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 드롭다운 메뉴 그림자 추가 */
+}
+
+.dropdown-item {
+  color: #24418E; /* 드롭다운 메뉴 항목 글자 색상 */
+}
+
+.dropdown-item:hover {
+  background-color: #1A2E5A; /* 드롭다운 메뉴 항목 hover 배경색 */
+  color: #ffc107; /* 드롭다운 메뉴 항목 hover 글자 색상 */
+}
+
+.dropdown-menu-end {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* 작은 화면에서의 드롭다운 메뉴 스타일 */
+@media (max-width: 991.98px) {
+  .dropdown-menu {
+    border-radius: 0; /* 작은 화면에서는 모서리를 각지게 */
+  }
+
+  .navbar-collapse {
+    background-color: white; /* 작은 화면에서는 배경색 흰색으로 */
+  }
+
+  .nav-item .nav-link {
+    color: #24418E !important; /* 작은 화면에서는 링크 색상 변경 */
+  }
+}
+
+.nav-tabs .nav-link {
+  color: #24418E;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: #24418E;
+  border-color: #24418E;
 }
 </style>
