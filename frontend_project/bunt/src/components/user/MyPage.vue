@@ -64,11 +64,17 @@ const deleteUser = async () => {
     }
   }
 };
+
+// 이전 페이지로 이동 함수
+const goBack = () => {
+  router.back();
+};
 </script>
 
 <template>
   <div class="container mt-5">
     <h2>My Page</h2>
+    <button @click="goBack" class="btn btn-secondary mb-3">이전으로</button>
     <div v-if="userInfo" class="card mt-4">
       <div class="card-body">
         <h5 class="card-title">{{ userInfo.name }}님의 정보</h5>

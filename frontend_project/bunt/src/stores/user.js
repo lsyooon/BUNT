@@ -11,7 +11,7 @@ export const useUserStore = defineStore('user', () => {
     axios.post(`${REST_USER_API}/login`, user)
       .then(() => {
         console.log(user)
-        router.push({ path: '/' })
+        router.back();
         sessionStorage.setItem('loginUser', JSON.stringify(user))
       })
       .catch((err) => {
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', () => {
   const join = (user) => {
     axios.post(`${REST_USER_API}/join`, user)
       .then(() => {
-        router.push({ path: '/' })
+        router.back();
       })
       .catch((err) => {
         console.log(err)
