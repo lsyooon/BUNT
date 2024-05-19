@@ -1,7 +1,7 @@
 <template>
     <div class="text-center">
         <div class="row align-items-center">
-            <div class="col-2">
+            <div class="col-3">
                 <select class="form-select" v-model="searchInfo.key">
                     <option value="none">전체</option>
                     <option value="title">제목</option>
@@ -13,7 +13,7 @@
             </div>
 
             <div class="col-1">
-                <button class="btn btn-outline-warning" @click="searchBoardList">검색</button>
+                <button class="btn btn-outline-warning" @click="searchBoardList" style="width: 70px">검색</button>
             </div>
         </div>
     </div>

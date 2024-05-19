@@ -1,5 +1,4 @@
 <template>
-  <TheHeaderNav/>
   <div class="container">
     <h4>게시글 작성</h4>
     <input type="hidden">
@@ -26,7 +25,6 @@
 import {onMounted, ref, computed} from "vue";
 import { useCommunityStore } from "@/stores/community";
 import {useRoute} from "vue-router";
-import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 
 // writer = 로그인 유저 아이디
 const loginUser = ref( );
