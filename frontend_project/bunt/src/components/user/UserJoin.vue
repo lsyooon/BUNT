@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from '@/stores/user.js';
+import { useRoute } from 'vue-router';
 
 const store = useUserStore();
+const route = useRoute();
 
 const user = ref({
   id: '',
@@ -18,6 +20,8 @@ const user = ref({
 const join = () => {
   if (!store.isDuplicateId) {
     store.join(user.value);
+  } else {
+    alert('중복된 아이디가 존재합니다. 다른 아이디를 입력하세요.');
   }
 };
 
@@ -109,7 +113,7 @@ const checkDuplicateId = async () => {
 }
 
 .container {
-  position: relative; /* 부모 요소를 기준으로 위치 설정 */
+  position: relative; /* 부모 요소의 위치를 기준으로 위치 설정 */
   max-width: 1000px;
   z-index: 2; /* 오버레이 아래에 위치하도록 설정 */
 }

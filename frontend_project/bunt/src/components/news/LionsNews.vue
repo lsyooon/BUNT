@@ -1,12 +1,12 @@
 <template>
   <div id="home" class="d-flex align-items-center justify-content-center min-vh-100">
     <div class="container mt-5">
-      <h1 class="mb-4">뉴스 목록</h1>
+      <h1 class="mb-4">라이온즈 뉴스 목록</h1>
       <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
       <div v-else>
         <ul class="list-group">
           <li v-for="(item, index) in newsItems" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
-            <router-link :to="{ name: 'newsDetail', params: { teamId: '2' }, query: { link: item.link } }" class="text-decoration-none">
+            <router-link :to="{ name: 'newsDetail', params: { teamId: '1' }, query: { link: item.link } }" class="text-decoration-none">
               <strong>{{ item.title }}</strong>
             </router-link>
             <span class="badge bg-secondary">{{ item.date }}</span>
@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { useNewsStore } from '@/stores/giantsNews.js'
+import { useNewsStore } from '@/stores/lionsNews.js'
 
 const newsStore = useNewsStore();
 const loading = ref(false);

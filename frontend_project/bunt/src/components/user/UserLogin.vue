@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user.js";
+import { useRoute } from 'vue-router'
 
-const store = useUserStore()
+const store = useUserStore();
+const route = useRoute();
 
 const user = ref({
   id: '',
@@ -10,7 +12,7 @@ const user = ref({
 })
 
 const login = function() {
-  store.login(user.value)
+  store.login(user.value);
 }
 </script>
 
