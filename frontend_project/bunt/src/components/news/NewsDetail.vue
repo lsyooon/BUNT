@@ -9,12 +9,12 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import cheerio from 'cheerio';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { useNewsStore } from '@/util/news.js'
 
 const route = useRoute();
+const newsStore = useNewsStore();
 const loading = ref(false);
 const error = ref(null);
 const newsContent = ref('');
@@ -31,10 +31,8 @@ const fetchNewsContent = async () => {
   }
 
   try {
-    const response = await axios.get(newsLink);
-    const $ = cheerio.load(response.data);
-    const content = $('.mboard-view-cont').html();
-    newsContent.value = content;
+    await newsStore.fetchNewsContent(newsLink);
+    newsContent.value = newsStore.newsContent;
   } catch (err) {
     error.value = '뉴스 내용을 가져오는 중 오류가 발생했습니다.';
   } finally {
