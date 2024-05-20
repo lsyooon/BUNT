@@ -1,29 +1,21 @@
 package com.baseball.bunt.model.dao;
 
-import com.baseball.bunt.model.dto.community.Criteria;
 import com.baseball.bunt.model.dto.community.LikeList;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
 public interface LikeListDao {
-    public void addLike(LikeList vo);
-    public void addLikeSelectKey(LikeList vo);
+    public void addLike(LikeList like);
+    public void addLikeSelectKey(LikeList like);
 
-    public LikeList listLike(Long lno);
+    public List<LikeList> getLikeList(String userId);
 
-    public List<LikeList> getLikeList(String userid);
+    public int removeLike(int boardId, String userId);
 
-    public int removeLike(@Param("mno") Long mno, @Param("userid") String userid);
+    public int find_like(int boardId, String userId);
 
-    public List<LikeList> getListWithPaging(
-            @Param("cri") Criteria cri,
-            @Param("lno") Long lno);
+    public int findLike(LikeList like);
 
-    public int find_like(@Param("mno") Long mno, @Param("userid") String userid);
-
-    public int findLike(LikeList vo);
-
-    public void addLike(@Param("mno") Long mno, @Param("userid") String userid);
+    public void addLike(int boardId, String userId);
 }
