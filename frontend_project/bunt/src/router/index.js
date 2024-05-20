@@ -11,6 +11,7 @@ import BoardModify from "@/components/community/BoardModify.vue";
 import MyPage from '@/components/user/MyPage.vue'
 import CommentList from "@/components/community/CommentList.vue";
 import Rule from '@/components/main/Rule.vue'
+import GiantsNews from '@/components/news/GiantsNews.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/read/:id',
       name: 'myPage',
       component: MyPage
+    },
+    {
+      path: '/:teamId/news',
+      name: 'giantsNews',
+      component: GiantsNews
     },
     {
       path: '/:teamId/community',
