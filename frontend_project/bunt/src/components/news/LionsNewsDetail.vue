@@ -2,6 +2,7 @@
   <div class="d-flex align-items-center justify-content-center min-vh-100 custom-bg">
     <div id="news-detail" class="container text-left mt-5 bg-white p-4 shadow rounded">
       <h1 class="mb-4">{{ newsTitle }}</h1>
+      <div v-if="newsDate" class="mb-2 text-muted">{{ newsDate }}</div>
       <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
       <div v-else-if="error" class="alert alert-danger">{{ error }}</div>
       <div v-else class="alert custom-content-bg" v-html="newsContent"></div>
@@ -14,14 +15,15 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
-import { useNewsStore } from '@/util/news.js'
+import { useNewsStore } from '@/stores/lionsNews.js'
 
 const route = useRoute()
 const router = useRouter()
 const newsStore = useNewsStore()
 const loading = ref(false)
 const error = ref(null)
-const newsTitle = ref('') // 뉴스 제목을 저장할 상태 추가
+const newsTitle = ref('')
+const newsDate = ref('') // 뉴스 날짜를 저장할 상태 추가
 const newsContent = ref('')
 
 // 이전 페이지로 이동 함수
@@ -43,6 +45,7 @@ const fetchNewsContent = async () => {
   try {
     await newsStore.fetchNewsContent(newsLink)
     newsTitle.value = newsStore.newsTitle // 뉴스 제목 설정
+    newsDate.value = newsStore.newsDate // 뉴스 날짜 설정
     newsContent.value = newsStore.newsContent
   } catch (err) {
     error.value = '뉴스 내용을 가져오는 중 오류가 발생했습니다.'
