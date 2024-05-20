@@ -8,11 +8,13 @@ export const useNewsStore = defineStore('news', {
   state: () => ({
     newsItems: [],
     newsContent: '',
+    currentPage: 1,
+    totalPages: 10, // 예시로 총 10페이지 설정, 실제 페이지 수에 맞게 조정
   }),
   actions: {
-    async fetchNews() {
+    async fetchNews(page = 1) {
       try {
-        const response = await axios.get(`${BASE_URL}?pcode=535`);
+        const response = await axios.get(`${BASE_URL}?pcode=535&P=${page}`);
         const $ = cheerio.load(response.data);
 
         const newsItems = [];
@@ -27,6 +29,7 @@ export const useNewsStore = defineStore('news', {
         });
 
         this.newsItems = newsItems;
+        this.currentPage = page;
       } catch (error) {
         console.error('Error fetching news:', error);
       }
@@ -67,6 +70,16 @@ export const useNewsStore = defineStore('news', {
       } catch (error) {
         console.error('Error fetching news content:', error);
         this.newsContent = 'Error fetching content';
+      }
+    },
+    async goToPreviousPage() {
+      if (this.currentPage > 1) {
+        await this.fetchNews(this.currentPage - 1);
+      }
+    },
+    async goToNextPage() {
+      if (this.currentPage < this.totalPages) {
+        await this.fetchNews(this.currentPage + 1);
       }
     }
   },
