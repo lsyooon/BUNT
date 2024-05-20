@@ -13,7 +13,7 @@ import CommentList from "@/components/community/CommentList.vue";
 import Rule from '@/components/main/Rule.vue';
 import GiantsNews from '@/components/news/GiantsNews.vue';
 import NewsDetail from '@/components/news/NewsDetail.vue';
-import MainView from '@/views/MainView.vue'
+import MainView from '@/views/MainView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +21,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: { hideHeaderFooter: true } // Add meta property here
     },
     {
       path: '/:teamId/login',
