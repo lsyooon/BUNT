@@ -13,18 +13,17 @@ import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
   <Footer/>
 </template>
 
-<style scoped>
-
+<style>
 
 main {
   min-height: 100%;
   height: auto;
   position: relative;
   padding-bottom: 200px;
-
 }
 
 footer {
+  height: 30%;
   position: relative;
   transform: translateY(-100%);
 }

@@ -112,11 +112,13 @@ export default {
       }
     },
     deleteComment(commentId) {
-      replyService.remove(commentId, () => {
-        this.fetchComments();
-      }, (error) => {
-        console.error(error);
-      });
+      if (confirm("댓글을 삭제하시겠습니까?")) {
+        replyService.remove(commentId, () => {
+          this.fetchComments();
+        }, (error) => {
+          console.error(error);
+        });
+      }
     }
   }
 };

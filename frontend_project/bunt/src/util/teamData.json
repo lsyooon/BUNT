@@ -44,16 +44,16 @@
   {
     "rank": "4",
     "name": "두산",
-    "gamesPlayed": "48",
+    "gamesPlayed": "49",
     "wins": "26",
     "losses": "21",
-    "draws": "1",
+    "draws": "2",
     "winRate": "0.553",
     "gamesBehind": "4.0",
     "recentRecord": "1승",
-    "battingAvg": "0.353",
-    "onBasePct": "0.443",
-    "last10Games": "7승-2패-1무"
+    "battingAvg": "0.351",
+    "onBasePct": "0.438",
+    "last10Games": "6승-2패-2무"
   },
   {
     "rank": "5",
@@ -128,15 +128,15 @@
   {
     "rank": "10",
     "name": "롯데",
-    "gamesPlayed": "43",
+    "gamesPlayed": "44",
     "wins": "15",
     "losses": "27",
-    "draws": "1",
+    "draws": "2",
     "winRate": "0.357",
     "gamesBehind": "12.5",
     "recentRecord": "1패",
-    "battingAvg": "0.331",
-    "onBasePct": "0.393",
-    "last10Games": "5승-5패-0무"
+    "battingAvg": "0.329",
+    "onBasePct": "0.392",
+    "last10Games": "4승-5패-1무"
   }
 ]
