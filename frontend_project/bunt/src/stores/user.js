@@ -77,5 +77,9 @@ export const useUserStore = defineStore('user', () => {
     }
   };
 
+
+  // 좋아요 기능
+
+
   return { login, logout, join, getUserById, modifyUser, deleteUserById, user, isDuplicateId };
 });

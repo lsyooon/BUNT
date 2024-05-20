@@ -38,7 +38,7 @@ const goUserJoin = () => {
 const goMyPage = () => {
   console.log(loginUserName.value)
   if (loginUserName.value) {
-    router.push(`/read/${loginUserName.value}`);
+    router.push(`/${route.params.teamId}/read/${loginUserName.value}`);
   } else {
     console.error('loginUserName이 설정되지 않았습니다.');
   }
