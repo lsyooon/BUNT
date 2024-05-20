@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.baseball.bunt.model.dao.PlayerDao">
+
+    <insert id="insertPlayer" parameterType="Player">
+        INSERT INTO PLAYERS (team_id, name, age, back_number, position)
+        VALUES (#{teamId}, #{name}, #{age}, #{backNumber}, #{position})
+    </insert>
+
+    <select id="selectPlayer" parameterType="Player" resultType="Player">
+        SELECT *
+        FROM PLAYERS
+        WHERE team_id = #{teamId}
+          AND name = #{name}
+          AND back_number = #{backNumber};
+
+    </select>
+
+    <select id="selectPlayerById" parameterType="Integer" resultType="Player">
+        SELECT *
+        FROM PLAYERS
+        where player_id = #{playerId}
+    </select>
+
+    <select id="selectPlayersByName" parameterType="String" resultType="Player">
+        SELECT *
+        FROM PLAYERS
+        WHERE name = #{name}
+    </select>
+
+    <select id="selectPlayersByPosition" parameterType="String" resultType="Player">
+        SELECT *
+        FROM PLAYERS
+        WHERE position = #{position}
+    </select>
+
+    <select id="selectPlayersByTeamId" parameterType="Integer" resultType="Player">
+        SELECT *
+        FROM PLAYERS
+        WHERE team_id = #{teamId}
+    </select>
+
+    <update id="updatePlayer" parameterType="Player">
+        UPDATE PLAYERS
+        SET team_id=#{teamId},
+            name=#{name},
+            age=#{age},
+            back_number=#{backNumber},
+            position=#{position}
+        WHERE player_id = #{playerId}
+    </update>
+
+    <delete id="deletePlayer" parameterType="Integer">
+        DELETE FROM PLAYERS
+        WHERE player_id = #{playerId}
+    </delete>
+</mapper>
