@@ -3,8 +3,8 @@
     <div class="row">
       <div class="main-top">
         <div class="main-left">
-          <img class="background-img">
-          <div class="buttons"> <!-- 버튼들을 감싸는 div 추가 -->
+          <img src="@/assets/image_logo/SAMSUNG_logo.png" class="background-img">
+          <div class="buttons">
             <button @click="searchGuJaWook"><p>LF　　　구자욱　　　5</p></button>
             <button @click="searchKimheonhon"><p>RF　　　김헌곤　　　32</p></button>
             <button @click="searchMackinnon"><p>1B　　　맥키넌　　　24</p></button>
@@ -54,26 +54,26 @@
 }
 
 .background-img {
-  width: 440px;
-  height: 315px;
-  background-image: url('@/assets/image_logo/SAMSUNG_logo.png');
+  width: 68%;
+  height: auto;
   position: absolute;
-  background-size: cover;
+  top: 0;
+  left: 0;
   z-index: -1;
-  border: none;
+  opacity: 0.5; /* 필요에 따라 투명도 조절 */
 }
 
 .main-left button {
   transform: skewX(-45deg);
-  display:block;
-  width:450px;
-  height:30px;
+  display: block;
+  width: 450px;
+  height: 30px;
   text-align: center;
   margin-bottom: 5.5px;
   line-height: 40px;
   border: none;
   background-color: lightgray;
-  opacity : 0.8;
+  opacity: 0.8;
 }
 .main-left button:hover {
   opacity: 1;
@@ -95,7 +95,7 @@
 </style>
 
 <script setup lang="ts">
-import {ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useYoutubeStore } from '@/stores/youtube.js';
 import TeamRank from '@/components/main/teamRank.vue';
 import VideoDetail from '@/components/main/YoutubeDetail.vue';

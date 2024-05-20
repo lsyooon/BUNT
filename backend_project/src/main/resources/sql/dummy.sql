@@ -8,17 +8,24 @@ VALUES
     ('admin', 'pass', 'admin@gmail.com', '관리자', '관리자', 25, '010-2345-6789', '대전광역시 유성구 봉명동');
 
 -- TEAM 테이블 더미 데이터 생성
-INSERT INTO `TEAM` (`name`, `song_path`)
+INSERT INTO `TEAM` (`name`, keyword)
 VALUES
-    ('롯데 자이언츠', 'songs/teamA.mp3'),
-    ('삼성 라이온즈', 'songs/teamB.mp3');
+    ('롯데 자이언츠', '부산 갈매기 응원가'),
+    ('삼성 라이온즈', '치고 달려라 삼성 응원가');
 
 -- PLAYERS 테이블 더미 데이터 생성
-INSERT INTO `PLAYERS` (`team_id`, `name`, `age`, `back_number`, `song_path`)
+INSERT INTO `PLAYERS` (`team_id`, `name`, `age`, `back_number`, `position`)
 VALUES
-    (1, '황성빈', 26, 0, 'songs/player1.mp3'),
-    (1, '김원중', 30, 34, 'songs/player2.mp3'),
-    (2, '구자욱', 31, 5, 'songs/player3.mp3');
+    (1, '황성빈', 26, 0, 'LF'),
+    (1, '윤동희', 20, 91, 'CF'),
+    (1, '고승민', 23, 65, '2B'),
+    (1, '레이예스', 29, 29, 'RF'),
+    (1, '한동희', 24, 25, 'DH'),
+    (1, '나승엽', 22, 51, '1B'),
+    (1, '박승욱', 31, 53, '3B'),
+    (1, '유강남', 31, 27, 'C'),
+    (1, '이학주', 33, 7, 'SS'),
+    (1, '윌커슨', 34, 46, 'SP');
 
 -- COMMUNITY 테이블 더미 데이터 생성
 INSERT INTO `COMMUNITY` (`team_id`, `name`, `description`)
