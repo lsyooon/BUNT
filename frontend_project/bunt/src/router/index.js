@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
 import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
 import BoardList from "@/components/community/BoardList.vue";
@@ -8,9 +8,11 @@ import BoardDetail from "@/components/community/BoardDetail.vue";
 import MainSamsung from "@/components/main/MainSamsung.vue";
 import MainLotte from "@/components/main/MainLotte.vue";
 import BoardModify from "@/components/community/BoardModify.vue";
-import MyPage from '@/components/user/MyPage.vue'
+import MyPage from '@/components/user/MyPage.vue';
 import CommentList from "@/components/community/CommentList.vue";
-import Rule from '@/components/main/Rule.vue'
+import Rule from '@/components/main/Rule.vue';
+import GiantsNews from '@/components/news/GiantsNews.vue';
+import NewsDetail from '@/components/news/NewsDetail.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,17 @@ const router = createRouter({
       path: '/read/:id',
       name: 'myPage',
       component: MyPage
+    },
+    {
+      path: '/:teamId/news',
+      name: 'giantsNews',
+      component: GiantsNews
+    },
+    {
+      path: '/:teamId/news/detail/:id',
+      name: 'newsDetail',
+      component: NewsDetail,
+      props: true
     },
     {
       path: '/:teamId/community',
@@ -78,6 +91,6 @@ const router = createRouter({
       component: MainLotte
     }
   ]
-})
+});
 
-export default router
+export default router;

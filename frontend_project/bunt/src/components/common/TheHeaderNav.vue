@@ -45,6 +45,11 @@ const goMyPage = () => {
 };
 
 const route = useRoute();
+
+const linkToNews = computed(() => {
+  return `/${route.params.teamId}/news`;
+});
+
 const linkToCommunity = computed(() => {
   return `/${route.params.teamId}/community`;
 });
@@ -55,7 +60,7 @@ const linkToCommunity = computed(() => {
     <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="100">
+          <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="80">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +69,7 @@ const linkToCommunity = computed(() => {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="" class="nav-link custom-nav-link">NEWS</RouterLink>
+              <RouterLink :to="linkToNews" class="nav-link custom-nav-link">NEWS</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">COMMUNITY</RouterLink>
@@ -115,7 +120,7 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 150px; /* TheHeaderNav 높이 */
+  height: 75px; /* TheHeaderNav 높이 조정 */
   background-color: #24418E; /* 헤더 배경색 */
   position: fixed;
   top: 0;
@@ -130,7 +135,7 @@ html, body {
 
 .custom-nav-link {
   color: white !important;
-  font-size: 24px; /* 글자 크기 조정 */
+  font-size: 16px; /* 글자 크기 조정 */
   font-weight: bold; /* 글자 굵게 */
 }
 
@@ -153,8 +158,8 @@ html, body {
 }
 
 .navbar-nav .btn {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 5px 10px; /* 버튼 패딩 조정 */
+  font-size: 14px; /* 글자 크기 조정 */
   background-color: #24418E;
   border-color: #24418E;
 }
