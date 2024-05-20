@@ -1,11 +1,13 @@
 <template>
-  <div id="app" class="container mt-5">
+  <div id="home" class="container mt-5">
     <h1 class="mb-4">뉴스 목록</h1>
     <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
     <div v-else>
       <ul class="list-group">
         <li v-for="(item, index) in newsItems" :key="index" class="list-group-item">
-          <strong>{{ item.title }}</strong>
+          <router-link :to="{ name: 'newsDetail', params: { id: index } }">
+            <strong>{{ item.title }}</strong>
+          </router-link>
           <span class="badge bg-secondary">{{ item.date }}</span>
         </li>
       </ul>
@@ -35,7 +37,7 @@ const newsItems = computed(() => newsStore.newsItems);
 </script>
 
 <style scoped>
-#app {
+#home {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
@@ -49,5 +51,9 @@ const newsItems = computed(() => newsStore.newsItems);
 
 .badge {
   font-size: 0.9em;
+}
+
+.mt-5 {
+  margin-top: 3rem;
 }
 </style>
