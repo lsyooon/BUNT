@@ -11,8 +11,6 @@ public interface UserService {
 
 	int createUser(User user);
 
-	User readUserByUserId(int userId);
-
 	User readUserById(String userId);
 
 	List<User> readUserList();

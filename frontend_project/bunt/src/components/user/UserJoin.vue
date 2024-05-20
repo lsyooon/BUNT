@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import { useUserStore } from "@/stores/user.js";
+import { useUserStore } from '@/stores/user.js';
 
-const store = useUserStore()
+const store = useUserStore();
 
 const user = ref({
   id: '',
@@ -13,11 +13,17 @@ const user = ref({
   age: '',
   phoneNumber: '',
   address: ''
-})
+});
 
 const join = () => {
-  store.join(user.value)
-}
+  if (!store.isDuplicateId) {
+    store.join(user.value);
+  }
+};
+
+const checkDuplicateId = async () => {
+  await store.getUserById(user.value.id);
+};
 </script>
 
 <template>
@@ -32,7 +38,12 @@ const join = () => {
               <form>
                 <div class="mb-3">
                   <label for="id" class="form-label">아이디</label>
-                  <input type="text" name="id" v-model="user.id" class="form-control" placeholder="아이디를 입력하세요.">
+                  <div class="input-group">
+                    <input type="text" name="id" v-model="user.id" class="form-control" placeholder="아이디를 입력하세요.">
+                    <button @click.prevent="checkDuplicateId" class="btn btn-secondary">중복 검사</button>
+                  </div>
+                  <div v-if="store.isDuplicateId" class="text-danger">중복된 아이디가 존재합니다.</div>
+                  <div v-else-if="user.id !== '' && !store.isDuplicateId" class="text-success">사용 가능한 아이디입니다.</div>
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">비밀번호</label>
@@ -63,7 +74,7 @@ const join = () => {
                   <input type="text" name="address" v-model="user.address" class="form-control" placeholder="주소를 입력하세요.">
                 </div>
                 <div class="d-grid">
-                  <button @click.prevent="join" class="btn btn-primary">회원가입</button>
+                  <button @click.prevent="join" class="btn btn-primary" :disabled="store.isDuplicateId">회원가입</button>
                 </div>
               </form>
             </div>

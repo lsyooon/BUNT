@@ -16,10 +16,10 @@
         WHERE id = #{id}
     </select>
 
-    <select id="selectUserByUserId" parameterType="int" resultType="User">
+    <select id="selectUserByNickname" parameterType="String" resultType="User">
         SELECT *
         FROM USERS
-        WHERE user_id = #{userId}
+        WHERE nickname = #{nickname}
     </select>
 
     <select id="selectUserList" resultType="User">
