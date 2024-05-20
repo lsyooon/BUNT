@@ -2,6 +2,8 @@ package com.baseball.bunt.controller;
 
 import java.util.List;
 
+import com.baseball.bunt.model.dto.community.LikeList;
+import com.baseball.bunt.model.service.LikeListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+	private final LikeListService likeservice;
 
 	@Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
 	@PostMapping("/login")
@@ -123,6 +126,35 @@ public class UserController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
+	}
+
+	// LikeListController
+	@Operation(summary = "좋아요 리스트")
+	@GetMapping("/read/likeList/{userId}")
+	public ResponseEntity<?> likeList(@PathVariable String userId) {
+		List<LikeList> list = likeservice.getLikeList(userId);
+		if (list == null || list.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	@Operation(summary = "좋아요 추가, 삭제")
+	@PostMapping("/read/likeList/{userId}/{boardId}")
+	public ResponseEntity<Integer> heart(@PathVariable String userId, @PathVariable int boardId) {
+		LikeList likeList = new LikeList();
+		likeList.setBoardId(boardId);
+		likeList.setUserId(userId);
+
+		int heart = likeservice.findLike(likeList);
+		if (heart >= 1) {
+			likeservice.removeLike(boardId, userId);
+			heart = 0;
+		} else {
+			likeservice.addLike(boardId, userId);
+			heart = 1;
+		}
+		return ResponseEntity.ok(heart);
 	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
