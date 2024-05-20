@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	public User readUserById(final String userId) {
 		return userDao.selectUserById(userId);
 	}
-	
+
 	@Override
 	public List<User> readUserList() {
 		return userDao.selectUserList();

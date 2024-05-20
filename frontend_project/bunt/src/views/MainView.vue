@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <RouterLink to="/main/samsung/1" class="logo">
+<!--    <router-link :to="{ name: 'newsDetail', params: { teamId: '1' }, query: { link: item.link } }" class="text-decoration-none">-->
+    <RouterLink :to="{name: 'main', params: {teamId: '1'}}" class="logo">
       <img src="@/assets/image_logo/SAMSUNG_logo.png" alt="SAMSUNG Logo">
     </RouterLink>
-    <RouterLink to="/main/lotte/2" class="logo">
+    <RouterLink :to="{name: 'main', params: {teamId: '2'}}" class="logo">
       <img src="@/assets/image_logo/LOTTE_logo.png" alt="LOTTE Logo">
     </RouterLink>
   </div>

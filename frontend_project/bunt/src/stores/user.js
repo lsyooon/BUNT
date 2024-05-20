@@ -13,8 +13,8 @@ export const useUserStore = defineStore('user', () => {
     axios.post(`${REST_USER_API}/login`, user)
       .then(() => {
         console.log(user);
-        router.back();
         sessionStorage.setItem('loginUser', JSON.stringify(user));
+        router.push('/'); // 이전 경로로 이동
       })
       .catch((err) => {
         console.log(err);
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () => {
     axios.get(`${REST_USER_API}/logout`)
       .then(() => {
         sessionStorage.removeItem('loginUser');
-        router.push({ path: '/' });
+        router.push('/'); // 로그아웃 후 메인 페이지로 이동
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +35,7 @@ export const useUserStore = defineStore('user', () => {
   const join = (user) => {
     axios.post(`${REST_USER_API}/join`, user)
       .then(() => {
-        router.back();
+        router.push('/'); // 회원가입 후 이전 경로로 이동
       })
       .catch((err) => {
         console.log(err);
