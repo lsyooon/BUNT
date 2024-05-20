@@ -35,7 +35,6 @@ CREATE TABLE `PLAYERS`
     `name`        VARCHAR(20)  NOT NULL,
     `age`         INT          NOT NULL,
     `back_number` INT          NOT NULL,
-    `song_path`   VARCHAR(100) NOT NULL,
     PRIMARY KEY (`player_id`)
 );
 
