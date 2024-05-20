@@ -24,6 +24,7 @@
           <div></div>
         </div>
       </div>
+      <team-rank></team-rank>
     </div>
   </div>
 </template>
@@ -89,5 +90,5 @@ h4 {
 
 </style>
 <script setup lang="ts">
-import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
+import TeamRank from "@/components/main/teamRank.vue";
 </script>

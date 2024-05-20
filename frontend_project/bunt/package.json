@@ -13,11 +13,14 @@
     "scrape": "node src/util/teamRank.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.11.3",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "chatgpt": "^5.2.5",
     "cheerio": "^1.0.0-rc.12",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "install": "^0.13.0",
     "jquery": "^3.7.1",
     "jsdom": "^24.0.0",

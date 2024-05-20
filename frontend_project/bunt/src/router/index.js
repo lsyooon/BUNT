@@ -10,6 +10,7 @@ import MainLotte from "@/components/main/MainLotte.vue";
 import BoardModify from "@/components/community/BoardModify.vue";
 import MyPage from '@/components/user/MyPage.vue'
 import CommentList from "@/components/community/CommentList.vue";
+import Rule from '@/components/main/Rule.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/join',
       name: 'join',
       component: UserJoin
+    },
+    {
+      path: '/rule',
+      name: 'rule',
+      component: Rule
     },
     {
       path: '/read/:id',
