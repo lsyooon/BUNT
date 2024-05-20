@@ -26,8 +26,8 @@ const clickPage = function(page) {
 
 const currentPageBoardList = computed(() => {
   return store.boardList.slice(
-    (currentPage.value - 1) * perPage,
-    currentPage.value * perPage
+      (currentPage.value - 1) * perPage,
+      currentPage.value * perPage
   );
 });
 
@@ -54,16 +54,21 @@ const linkToBoardCreate = () => {
 <template>
   <div class="container">
     <div class="bar">
-      <div v-if="loginUser !== null">
+      <div class="button-container" :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
         <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
       </div>
       <BoardSearchInput />
     </div>
     <table class="table table-hover text-center">
-      <th>번호</th>
-      <th>제목</th>
-      <th>글쓴이</th>
-      <th>등록일</th>
+      <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>글쓴이</th>
+        <th>등록일</th>
+      </tr>
+      </thead>
+      <tbody>
       <tr v-for="board in currentPageBoardList" :key="board.community_board_id">
         <td>{{ board.communityBoardId }}</td>
         <td>
@@ -72,36 +77,33 @@ const linkToBoardCreate = () => {
         <td>{{ board.userId }}</td>
         <td>{{ board.regDate }}</td>
       </tr>
+      </tbody>
     </table>
     <nav aria-label="Page navigation">
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
           <a
-            class="page-link"
-            @click.prevent="currentPage--"
-            :class="{ disabled: currentPage <= 1 }"
-            href="#"
-          >&lt;</a
-          >
+              class="page-link"
+              @click.prevent="currentPage--"
+              :class="{ disabled: currentPage <= 1 }"
+              href="#"
+          >&lt;</a>
         </li>
         <li
-          class="page-item"
-          :class="{ active: currentPage === page }"
-          v-for="page in pageCount"
-          :key="page"
+            class="page-item"
+            :class="{ active: currentPage === page }"
+            v-for="page in pageCount"
+            :key="page"
         >
-          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
-              page
-            }}</a>
+          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{ page }}</a>
         </li>
         <li class="page-item">
           <a
-            class="page-link"
-            @click.prevent="currentPage++"
-            :class="{ disabled: currentPage >= pageCount }"
-            href="#"
-          >&gt;</a
-          >
+              class="page-link"
+              @click.prevent="currentPage++"
+              :class="{ disabled: currentPage >= pageCount }"
+              href="#"
+          >&gt;</a>
         </li>
       </ul>
     </nav>
@@ -123,4 +125,8 @@ table, tr, td, th {
   justify-content: space-between;
 }
 
+.button-container {
+  display: flex;
+  align-items: center;
+}
 </style>
