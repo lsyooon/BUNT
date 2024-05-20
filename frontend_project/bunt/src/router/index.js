@@ -48,10 +48,10 @@ const router = createRouter({
       component: GiantsNews
     },
     {
-      path: '/:teamId/news/detail/:id',
+      path: '/:teamId/news/detail',
       name: 'newsDetail',
       component: NewsDetail,
-      props: true
+      props: (route) => ({ link: route.query.link })
     },
     {
       path: '/:teamId/community',

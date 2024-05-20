@@ -9,30 +9,32 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import axios from 'axios';
+import cheerio from 'cheerio';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { useNewsStore } from '@/util/news.js'
 
-const newsStore = useNewsStore();
 const route = useRoute();
 const loading = ref(false);
 const error = ref(null);
+const newsContent = ref('');
 
 const fetchNewsContent = async () => {
   loading.value = true;
   error.value = null;
 
-  const newsItem = newsStore.newsItems[route.params.id];
-  console.log('newsItem:', newsItem);  // 디버깅을 위해 추가
-
-  if (!newsItem) {
-    error.value = '뉴스 항목을 찾을 수 없습니다.';
+  const newsLink = route.query.link;
+  if (!newsLink) {
+    error.value = '뉴스 링크를 찾을 수 없습니다.';
     loading.value = false;
     return;
   }
 
   try {
-    await newsStore.fetchNewsContent(newsItem.link);
+    const response = await axios.get(newsLink);
+    const $ = cheerio.load(response.data);
+    const content = $('.mboard-view-cont').html();
+    newsContent.value = content;
   } catch (err) {
     error.value = '뉴스 내용을 가져오는 중 오류가 발생했습니다.';
   } finally {
@@ -43,8 +45,6 @@ const fetchNewsContent = async () => {
 onMounted(() => {
   fetchNewsContent();
 });
-
-const newsContent = computed(() => newsStore.newsContent);
 </script>
 
 <style scoped>

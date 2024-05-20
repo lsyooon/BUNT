@@ -5,7 +5,7 @@
     <div v-else>
       <ul class="list-group">
         <li v-for="(item, index) in newsItems" :key="index" class="list-group-item">
-          <router-link :to="{ name: 'newsDetail', params: { id: index } }">
+          <router-link :to="{ name: 'newsDetail', params: { teamId: '1' }, query: { link: item.link } }">
             <strong>{{ item.title }}</strong>
           </router-link>
           <span class="badge bg-secondary">{{ item.date }}</span>
