@@ -26,15 +26,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User readUserByUserId(final int userId) {
-		return userDao.selectUserByUserId(userId);
-	}
-
-	@Override
 	public User readUserById(final String userId) {
 		return userDao.selectUserById(userId);
 	}
-
+	
 	@Override
 	public List<User> readUserList() {
 		return userDao.selectUserList();
