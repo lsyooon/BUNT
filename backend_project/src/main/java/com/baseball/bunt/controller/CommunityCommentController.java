@@ -31,16 +31,6 @@ public class CommunityCommentController {
         return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
-    // 댓글 상세보기
-//    @GetMapping("/{commentId}")
-//    public ResponseEntity<?> readComment(@PathVariable int commentId){
-//        CommunityBoardComment comment = service.readCommentDetail(commentId);
-//        if (comment == null) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(comment, HttpStatus.OK);
-//    }
-
     // 댓글 등록
     @PostMapping()
     public ResponseEntity<?> createComment(@RequestBody CommunityBoardComment comment){

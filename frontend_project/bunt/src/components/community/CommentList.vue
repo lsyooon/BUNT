@@ -12,15 +12,17 @@
           <hr>
           <li v-for="comment in comments" :key="comment.communityBoardCommentId" class="comment-item">
             <div class="comment-content">
-              <span>{{ comment.content }}</span>
-              <div>
-                <span>|　작성자 : {{ comment.userId }}　|　</span>
-                <span>{{ comment.regDate }}　</span>
+              <span class="comment-text">{{ comment.content }}</span>
+              <div class="comment-actions">
+                <div class="writer-bnt" v-if="loginUserName === comment.userId" style="margin-bottom: 20px">
+                  <button class="btn btn-outline-warning" @click="editComment(comment)">수정</button>
+                  <button class="btn btn-outline-danger" @click="deleteComment(comment.communityBoardCommentId)">삭제</button>
+                </div>
+                <div class="comment-details">
+                  <span>| 작성자 : {{ comment.userId }} |</span>
+                  <span>{{ comment.regDate }}</span>
+                </div>
               </div>
-            </div>
-            <div class="writer-bnt" v-if="loginUserName === comment.userId">
-              <button class="btn btn-outline-warning" @click="editComment(comment)">수정</button>
-              <button class="btn btn-outline-danger" @click="deleteComment(comment.communityBoardCommentId)">삭제</button>
             </div>
             <hr>
           </li>
@@ -41,7 +43,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 
 const loginUser = ref(null);
 const loginUserName = ref('');
@@ -78,7 +80,7 @@ export default {
   },
   methods: {
     fetchComments() {
-      replyService.getList({boardId: this.boardId}, (replyCnt, list) => {
+      replyService.getList({ boardId: this.boardId }, (replyCnt, list) => {
         this.comments = list;
       }, (error) => {
         console.error(error);
@@ -86,12 +88,12 @@ export default {
     },
     addComment() {
       this.editMode = false;
-      this.currentComment = {content: '', communityBoardId: this.boardId, userId: this.user_id};
+      this.currentComment = { content: '', communityBoardId: this.boardId, userId: this.user_id };
       this.showModal = true;
     },
     editComment(comment) {
       this.editMode = true;
-      this.currentComment = {...comment};
+      this.currentComment = { ...comment };
       this.showModal = true;
     },
     saveComment() {
@@ -124,7 +126,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .modal {
   display: block;
   position: fixed;
@@ -175,21 +177,37 @@ export default {
 
 .comment-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 3%;
+  flex-direction: column;
   position: relative;
 }
 
 .comment-content {
-  flex-grow: 1;
   display: flex;
   justify-content: space-between;
+  flex-grow: 1;
+}
+
+.comment-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 20px;
+}
+
+.comment-text {
+  max-width: 50ch; /* 줄바꿈을 원하는 최대 글자 수 */
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .writer-bnt {
   display: flex;
   gap: 10px;
+}
+
+.comment-details {
+  display: flex;
+  align-items: center;
 }
 
 .comment-divider {
