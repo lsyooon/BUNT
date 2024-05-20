@@ -23,22 +23,22 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/login',
+      path: '/:teamId/login',
       name: 'login',
       component: UserLogin
     },
     {
-      path: '/join',
+      path: '/:teamId/join',
       name: 'join',
       component: UserJoin
     },
     {
-      path: '/rule',
+      path: '/:teamId/rule',
       name: 'rule',
       component: Rule
     },
     {
-      path: '/read/:id',
+      path: '/:teamId/read/:id',
       name: 'myPage',
       component: MyPage
     },
