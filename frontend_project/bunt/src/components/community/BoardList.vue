@@ -1,58 +1,126 @@
-<template>
-  <div id="news-detail" class="container mt-5">
-    <h1 class="mb-4">뉴스 내용</h1>
-    <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
-    <div v-else-if="error" class="alert alert-danger">{{ error }}</div>
-    <div v-else class="alert alert-success" v-html="newsContent"></div>
-    <router-link to="/" class="btn btn-primary mt-3">돌아가기</router-link>
-  </div>
-</template>
-
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useNewsStore } from '@/util/news.js'
+import { useCommunityStore } from "@/stores/community.js";
+import { computed, onMounted, ref } from "vue";
+import BoardSearchInput from "@/components/community/BoardSearchInput.vue";
+import { useRoute } from "vue-router";
+import router from "@/router/index";
+
+const store = useCommunityStore();
 
 const route = useRoute();
-const newsStore = useNewsStore();
-const loading = ref(false);
-const error = ref(null);
-const newsContent = ref('');
-
-const fetchNewsContent = async () => {
-  loading.value = true;
-  error.value = null;
-
-  const newsLink = route.query.link;
-  if (!newsLink) {
-    error.value = '뉴스 링크를 찾을 수 없습니다.';
-    loading.value = false;
-    return;
-  }
-
-  try {
-    await newsStore.fetchNewsContent(newsLink);
-    newsContent.value = newsStore.newsContent;
-  } catch (err) {
-    error.value = '뉴스 내용을 가져오는 중 오류가 발생했습니다.';
-  } finally {
-    loading.value = false;
-  }
-};
 
 onMounted(() => {
-  fetchNewsContent();
+  store.getBoardList(route.params.teamId);
 });
+
+const perPage = 10;
+const currentPage = ref(1);
+
+const pageCount = computed(() => {
+  return Math.ceil(store.boardList.length / perPage);
+});
+
+const clickPage = function(page) {
+  currentPage.value = page;
+};
+
+const currentPageBoardList = computed(() => {
+  return store.boardList.slice(
+    (currentPage.value - 1) * perPage,
+    currentPage.value * perPage
+  );
+});
+
+const loginUser = ref(null);
+const loginUserName = ref('');
+onMounted(() => {
+  const storedUser = sessionStorage.getItem('loginUser');
+  if (storedUser) {
+    loginUser.value = JSON.parse(storedUser);
+    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+  }
+});
+
+const linkToBoardDetail = (communityBoardId) => {
+  return `/${route.params.teamId}/community/${communityBoardId}`;
+};
+
+const linkToBoardCreate = () => {
+  const teamId = route.params.teamId;
+  router.push(`/${teamId}/community/create`);
+};
 </script>
 
+<template>
+  <div class="container">
+    <div class="bar">
+      <div v-if="loginUser !== null">
+        <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
+      </div>
+      <BoardSearchInput />
+    </div>
+    <table class="table table-hover text-center">
+      <th>번호</th>
+      <th>제목</th>
+      <th>글쓴이</th>
+      <th>등록일</th>
+      <tr v-for="board in currentPageBoardList" :key="board.community_board_id">
+        <td>{{ board.communityBoardId }}</td>
+        <td>
+          <RouterLink :to="linkToBoardDetail(board.communityBoardId)" class="nav-link">{{ board.title }}</RouterLink>
+        </td>
+        <td>{{ board.userId }}</td>
+        <td>{{ board.regDate }}</td>
+      </tr>
+    </table>
+    <nav aria-label="Page navigation">
+      <ul class="pagination d-flex justify-content-center">
+        <li class="page-item">
+          <a
+            class="page-link"
+            @click.prevent="currentPage--"
+            :class="{ disabled: currentPage <= 1 }"
+            href="#"
+          >&lt;</a
+          >
+        </li>
+        <li
+          class="page-item"
+          :class="{ active: currentPage === page }"
+          v-for="page in pageCount"
+          :key="page"
+        >
+          <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
+              page
+            }}</a>
+        </li>
+        <li class="page-item">
+          <a
+            class="page-link"
+            @click.prevent="currentPage++"
+            :class="{ disabled: currentPage >= pageCount }"
+            href="#"
+          >&gt;</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <RouterView />
+</template>
+
 <style scoped>
-#news-detail {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
+table, tr, td, th {
+  border: 1px solid black;
 }
 
-.mt-5 {
-  margin-top: 3rem;
+.container {
+  padding-top: 3%;
 }
+
+.bar {
+  display: flex;
+  justify-content: space-between;
+}
+
 </style>

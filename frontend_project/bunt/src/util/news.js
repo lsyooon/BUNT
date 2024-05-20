@@ -8,6 +8,7 @@ export const useNewsStore = defineStore('news', {
   state: () => ({
     newsItems: [],
     newsContent: '',
+    newsTitle: '', // 뉴스 제목을 저장할 상태 추가
     currentPage: 1,
     totalPages: 10, // 예시로 총 10페이지 설정, 실제 페이지 수에 맞게 조정
   }),
@@ -39,12 +40,17 @@ export const useNewsStore = defineStore('news', {
         const response = await axios.get(link);
         const $ = cheerio.load(response.data);
 
-        // 모든 이미지 태그의 src를 절대 경로로 변환
+        // 뉴스 제목 가져오기
+        const title = $('#frm > div > div.mboard-view-top > h3 > strong').text().trim();
+        this.newsTitle = title || '제목을 가져올 수 없습니다.';
+
+        // 모든 이미지 태그의 src를 절대 경로로 변환하고 가운데 정렬을 위한 스타일 추가
         $('img').each((i, el) => {
           const src = $(el).attr('src');
           if (src && !src.startsWith('http')) {
             $(el).attr('src', `${BASE_URL}${src}`);
           }
+          $(el).attr('style', 'display: block; margin: 0 auto;'); // 이미지 가운데 정렬 스타일 추가
         });
 
         // 필요한 경우 a 태그의 href도 절대 경로로 변환
