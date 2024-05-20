@@ -22,65 +22,69 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
+
+const isChecked = ref(false);
+
+onMounted(() => {
+  if (window.location.pathname === '/') {
+    isChecked.value = true;
+  }
+});
+
+
 </script>
 
 <template>
   <div id="app">
-    <TheHeaderNav v-if="isHeaderVisible" />
+    <TheHeaderNav v-if="isHeaderVisible && !isChecked"/>
     <main>
       <RouterView />
     </main>
-    <Footer v-if="isFooterVisible" />
+    <Footer v-if="isFooterVisible && !isChecked" />
   </div>
 </template>
 
 <style scoped>
-/* 모든 요소의 기본 여백과 패딩을 제거 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* body와 html 요소의 여백과 패딩 제거 */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: auto; /* 전체 페이지에서 스크롤을 가능하게 설정 */
+  overflow: auto;
 }
 
-/* TheHeaderNav 스타일 조정 */
 TheHeaderNav {
-  height: 50px; /* TheHeaderNav 높이 조정 */
-  background-color: white; /* 필요에 따라 배경색 추가 */
-  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
+  height: 50px;
+  background-color: white;
+  z-index: 1000;
   width: 100%;
-  position: fixed; /* 고정 위치 */
+  position: fixed;
   top: 0;
 }
 
-/* main 영역의 스타일 조정 */
 main {
   flex: 1;
-  padding-top: 50px; /* TheHeaderNav 높이만큼 패딩 추가 */
+  padding-top: 50px;
 }
 
-/* Footer 스타일 조정 */
 footer {
-  position: fixed; /* 고정 위치 */
+  position: fixed;
   bottom: 0;
-  right: 0; /* 오른쪽 하단에 고정 */
+  right: 0;
   width: 100%;
-  height: 100px; /* Footer 높이 */
-  background-color: white; /* 필요에 따라 배경색 추가 */
-  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
+  height: 100px;
+  background-color: white;
+  z-index: 1000;
 }
 
-/* 추가 스타일 */
 #app {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 전체 높이를 100vh로 설정 */
+  height: 100vh;
 }
 </style>
