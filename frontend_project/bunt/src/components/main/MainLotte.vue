@@ -3,7 +3,7 @@
     <div class="row">
       <div class="main-top">
         <div class="main-left">
-          <img src="@/assets/image_logo/LOTTE_logo.png" class="background-img">
+          <img src="@/assets/image_logo/LOTTE_logo.svg" class="background-img">
           <div class="buttons">
             <button v-for="player in players" :key="player.playerId" @click="searchPlayer(player)">
               <p>{{ player.position }}　　　{{ player.name }}　　　{{ player.backNumber }}</p>
@@ -11,7 +11,6 @@
           </div>
         </div>
         <div class="main-right">
-          <p>{{ songKeyword }}</p>
           <VideoDetail v-if="youtubeStore.selectedVideo" :video="youtubeStore.selectedVideo" />
         </div>
       </div>
@@ -44,8 +43,8 @@
 }
 
 .background-img {
-  width: 68%;
-  height: auto;
+  width: 40%;  /* or specific width in px, % */
+  height: auto; /* maintains aspect ratio */
   position: absolute;
   top: 0;
   left: 0;
@@ -101,6 +100,10 @@ const search = () => {
 
 // 페이지 처음 들어왔을 때
 onMounted(() => {
+  // 초기 검색어 설정
+  keyword.value = '롯데자이언츠 부산 갈매기 응원가';
+  // 초기 검색 실행
+  search();
   // 팀 ID를 사용하여 선수 목록 로드
   const teamId = 1; // 예시로 팀 ID 1 사용
   playerStore.findPlayersByTeamId(teamId).then(() => {
@@ -119,5 +122,5 @@ const searchPlayer = (player) => {
   playerStore.findPlayer(player);
 };
 
-const { players, songKeyword } = playerStore;
+const { players } = playerStore;
 </script>
