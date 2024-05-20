@@ -1,8 +1,8 @@
 <script setup>
-import {useCommunityStore} from "@/stores/community.js";
-import {computed, onMounted, ref} from "vue";
+import { useCommunityStore } from "@/stores/community.js";
+import { computed, onMounted, ref } from "vue";
 import BoardSearchInput from "@/components/community/BoardSearchInput.vue";
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 import router from "@/router/index";
 
 const store = useCommunityStore();
@@ -20,14 +20,14 @@ const pageCount = computed(() => {
   return Math.ceil(store.boardList.length / perPage);
 });
 
-const clickPage = function (page) {
+const clickPage = function(page) {
   currentPage.value = page;
 };
 
 const currentPageBoardList = computed(() => {
   return store.boardList.slice(
-      (currentPage.value - 1) * perPage,
-      currentPage.value * perPage
+    (currentPage.value - 1) * perPage,
+    currentPage.value * perPage
   );
 });
 
@@ -57,7 +57,7 @@ const linkToBoardCreate = () => {
       <div v-if="loginUser !== null">
         <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
       </div>
-      <BoardSearchInput/>
+      <BoardSearchInput />
     </div>
     <table class="table table-hover text-center">
       <th>번호</th>
@@ -77,18 +77,18 @@ const linkToBoardCreate = () => {
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
           <a
-              class="page-link"
-              @click.prevent="currentPage--"
-              :class="{ disabled: currentPage <= 1 }"
-              href="#"
+            class="page-link"
+            @click.prevent="currentPage--"
+            :class="{ disabled: currentPage <= 1 }"
+            href="#"
           >&lt;</a
           >
         </li>
         <li
-            class="page-item"
-            :class="{ active: currentPage === page }"
-            v-for="page in pageCount"
-            :key="page"
+          class="page-item"
+          :class="{ active: currentPage === page }"
+          v-for="page in pageCount"
+          :key="page"
         >
           <a class="page-link" href="#" @click.prevent="clickPage(page)">{{
               page
@@ -96,17 +96,17 @@ const linkToBoardCreate = () => {
         </li>
         <li class="page-item">
           <a
-              class="page-link"
-              @click.prevent="currentPage++"
-              :class="{ disabled: currentPage >= pageCount }"
-              href="#"
+            class="page-link"
+            @click.prevent="currentPage++"
+            :class="{ disabled: currentPage >= pageCount }"
+            href="#"
           >&gt;</a
           >
         </li>
       </ul>
     </nav>
   </div>
-  <RouterView/>
+  <RouterView />
 </template>
 
 <style scoped>
