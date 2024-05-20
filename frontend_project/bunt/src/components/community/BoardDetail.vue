@@ -58,13 +58,16 @@ const moveUpdate = function () {
 };
 
 const deleteBoard = function () {
-  axios
-      .delete(`http://localhost:8080/api/board/${route.params.teamId}/${route.params.id}`)
-      .then(() => {
-        router.push({name: "community"});
-      })
-      .catch(() => {
-      });
+  if (confirm("게시글을 삭제하시겠습니까?")) {
+    axios
+        .delete(`http://localhost:8080/api/board/${route.params.teamId}/${route.params.id}`)
+        .then(() => {
+          router.push({name: "community"});
+        })
+        .catch(() => {
+          // Handle error if necessary
+        });
+  }
 };
 
 const loginUser = ref(null);

@@ -53,6 +53,11 @@ const linkToNews = computed(() => {
 const linkToCommunity = computed(() => {
   return `/${route.params.teamId}/community`;
 });
+
+const linkToRule = computed(() => {
+  return `/${route.params.teamId}/rule`;
+});
+
 </script>
 
 <template>
@@ -75,7 +80,7 @@ const linkToCommunity = computed(() => {
               <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">COMMUNITY</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink to="/rule" class="nav-link custom-nav-link">RULE</RouterLink>
+              <RouterLink :to="linkToRule" class="nav-link custom-nav-link">RULE</RouterLink>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">

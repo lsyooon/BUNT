@@ -1,5 +1,5 @@
 <script setup>
-import { RouterView, useRoute } from 'vue-router';
+import { RouterView } from 'vue-router';
 import Footer from "@/components/common/Footer.vue";
 import TheHeaderNav from "@/components/common/TheHeaderNav.vue";
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -22,15 +22,11 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
-
-// 현재 라우트를 가져옴
-const route = useRoute();
-
 </script>
 
 <template>
   <div id="app">
-    <TheHeaderNav v-if="isHeaderVisible && !route.meta.hideHeader" />
+    <TheHeaderNav v-if="isHeaderVisible" />
     <main>
       <RouterView />
     </main>
