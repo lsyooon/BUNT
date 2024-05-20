@@ -14,9 +14,9 @@ import java.sql.Date;
 @Setter
 public class LikeList {
     private String userId;
-    private int communityBoardId;
+    private int boardId;
     private int like_qty;
-    private int find_like;
+    private int findW_like;
     private Date regDate;
     private String title;
 }
