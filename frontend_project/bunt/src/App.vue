@@ -6,14 +6,17 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 // 스크롤 상태를 추적하기 위한 상태 변수
 const isHeaderVisible = ref(true);
+const isFooterVisible = ref(false);
 
 // 스크롤 이벤트 핸들러
 const handleScroll = () => {
   isHeaderVisible.value = window.scrollY === 0;
+  isFooterVisible.value = window.innerHeight + window.scrollY >= document.body.offsetHeight;
 };
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
+  handleScroll(); // 초기 상태 설정
 });
 
 onUnmounted(() => {
@@ -27,7 +30,7 @@ onUnmounted(() => {
     <main>
       <RouterView />
     </main>
-    <Footer />
+    <Footer v-if="isFooterVisible" />
   </div>
 </template>
 
@@ -44,7 +47,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* 전체 페이지에서 스크롤을 없앱니다 */
+  overflow: auto; /* 전체 페이지에서 스크롤을 가능하게 설정 */
 }
 
 /* TheHeaderNav 스타일 조정 */
@@ -53,25 +56,25 @@ TheHeaderNav {
   background-color: white; /* 필요에 따라 배경색 추가 */
   z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
   width: 100%;
-  position: fixed;
+  position: fixed; /* 고정 위치 */
   top: 0;
 }
 
 /* main 영역의 스타일 조정 */
 main {
   flex: 1;
-  overflow-y: auto; /* main 영역에서만 스크롤이 가능하도록 설정 */
   padding-top: 50px; /* TheHeaderNav 높이만큼 패딩 추가 */
-  padding-bottom: 100px; /* Footer 높이만큼 패딩 추가 */
 }
 
 /* Footer 스타일 조정 */
 footer {
-  position: fixed;
+  position: fixed; /* 고정 위치 */
   bottom: 0;
+  right: 0; /* 오른쪽 하단에 고정 */
   width: 100%;
   height: 100px; /* Footer 높이 */
   background-color: white; /* 필요에 따라 배경색 추가 */
+  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
 }
 
 /* 추가 스타일 */
