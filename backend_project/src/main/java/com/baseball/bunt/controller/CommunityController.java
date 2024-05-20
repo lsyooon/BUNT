@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Tag(name = "Community Controller", description = "커뮤니티를 관리하는 컨트롤러")
@@ -21,6 +20,8 @@ import java.util.List;
 public class CommunityController {
 
     private final CommunityService communityService;
+
+
 
     @Operation(summary = "게시글 목록")
     @GetMapping("/{teamId}")
@@ -73,4 +74,6 @@ public class CommunityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
 }
+
