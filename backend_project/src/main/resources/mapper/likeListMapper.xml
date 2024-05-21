@@ -15,28 +15,32 @@
 
     <select id="getLikeList" resultType="LikeList">
         SELECT
-        l.user_id,
-        l.community_board_id,
-        l.reg_date,
-        m.title
+            l.user_id,
+            l.community_board_id,
+            l.reg_date,
+            m.title
         FROM
-        BOARD_LIKE_LIST l
-        INNER JOIN COMMUNITY_BOARD m ON l.community_board_id = m.community_board_id
-        INNER JOIN USERS u ON l.user_id = u.id
+            BOARD_LIKE_LIST l
+                INNER JOIN COMMUNITY_BOARD m ON l.community_board_id = m.community_board_id
+                INNER JOIN USERS u ON l.user_id = u.id
         WHERE
-        l.user_id = #{userId}
+            l.user_id = #{userId}
         ORDER BY
-        l.reg_date DESC
+            l.reg_date DESC
     </select>
     <delete id="removeLike" parameterType="map">
         delete from BOARD_LIKE_LIST where community_board_id = #{boardId} and user_id = #{userId}
     </delete>
 
-    <!--    <select id="find_like" resultType="int" parameterType="map">-->
-    <!--        select count(*) from BOARD_LIKE_LIST where community_board_id = #{boardId} and userid = #{userId}-->
-    <!--    </select>-->
+    <select id="find_like" resultType="int" parameterType="map">
+        select count(*) from BOARD_LIKE_LIST where community_board_id = #{boardId} and user_id = #{userId}
+    </select>
 
     <select id="findLike" resultType="int">
         select count(*) from BOARD_LIKE_LIST where community_board_id = #{boardId} and user_id = #{userId}
+    </select>
+
+    <select id="likeCnt" resultType="int" parameterType="int">
+        select count(*) from BOARD_LIKE_LIST where community_board_id = #{boardId}
     </select>
 </mapper>

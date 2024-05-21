@@ -139,6 +139,20 @@ public class UserController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
+	@Operation(summary = "좋아요 여부 확인")
+	@GetMapping("/read/likeList/{userId}/{boardId}")
+	public ResponseEntity<?> isLiked(@PathVariable String userId, @PathVariable int boardId) {
+		int result = likeService.find_like(userId, boardId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@Operation(summary = "해당 게시글 좋아요 개수")
+	@GetMapping("/read/likeList/cnt/{boardId}")
+	public ResponseEntity<?> likeCnt(@PathVariable int boardId) {
+		int result = likeService.likeCnt(boardId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 	@Operation(summary = "좋아요 추가, 삭제")
 	@PostMapping("/read/likeList/{userId}/{boardId}")
 	public ResponseEntity<Integer> like(@PathVariable String userId, @PathVariable int boardId) {

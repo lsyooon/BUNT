@@ -10,4 +10,6 @@ public interface LikeListService {
     //    int addLikeSelectKey(LikeList like);
     void removeLike(int boardId, String userId);
     void addLike(int boardId, String userId);
+    int find_like(String userId, int boardId);
+    int likeCnt(int boardId);
 }
