@@ -7,7 +7,7 @@ import java.util.List;
 public interface LikeListService {
     List<LikeList> getLikeList(String userId);
     int findLike(LikeList like);
-//    int addLikeSelectKey(LikeList like);
+    //    int addLikeSelectKey(LikeList like);
     void removeLike(int boardId, String userId);
     void addLike(int boardId, String userId);
 }

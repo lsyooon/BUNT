@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-	private final LikeListService likeservice;
+	private final LikeListService likeService;
 
 	@Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
 	@PostMapping("/login")
@@ -132,7 +132,7 @@ public class UserController {
 	@Operation(summary = "좋아요 리스트")
 	@GetMapping("/read/likeList/{userId}")
 	public ResponseEntity<?> likeList(@PathVariable String userId) {
-		List<LikeList> list = likeservice.getLikeList(userId);
+		List<LikeList> list = likeService.getLikeList(userId);
 		if (list == null || list.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -141,20 +141,20 @@ public class UserController {
 
 	@Operation(summary = "좋아요 추가, 삭제")
 	@PostMapping("/read/likeList/{userId}/{boardId}")
-	public ResponseEntity<Integer> heart(@PathVariable String userId, @PathVariable int boardId) {
+	public ResponseEntity<Integer> like(@PathVariable String userId, @PathVariable int boardId) {
 		LikeList likeList = new LikeList();
 		likeList.setBoardId(boardId);
 		likeList.setUserId(userId);
 
-		int heart = likeservice.findLike(likeList);
-		if (heart >= 1) {
-			likeservice.removeLike(boardId, userId);
-			heart = 0;
+		int like = likeService.findLike(likeList);
+		if (like >= 1) {
+			likeService.removeLike(boardId, userId);
+			like = 0;
 		} else {
-			likeservice.addLike(boardId, userId);
-			heart = 1;
+			likeService.addLike(boardId, userId);
+			like = 1;
 		}
-		return ResponseEntity.ok(heart);
+		return ResponseEntity.ok(like);
 	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
