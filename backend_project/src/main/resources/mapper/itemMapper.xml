@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baseball.bunt.model.dao.ItemDao">
+    <!-- 상품 목록 -->
+    <select id="getList" resultType="Item" parameterType="SearchCondition">
+        SELECT * FROM ITEM
+        <if test="key != 'none'">
+            WHERE ${key} LIKE concat('%', #{word}, '%')
+        </if>
+    </select>
+
+    <!-- 상품 상세보기 -->
+    <select id="getDetail" resultType="Item" parameterType="int">
+        SELECT * FROM ITEM WHERE item_id = #{itemId}
+    </select>
+</mapper>
