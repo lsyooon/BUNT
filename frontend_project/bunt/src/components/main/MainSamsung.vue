@@ -44,7 +44,7 @@
 }
 
 .background-img {
-  width: 40%;  /* or specific width in px, % */
+  width: 465px;  /* or specific width in px, % */
   height: auto; /* maintains aspect ratio */
   position: absolute;
   top: 0;
