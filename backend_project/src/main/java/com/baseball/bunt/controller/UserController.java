@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-	private final LikeListService likeservice;
+	private final LikeListService likeService;
 
 	@Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
 	@PostMapping("/login")
@@ -132,7 +132,7 @@ public class UserController {
 	@Operation(summary = "좋아요 리스트")
 	@GetMapping("/read/likeList/{userId}")
 	public ResponseEntity<?> likeList(@PathVariable String userId) {
-		List<LikeList> list = likeservice.getLikeList(userId);
+		List<LikeList> list = likeService.getLikeList(userId);
 		if (list == null || list.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
@@ -146,12 +146,12 @@ public class UserController {
 		likeList.setBoardId(boardId);
 		likeList.setUserId(userId);
 
-		int heart = likeservice.findLike(likeList);
+		int heart = likeService.findLike(likeList);
 		if (heart >= 1) {
-			likeservice.removeLike(boardId, userId);
+			likeService.removeLike(boardId, userId);
 			heart = 0;
 		} else {
-			likeservice.addLike(boardId, userId);
+			likeService.addLike(boardId, userId);
 			heart = 1;
 		}
 		return ResponseEntity.ok(heart);
