@@ -2,10 +2,13 @@
   <div class="container">
 <!--    <router-link :to="{ name: 'newsDetail', params: { teamId: '1' }, query: { link: item.link } }" class="text-decoration-none">-->
     <RouterLink :to="{name: 'main', params: {teamId: '1'}}" class="logo">
-      <img src="@/assets/image_logo/SAMSUNG_logo.png" alt="SAMSUNG Logo">
+      <img src="@/assets/image_logo/LOTTE_logo.svg" alt="LOTTE Logo">
     </RouterLink>
     <RouterLink :to="{name: 'main', params: {teamId: '2'}}" class="logo">
-      <img src="@/assets/image_logo/LOTTE_logo.png" alt="LOTTE Logo">
+      <img src="@/assets/image_logo/SAMSUNG_logo.svg" alt="SAMSUNG Logo">
+    </RouterLink>
+    <RouterLink :to="{name: 'main', params: {teamId: '3'}}" class="logo">
+      <img src="@/assets/image_logo/EAGLES_logo.svg" alt="EAGLES Logo">
     </RouterLink>
   </div>
 </template>

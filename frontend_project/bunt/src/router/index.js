@@ -58,9 +58,9 @@ const routes = [
     component: DynamicComponentWrapper,
     beforeEnter: (to, from, next) => {
       if (to.params.teamId === '1') {
-        to.meta.component = LionsNews;
-      } else if (to.params.teamId === '2') {
         to.meta.component = GiantsNews;
+      } else if (to.params.teamId === '2') {
+        to.meta.component = LionsNews;
       } else {
         return next({ name: 'home' });
       }
@@ -74,9 +74,9 @@ const routes = [
     component: DynamicComponentWrapper,
     beforeEnter: (to, from, next) => {
       if (to.params.teamId === '1') {
-        to.meta.component = LionsNewsDetail;
-      } else if (to.params.teamId === '2') {
         to.meta.component = GiantsNewsDetail;
+      } else if (to.params.teamId === '2') {
+        to.meta.component = LionsNewsDetail;
       } else {
         return next({ name: 'home' });
       }
@@ -117,9 +117,9 @@ const routes = [
     component: DynamicComponentWrapper,
     beforeEnter: (to, from, next) => {
       if (to.params.teamId === '1') {
-        to.meta.component = MainSamsung;
-      } else if (to.params.teamId === '2') {
         to.meta.component = MainLotte;
+      } else if (to.params.teamId === '2') {
+        to.meta.component = MainSamsung;
       } else {
         return next({ name: 'home' });
       }
