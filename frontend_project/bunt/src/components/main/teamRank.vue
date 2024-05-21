@@ -1,3 +1,4 @@
+<!-- TeamRank.vue -->
 <template>
   <div class="container">
     <table class="table table-bordered table-hover rounded-table" v-if="teams.length">
@@ -64,8 +65,8 @@ h1 {
 }
 
 .table {
-  margin-top: 20px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.3); /* 투명도 추가 */
+  opacity: 0.7; /* 추가 투명도 설정 */
 }
 
 .rounded-table {
@@ -74,8 +75,9 @@ h1 {
 }
 
 thead.thead-dark th {
-  background-color: #455d9f;
+  background-color: rgba(69, 93, 159, 0.3); /* 투명도 추가 */
   border: none;
+  opacity: 0.7; /* 추가 투명도 설정 */
 }
 
 thead.thead-dark th,
@@ -84,15 +86,18 @@ tbody tr {
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #6c757d;
+  background-color: rgba(108, 117, 125, 0.3); /* 투명도 추가 */
+  opacity: 0.7; /* 추가 투명도 설정 */
 }
 
 tbody tr:nth-child(even) {
-  background-color: #5a6268;
+  background-color: rgba(90, 98, 104, 0.3); /* 투명도 추가 */
+  opacity: 0.7; /* 추가 투명도 설정 */
 }
 
 tbody tr:hover {
-  background-color: #495057;
+  background-color: rgba(73, 80, 87, 0.3); /* 투명도 추가 */
+  opacity: 0.7; /* 추가 투명도 설정 */
 }
 
 th, td {
