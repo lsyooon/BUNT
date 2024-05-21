@@ -4,13 +4,14 @@ import { computed, onMounted, ref } from "vue";
 import BoardSearchInput from "@/components/community/BoardSearchInput.vue";
 import { useRoute } from "vue-router";
 import router from "@/router/index";
+import axios from "axios";
 
 const store = useCommunityStore();
 
 const route = useRoute();
 
-onMounted(() => {
-  store.getBoardList(route.params.teamId);
+onMounted(async () => {
+  await store.getBoardList(route.params.teamId);
 });
 
 const perPage = 10;
@@ -37,7 +38,7 @@ onMounted(() => {
   const storedUser = sessionStorage.getItem('loginUser');
   if (storedUser) {
     loginUser.value = JSON.parse(storedUser);
-    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+    loginUserName.value = loginUser.value.id;
   }
 });
 
@@ -49,6 +50,7 @@ const linkToBoardCreate = () => {
   const teamId = route.params.teamId;
   router.push(`/${teamId}/community/create`);
 };
+
 </script>
 
 <template>
@@ -57,25 +59,27 @@ const linkToBoardCreate = () => {
       <div class="button-container" :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
         <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
       </div>
-      <BoardSearchInput />
+      <BoardSearchInput/>
     </div>
     <table class="table table-hover text-center">
       <thead>
       <tr>
-        <th>번호</th>
+        <th>글 번호</th>
         <th>제목</th>
         <th>글쓴이</th>
         <th>등록일</th>
+        <th>추천수</th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="board in currentPageBoardList" :key="board.community_board_id">
+      <tr v-for="board in currentPageBoardList" :key="board.communityBoardId">
         <td>{{ board.communityBoardId }}</td>
         <td>
           <RouterLink :to="linkToBoardDetail(board.communityBoardId)" class="nav-link">{{ board.title }}</RouterLink>
         </td>
         <td>{{ board.userId }}</td>
         <td>{{ board.regDate }}</td>
+        <td>{{ board.likeCount }}</td>
       </tr>
       </tbody>
     </table>
@@ -108,7 +112,7 @@ const linkToBoardCreate = () => {
       </ul>
     </nav>
   </div>
-  <RouterView />
+  <RouterView/>
 </template>
 
 <style scoped>
