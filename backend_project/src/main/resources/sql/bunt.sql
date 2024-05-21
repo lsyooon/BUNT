@@ -121,28 +121,3 @@ ALTER TABLE `COMMUNITY_BOARD`
 --     ADD CONSTRAINT `FK_COMMUNITY_BOARD_TO_COMMUNITY_BOARD_COMMENT_1` FOREIGN KEY (`community_board_id`) REFERENCES `COMMUNITY_BOARD` (`community_board_id`);
 ALTER TABLE `COMMUNITY_BOARD_COMMENT`
     ADD CONSTRAINT `FK_USERS_TO_COMMUNITY_BOARD_COMMENT_1` FOREIGN KEY (`user_id`) REFERENCES `USERS` (`id`);
-
-
-DROP TABLE IF EXISTS `ITEM`;
-CREATE TABLE `ITEM`
-(
-    `item_id`        INT          NOT NULL AUTO_INCREMENT,
-    `team_id`        INT          NOT NULL,
-    `p_name`           VARCHAR(20)  NOT NULL,
-    `price`          INT          NOT NULL,
-    `stock_quantity` INT          NOT NULL,
-    `image_path`     VARCHAR(100) NOT NULL,
-    `category`       VARCHAR(10)  NOT NULL,
-    `item_dscription`    TEXT         NOT NULL,
-    `reg_date`       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `mod_date`       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`item_id`)
-);
-
-ALTER TABLE `ITEM`
-    ADD CONSTRAINT `FK_TEAM_TO_ITEM_1` FOREIGN KEY (`team_id`) REFERENCES `TEAM` (`team_id`);
-
-
-INSERT INTO ITEM (`team_id`, `p_name`, `price`, `stock_quantity`,
-                  `image_path`, `category`, `item_dscription`) VALUES (1, 'test', 30000, 4, 'dd',
-                                                                       'rr', 'testsetsetsetseetset');
