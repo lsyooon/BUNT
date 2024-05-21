@@ -141,20 +141,20 @@ public class UserController {
 
 	@Operation(summary = "좋아요 추가, 삭제")
 	@PostMapping("/read/likeList/{userId}/{boardId}")
-	public ResponseEntity<Integer> heart(@PathVariable String userId, @PathVariable int boardId) {
+	public ResponseEntity<Integer> like(@PathVariable String userId, @PathVariable int boardId) {
 		LikeList likeList = new LikeList();
 		likeList.setBoardId(boardId);
 		likeList.setUserId(userId);
 
-		int heart = likeService.findLike(likeList);
-		if (heart >= 1) {
+		int like = likeService.findLike(likeList);
+		if (like >= 1) {
 			likeService.removeLike(boardId, userId);
-			heart = 0;
+			like = 0;
 		} else {
 			likeService.addLike(boardId, userId);
-			heart = 1;
+			like = 1;
 		}
-		return ResponseEntity.ok(heart);
+		return ResponseEntity.ok(like);
 	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {

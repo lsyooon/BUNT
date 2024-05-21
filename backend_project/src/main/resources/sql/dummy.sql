@@ -7,9 +7,9 @@ VALUES ('prao', 'pass', 'prao@gmail.com', '박창호', 'prao96', 27, '010-1234-5
        ('admin', 'pass', 'admin@gmail.com', '관리자', '관리자', 25, '010-2345-6789', '대전광역시 유성구 봉명동');
 
 -- TEAM 테이블 더미 데이터 생성
-INSERT INTO `TEAM` (`name`, keyword)
-VALUES ('롯데 자이언츠', '부산 갈매기 응원가'),
-       ('삼성 라이온즈', '치고 달려라 삼성 응원가');
+INSERT INTO `TEAM` (`name`)
+VALUES ('롯데 자이언츠'),
+       ('삼성 라이온즈');
 
 -- PLAYERS 테이블 더미 데이터 생성
 INSERT INTO `PLAYERS` (`team_id`, `name`, `age`, `back_number`, `position`)

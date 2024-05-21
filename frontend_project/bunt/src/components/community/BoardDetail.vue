@@ -16,20 +16,21 @@
           <p class="card-text" style="height: 10rem">
             {{ store.board.content }}
           </p>
-          <div class="d-flex justify-content-between">
-            <button class="mx-3 btn btn-light" @click="goBack">돌아가기</button>
-            <button class="mx-3 btn btn-light" @click="toggleLike"
-                    :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
-              <img :src="likeImage()" style="width: 30px; height: 30px">
-              좋아요
-            </button>
-            <div v-if="loginUser !== null && loginUserName === store.board.userId" class="button-container">
-              <div>
+          <div class="d-flex align-items-center position-relative">
+            <button class="mx-3 btn btn-light back" @click="goBack">목록</button>
+            <div class="position-absolute start-50 translate-middle-x">
+              <button class="mx-3 btn btn-light like" @click="toggleLike"
+                      :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
+                <img :src="likeImage()" style="width: 30px; height: 30px">
+                좋아요
+              </button>
+            </div>
+            <div class="ms-auto">
+              <div v-if="loginUser !== null && loginUserName === store.board.userId" class="d-flex">
                 <button class="mx-3 btn btn-outline-warning" @click="moveUpdate">수정</button>
                 <button class="mx-3 btn btn-outline-danger" @click="deleteBoard">삭제</button>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -91,21 +92,11 @@ const toggleLike = async () => {
   const userId = loginUserName.value;
   const boardId = route.params.id;
 
-  try {
-    const response = await axios.post(`http://localhost:8080/api/read/likeList/${userId}/${boardId}`);
-    const heart = response.data;
+  const response = await axios.post(`http://localhost:8080/api/read/likeList/${userId}/${boardId}`);
+  const heart = response.data;
 
-    // 서버로부터 받은 좋아요 상태에 따라 이미지 변경
-    isLiked.value = heart === 1;
-
-    if (heart === 1) {
-      console.log('좋아요가 추가되었습니다.');
-    } else {
-      console.log('좋아요가 삭제되었습니다.');
-    }
-  } catch (error) {
-    console.error('좋아요 토글에 실패했습니다:', error);
-  }
+  // 서버로부터 받은 좋아요 상태에 따라 이미지 변경
+  isLiked.value = heart === 1;
 };
 
 import fullLikeImage from '@/assets/image_icons/fullLike.png';
@@ -120,16 +111,6 @@ const likeImage = () => {
 
 .container {
   padding-top: 3%;
-}
-
-.button-container {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.button-container.visible {
-  visibility: visible;
-  pointer-events: auto;
 }
 
 </style>

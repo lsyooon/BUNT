@@ -10,7 +10,10 @@
       <div>
         <ul class="comment-list">
           <hr>
-          <li v-for="comment in comments" :key="comment.communityBoardCommentId" class="comment-item">
+          <li v-if="comments.length === 0" class="no-comments" style="list-style: none">
+            댓글이 없습니다
+          </li>
+          <li v-else v-for="comment in comments" :key="comment.communityBoardCommentId" class="comment-item">
             <div class="comment-content">
               <span class="comment-text">{{ comment.content }}</span>
               <div class="comment-actions">
@@ -195,7 +198,7 @@ export default {
 }
 
 .comment-text {
-  max-width: 50ch; /* 줄바꿈을 원하는 최대 글자 수 */
+  max-width: 50ch;
   word-wrap: break-word;
   word-break: break-all;
 }
@@ -216,5 +219,15 @@ export default {
   width: 100%;
   border: none;
   border-bottom: 1px solid #ccc;
+}
+
+.no-comments {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+}
+
+.container {
+  margin-bottom: 2%;
 }
 </style>
