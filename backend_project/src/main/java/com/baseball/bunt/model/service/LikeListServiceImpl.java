@@ -18,21 +18,6 @@ public class LikeListServiceImpl implements LikeListService{
         return dao.getLikeList(userId);
     }
 
-//    @Override
-//    public int find_Like(int boardId, String userId) {
-//        return dao.find_like(boardId, userId);
-//    }
-
-    @Override
-    public int findLike(LikeList like) {
-        return dao.findLike(like);
-    }
-
-//    @Override
-//    public int addLikeSelectKey(LikeList like) {
-//        return dao.addLikeSelectKey(like);
-//    }
-
     @Override
     public void removeLike(int boardId, String userId) {
         dao.removeLike(boardId, userId);
@@ -41,5 +26,15 @@ public class LikeListServiceImpl implements LikeListService{
     @Override
     public void addLike(int boardId, String userId) {
         dao.addLike(boardId, userId);
+    }
+
+    @Override
+    public int find_like(String userId, int boardId) {
+        return dao.find_like(userId, boardId);
+    }
+
+    @Override
+    public int likeCnt(int boardId) {
+        return dao.likeCnt(boardId);
     }
 }

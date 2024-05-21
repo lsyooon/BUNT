@@ -1,8 +1,10 @@
 package com.baseball.bunt.controller;
 
 import com.baseball.bunt.model.dto.community.CommunityBoard;
+import com.baseball.bunt.model.dto.community.LikeList;
 import com.baseball.bunt.model.dto.community.SearchCondition;
 import com.baseball.bunt.model.service.CommunityService;
+import com.baseball.bunt.model.service.LikeListService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,7 @@ import java.util.List;
 public class CommunityController {
 
     private final CommunityService communityService;
-
+    private final LikeListService likeService;
 
 
     @Operation(summary = "게시글 목록")
@@ -72,6 +74,47 @@ public class CommunityController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+    // LikeListController
+    @Operation(summary = "좋아요 리스트")
+    @GetMapping("/like/{userId}")
+    public ResponseEntity<?> likeList(@PathVariable String userId) {
+        List<LikeList> list = likeService.getLikeList(userId);
+        if (list == null || list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+    @Operation(summary = "좋아요 여부 확인")
+    @GetMapping("/like/{userId}/{boardId}")
+    public ResponseEntity<?> isLiked(@PathVariable String userId, @PathVariable int boardId) {
+        int result = likeService.find_like(userId, boardId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Operation(summary = "해당 게시글 좋아요 개수")
+    @GetMapping("/like/cnt/{boardId}")
+    public ResponseEntity<?> likeCnt(@PathVariable int boardId) {
+        int result = likeService.likeCnt(boardId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Operation(summary = "좋아요 추가, 삭제")
+    @PostMapping("/like/{userId}/{boardId}")
+    public ResponseEntity<Integer> like(@PathVariable String userId, @PathVariable int boardId) {
+        int like = likeService.find_like(userId, boardId);
+        if (like >= 1) {
+            likeService.removeLike(boardId, userId);
+            like = 0;
+        } else {
+            likeService.addLike(boardId, userId);
+            like = 1;
+        }
+        return ResponseEntity.ok(like);
     }
 
 

@@ -19,10 +19,9 @@
           <div class="d-flex align-items-center position-relative">
             <button class="mx-3 btn btn-light back" @click="goBack">목록</button>
             <div class="position-absolute start-50 translate-middle-x">
-              <button class="mx-3 btn btn-light like" @click="toggleLike"
-                      :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
+              <button class="mx-3 btn btn-light like" @click="handleLikeClick">
                 <img :src="likeImage()" style="width: 30px; height: 30px">
-                좋아요
+                좋아요 <span v-if="likeCount !== 0">{{likeCount}}</span>
               </button>
             </div>
             <div class="ms-auto">
@@ -40,67 +39,82 @@
 </template>
 
 <script setup>
+import { onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
 import {useCommunityStore} from "@/stores/community";
 import axios from "axios";
-import CommentList from "@/components/community/CommentList.vue"
+import CommentList from "@/components/community/CommentList.vue";
 
 const route = useRoute();
 const router = useRouter();
 const store = useCommunityStore();
 
+const isLiked = ref(false);
+const likeCount = ref(0);
+
 onMounted(() => {
   store.getBoard(route.params.teamId, route.params.id);
+  checkLiked();
 });
 
 const goBack = () => {
   router.back();
 };
 
-const moveUpdate = function () {
+const moveUpdate = () => {
   router.push({name: "boardModify"});
 };
 
-const deleteBoard = function () {
+const deleteBoard = () => {
   if (confirm("게시글을 삭제하시겠습니까?")) {
     axios
         .delete(`http://localhost:8080/api/board/${route.params.teamId}/${route.params.id}`)
         .then(() => {
           router.push({name: "community"});
         })
-        .catch(() => {
-          // Handle error if necessary
-        });
   }
 };
 
 const loginUser = ref(null);
-const loginUserName = ref('');
+const loginUserName = ref("");
 onMounted(() => {
-  const storedUser = sessionStorage.getItem('loginUser');
+  const storedUser = sessionStorage.getItem("loginUser");
   if (storedUser) {
     loginUser.value = JSON.parse(storedUser);
-    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+    loginUserName.value = loginUser.value.id;
   }
 });
 
-const isLiked = ref(false);
-
-// 좋아요 토글 함수
-const toggleLike = async () => {
-  const userId = loginUserName.value;
-  const boardId = route.params.id;
-
-  const response = await axios.post(`http://localhost:8080/api/read/likeList/${userId}/${boardId}`);
-  const heart = response.data;
-
-  // 서버로부터 받은 좋아요 상태에 따라 이미지 변경
-  isLiked.value = heart === 1;
+const boardId = route.params.id;
+const checkLiked = async () => {
+  const response = await axios.get(`http://localhost:8080/api/board/like/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
+  isLiked.value = response.data === 1;
+  await likeCnt();
 };
 
-import fullLikeImage from '@/assets/image_icons/fullLike.png';
-import emptyLikeImage from '@/assets/image_icons/emptyLike.png';
+const toggleLike = async () => {
+  const response = await axios.post(`http://localhost:8080/api/board/like/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
+  const like = response.data;
+
+  isLiked.value = like === 1;
+  await likeCnt();
+};
+
+const handleLikeClick = () => {
+  if (loginUserName.value) {
+    toggleLike();
+  } else {
+    alert("로그인이 필요합니다.");
+  }
+};
+
+const likeCnt = async () => {
+  const response = await axios.get(`http://localhost:8080/api/board/like/cnt/${boardId}`);
+  likeCount.value = response.data;
+};
+
+import fullLikeImage from "@/assets/image_icons/fullLike.png";
+import emptyLikeImage from "@/assets/image_icons/emptyLike.png";
 
 const likeImage = () => {
   return isLiked.value ? fullLikeImage : emptyLikeImage;
