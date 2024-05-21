@@ -1,105 +1,123 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useUserStore } from "@/stores/user.js";
-import { useRoute, useRouter } from 'vue-router';
+import { ref, onMounted, computed } from 'vue'
+import { useUserStore } from '@/stores/user.js'
+import { useRoute, useRouter } from 'vue-router'
 
-const store = useUserStore();
-const router = useRouter();
+const store = useUserStore()
+const router = useRouter()
+const route = useRoute()
 
 // 반응형 데이터 선언
-const loginUser = ref(null);
-const loginUserName = ref('');
+const loginUser = ref(null)
+const loginUserName = ref('')
 
 // 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
 onMounted(() => {
-  const storedUser = sessionStorage.getItem('loginUser');
+  const storedUser = sessionStorage.getItem('loginUser')
   if (storedUser) {
-    loginUser.value = JSON.parse(storedUser);
-    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+    loginUser.value = JSON.parse(storedUser)
+    loginUserName.value = loginUser.value.id // 사용자 이름 속성 사용
   }
-});
+})
 
 // 로그아웃 함수
 const logout = () => {
-  store.logout();
-  loginUser.value = null;
-  loginUserName.value = '';
-  router.push({ name: 'home' }); // 로그아웃 후 메인 페이지로 이동
-};
+  store.logout()
+  loginUser.value = null
+  loginUserName.value = ''
+  router.push({ name: 'home' }) // 로그아웃 후 메인 페이지로 이동
+}
 
 const goUserLogin = () => {
-  router.push({ name: 'login' }); // 로그인 페이지로 이동
-};
+  router.push({ name: 'login' }) // 로그인 페이지로 이동
+}
 
 const goUserJoin = () => {
-  router.push({ name: 'join' }); // 회원가입 페이지로 이동
-};
+  router.push({ name: 'join' }) // 회원가입 페이지로 이동
+}
 
 const goMyPage = () => {
   console.log(loginUserName.value)
   if (loginUserName.value) {
-    router.push(`/${route.params.teamId}/read/${loginUserName.value}`);
+    router.push(`/${route.params.teamId}/read/${loginUserName.value}`)
   } else {
-    console.error('loginUserName이 설정되지 않았습니다.');
+    console.error('loginUserName이 설정되지 않았습니다.')
   }
-};
-
-const route = useRoute();
+}
 
 const linkToNews = computed(() => {
-  return `/${route.params.teamId}/news`;
-});
+  return `/${route.params.teamId}/news`
+})
 
 const linkToCommunity = computed(() => {
-  return `/${route.params.teamId}/community`;
-});
+  return `/${route.params.teamId}/community`
+})
 
 const linkToRule = computed(() => {
-  return `/${route.params.teamId}/rule`;
-});
-
+  return `/${route.params.teamId}/rule`
+})
 </script>
 
 <template>
   <header class="header">
     <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
-      <div class="container-fluid">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
         <a class="navbar-brand" href="/">
-          <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="80">
+          <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="200px">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav">
             <li class="nav-item">
-              <RouterLink :to="linkToNews" class="nav-link custom-nav-link">NEWS</RouterLink>
+              <RouterLink :to="linkToNews" class="nav-link custom-nav-link">
+                NEWS
+              </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">COMMUNITY</RouterLink>
+              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">
+                COMMUNITY
+              </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToRule" class="nav-link custom-nav-link">RULE</RouterLink>
-            </li>
-          </ul>
-          <ul class="navbar-nav ms-auto">
-            <li v-if="loginUser" class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                 aria-expanded="false">
-                {{ loginUserName }}님 환영합니다
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" @click="goMyPage">MyPage</a></li>
-                <li><a class="dropdown-item" @click="logout">Logout</a></li>
-              </ul>
-            </li>
-            <li v-else class="nav-item">
-              <a @click="goUserLogin" class="btn btn-outline-light me-2">로그인</a>
-              <button @click="goUserJoin" class="btn btn-outline-light me-2">회원가입</button>
+              <RouterLink :to="linkToRule" class="nav-link custom-nav-link">
+                RULES
+              </RouterLink>
             </li>
           </ul>
         </div>
+        <ul class="navbar-nav align-items-center">
+          <li v-if="loginUser" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false" style="font-size: 18px">
+              {{ loginUserName }}님 환영합니다
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" @click="goMyPage">
+                마이페이지
+              </a></li>
+              <li><a class="dropdown-item" @click="logout">
+                로그아웃
+              </a></li>
+            </ul>
+          </li>
+          <li v-else class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false" style="font-size: 18px">
+              로그인 후 이용해주세요
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" @click="goUserLogin">
+                로그인
+              </a></li>
+              <li><a class="dropdown-item" @click="goUserJoin">
+                회원가입
+              </a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </nav>
   </header>
@@ -121,26 +139,23 @@ html, body {
 }
 
 .header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 75px; /* TheHeaderNav 높이 조정 */
-  background-color: #24418E; /* 헤더 배경색 */
+  width: 100%;
+  height: 70px;
+  background-color: midnightblue; /* 헤더 배경색 */
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
 }
 
 .custom-bg-color {
-  background-color: #24418E !important;
+  background-color: midnightblue !important;
 }
 
 .custom-nav-link {
+  margin-left: 120px;
+  margin-right: 120px;
   color: white !important;
-  font-size: 16px; /* 글자 크기 조정 */
+  font-size: 30px; /* 글자 크기 조정 */
   font-weight: bold; /* 글자 굵게 */
 }
 
@@ -148,25 +163,16 @@ html, body {
   color: #ffc107 !important; /* Hover 색상 변경 */
 }
 
-.navbar-nav.nav-fill {
-  width: 50%; /* 링크 항목들을 중앙으로 몰기 위해 넓이 조정 */
-  justify-content: center; /* 가운데 정렬 */
-}
-
 .navbar-nav .nav-item {
-  flex: 1;
   text-align: center;
-}
-
-.navbar-nav.ms-auto {
-  margin-left: auto;
+  font-size: 50px;
 }
 
 .navbar-nav .btn {
   padding: 5px 10px; /* 버튼 패딩 조정 */
   font-size: 14px; /* 글자 크기 조정 */
-  background-color: #24418E;
-  border-color: #24418E;
+  background-color: midnightblue;
+  border-color: midnightblue;
 }
 
 .navbar-nav .btn:hover {
@@ -192,6 +198,12 @@ html, body {
 
 .navbar-nav .btn-outline-light:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu-icon {
+  border: none; /* 테두리 제거 */
+  filter: brightness(0) invert(1); /* 흰색 필터 적용 */
+  height: 70px; /* 높이 설정 */
 }
 
 .dropdown-menu {

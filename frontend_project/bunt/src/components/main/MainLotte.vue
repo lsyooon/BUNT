@@ -10,6 +10,8 @@
             </button>
           </div>
         </div>
+        <div class="main-center">
+        </div>
         <div class="main-right">
           <VideoDetail v-if="youtubeStore.selectedVideo" :video="youtubeStore.selectedVideo" />
         </div>
@@ -21,11 +23,15 @@
 
 <style scoped>
 .cont {
-  margin-top: 3%;
+  margin-top: 30px;
 }
 
 .row {
   margin: 0;
+  background-image: url('@/assets/image_background/LOTTE_BG7.jpeg');
+  background-size: cover; /* 추가 */
+  background-position: center; /* 추가 */
+  background-repeat: no-repeat; /* 추가 */
 }
 
 .main-top {
@@ -34,7 +40,7 @@
 }
 
 .main-left {
-  flex: 6;
+  flex: 4;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -43,8 +49,8 @@
 }
 
 .background-img {
-  width: 40%;  /* or specific width in px, % */
-  height: auto; /* maintains aspect ratio */
+  width: 100%;
+  height: 100%; /* 변경 */
   position: absolute;
   top: 0;
   left: 0;
@@ -55,7 +61,7 @@
 .main-left button {
   transform: skewX(-45deg);
   display: block;
-  width: 450px;
+  width: 300px;
   height: 30px;
   text-align: center;
   margin-bottom: 5.5px;
@@ -64,19 +70,30 @@
   background-color: lightgray;
   opacity: 0.8;
 }
+
 .main-left button:hover {
   opacity: 1;
   background-color: gray;
 }
+
 .main-left button p {
   transform: skewX(45deg);
 }
 
+.main-center {
+  flex: 4;
+  position: relative; /* for background image positioning */
+}
+
 .main-right {
   flex: 4;
+  position: relative; /* for background image positioning */
 }
 
 .buttons {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
