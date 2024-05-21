@@ -15,7 +15,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #24418E;
+  background-color: midnightblue;
   padding-top: 1%;
   padding-bottom: 1%;
   text-align: center;

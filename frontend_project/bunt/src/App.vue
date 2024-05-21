@@ -61,7 +61,6 @@ html, body {
 /* TheHeaderNav 스타일 조정 */
 TheHeaderNav {
   height: 50px; /* TheHeaderNav 높이 설정 */
-  background-color: white; /* 필요에 따라 배경색 추가 */
   z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 설정 */
   width: 100%;
   position: fixed; /* 고정 위치 설정 */
