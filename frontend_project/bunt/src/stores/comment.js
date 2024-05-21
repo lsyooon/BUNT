@@ -28,7 +28,7 @@ var replyService = (function() {
         var boardId = param.boardId;
         $.getJSON(`${REST_BOARD_API}/${boardId}`, function(data) {
             if (callback) {
-                callback(data.length, data); // Assuming data is the list of comments
+                callback(data.length, data);
             }
         }).fail(function(xhr, status, er) {
             if (error) {

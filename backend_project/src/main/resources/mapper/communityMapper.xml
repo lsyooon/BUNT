@@ -6,18 +6,29 @@
 
     <!-- 게시글 리스트 -->
     <select id="boardList" resultType="CommunityBoard" parameterType="searchCondition">
-        SELECT community_board_id, content, user_id, title, date_format(reg_date, '%Y-%M-%d') AS reg_date
-        FROM COMMUNITY_BOARD
+        SELECT
+        cb.community_board_id,
+        cb.content,
+        cb.user_id,
+        cb.title,
+        date_format(cb.reg_date, '%Y-%M-%d') AS reg_date,
+        COALESCE(bl.like_count, 0) AS like_count
+        FROM
+        COMMUNITY_BOARD cb
+        LEFT JOIN
+        (SELECT community_board_id, COUNT(*) AS like_count
+        FROM BOARD_LIKE_LIST
+        GROUP BY community_board_id) bl
+        ON cb.community_board_id = bl.community_board_id
         <where>
-            team_id = #{teamId}
-            <!-- 동적쿼리(검색 조건) -->
+            cb.team_id = #{teamId}
             <if test="key != 'none'">
                 AND ${key} LIKE concat('%', #{word}, '%')
             </if>
         </where>
-        <!-- 동적쿼리(정렬 조건) -->
-        ORDER BY community_board_id DESC
+        ORDER BY cb.community_board_id DESC
     </select>
+
 
     <!-- 게시글 상세보기 -->
     <select id="getDetail" resultType="CommunityBoard" parameterType="int">

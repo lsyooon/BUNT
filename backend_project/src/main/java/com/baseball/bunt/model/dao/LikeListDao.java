@@ -11,9 +11,7 @@ public interface LikeListDao {
 
     void removeLike(int boardId, String userId);
 
-    int find_like(int boardId, String userId);
-
-    int findLike(LikeList like);
+    int find_like(String userId, int boardId);
 
     void addLike(int boardId, String userId);
 

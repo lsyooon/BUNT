@@ -19,8 +19,7 @@
           <div class="d-flex align-items-center position-relative">
             <button class="mx-3 btn btn-light back" @click="goBack">목록</button>
             <div class="position-absolute start-50 translate-middle-x">
-              <button class="mx-3 btn btn-light like" @click="toggleLike"
-                      :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
+              <button class="mx-3 btn btn-light like" @click="handleLikeClick">
                 <img :src="likeImage()" style="width: 30px; height: 30px">
                 좋아요 <span v-if="likeCount !== 0">{{likeCount}}</span>
               </button>
@@ -73,9 +72,6 @@ const deleteBoard = () => {
         .then(() => {
           router.push({name: "community"});
         })
-        .catch(() => {
-          // Handle error if necessary
-        });
   }
 };
 
@@ -91,22 +87,29 @@ onMounted(() => {
 
 const boardId = route.params.id;
 const checkLiked = async () => {
-  const response = await axios.get(`http://localhost:8080/api/read/likeList/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
+  const response = await axios.get(`http://localhost:8080/api/board/like/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
   isLiked.value = response.data === 1;
-  likeCnt(); // 좋아요 여부 확인 후 좋아요 수 업데이트
+  await likeCnt();
 };
 
-// 좋아요 토글 함수
 const toggleLike = async () => {
-  const response = await axios.post(`http://localhost:8080/api/read/likeList/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
+  const response = await axios.post(`http://localhost:8080/api/board/like/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
   const like = response.data;
 
   isLiked.value = like === 1;
-  likeCnt(); // 좋아요 상태 변경 후 좋아요 수 업데이트
+  await likeCnt();
+};
+
+const handleLikeClick = () => {
+  if (loginUserName.value) {
+    toggleLike();
+  } else {
+    alert("로그인이 필요합니다.");
+  }
 };
 
 const likeCnt = async () => {
-  const response = await axios.get(`http://localhost:8080/api/read/likeList/cnt/${boardId}`);
+  const response = await axios.get(`http://localhost:8080/api/board/like/cnt/${boardId}`);
   likeCount.value = response.data;
 };
 
@@ -117,8 +120,6 @@ const likeImage = () => {
   return isLiked.value ? fullLikeImage : emptyLikeImage;
 };
 </script>
-
-
 
 <style scoped>
 

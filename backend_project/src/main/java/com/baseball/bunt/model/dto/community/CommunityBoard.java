@@ -20,4 +20,5 @@ public class CommunityBoard {
 	private String content;
 	private String regDate;
 	private String modDate;
+	private int likeCount;
 }

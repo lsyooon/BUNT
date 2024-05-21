@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user.js';
+import {ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {useUserStore} from '@/stores/user.js';
 import axios from 'axios';
 
 // 반응형 데이터 선언
@@ -21,15 +21,15 @@ onMounted(async () => {
         userInfo.value = store.user;
       } else {
         console.error('올바른 사용자 데이터를 받지 못했습니다.');
-        router.push({ name: 'home' });
+        router.push({name: 'home'});
       }
     } catch (error) {
       console.error('사용자 정보를 불러오는 중 오류가 발생했습니다.', error);
-      router.push({ name: 'home' });
+      router.push({name: 'home'});
     }
   } else {
     console.error('loginUser가 sessionStorage에 없습니다.');
-    router.push({ name: 'home' });
+    router.push({name: 'home'});
   }
 });
 
@@ -57,7 +57,7 @@ const deleteUser = async () => {
       await store.deleteUserById(userId);
       alert('회원 탈퇴가 성공적으로 처리되었습니다.');
       store.logout();
-      router.push({ name: 'home' });
+      router.push({name: 'home'});
     } catch (error) {
       console.error('회원 탈퇴 중 오류가 발생했습니다.', error);
       alert('회원 탈퇴 중 오류가 발생했습니다.');
@@ -116,8 +116,10 @@ const goBack = () => {
               <label for="modDate" class="form-label d-flex justify-content-start">수정 날짜</label>
               <input type="text" class="form-control" id="modDate" v-model="userInfo.modDate" disabled>
             </div>
-            <button type="submit" class="btn btn-primary">수정</button>
-            <button type="button" class="btn btn-danger" @click="deleteUser">회원 탈퇴</button>
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-primary">정보 수정</button>
+              <button type="button" class="btn btn-danger" @click="deleteUser">회원 탈퇴</button>
+            </div>
           </form>
         </div>
       </div>
@@ -140,6 +142,7 @@ const goBack = () => {
 .container {
   width: 100%;
   max-width: 600px; /* 중앙에 위치하게 하기 위해 최대 너비 설정 */
+  margin-bottom: 3%;
 }
 
 .card {
