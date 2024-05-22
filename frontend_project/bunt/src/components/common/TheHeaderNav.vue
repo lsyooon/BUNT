@@ -8,22 +8,19 @@ const router = useRouter()
 const route = useRoute()
 
 // 반응형 데이터 선언
-const loginUser = ref(null)
 const loginUserName = ref('')
 
 // 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
 onMounted(() => {
-  const storedUser = sessionStorage.getItem('loginUser')
+  const storedUser = sessionStorage.getItem('access-token').split('.')
   if (storedUser) {
-    loginUser.value = JSON.parse(storedUser)
-    loginUserName.value = loginUser.value.id // 사용자 이름 속성 사용
+    loginUserName.value = JSON.parse(atob(storedUser[1]))['id'];
   }
 })
 
 // 로그아웃 함수
 const logout = () => {
   store.logout()
-  loginUser.value = null
   loginUserName.value = ''
   router.push({ name: 'home' }) // 로그아웃 후 메인 페이지로 이동
 }
@@ -89,7 +86,7 @@ const linkToRule = computed(() => {
           </ul>
         </div>
         <ul class="navbar-nav align-items-center">
-          <li v-if="loginUser" class="nav-item dropdown">
+          <li v-if="loginUserName" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                aria-expanded="false" style="font-size: 18px">
               {{ loginUserName }}님 환영합니다

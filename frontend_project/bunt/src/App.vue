@@ -55,7 +55,6 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
   overflow: auto; /* 전체 페이지에서 스크롤을 가능하게 설정 */
 }
 
@@ -70,7 +69,6 @@ TheHeaderNav {
 
 /* main 영역의 스타일 조정 */
 main {
-  width: 100%;
   flex: 1;
 }
 
@@ -87,7 +85,6 @@ footer {
 
 /* 추가 스타일 */
 #app {
-  margin: 0;
   display: flex;
   flex-direction: column;
   height: 100vh; /* 전체 높이를 100vh로 설정 */
