@@ -12,17 +12,17 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <RouterLink :to="linkToNews" class="nav-link custom-nav-link">
+              <RouterLink :to="linkToNews" class="nav-link custom-nav-link custom-font">
                 NEWS
               </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">
+              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link custom-font">
                 COMMUNITY
               </RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToRule" class="nav-link custom-nav-link">
+              <RouterLink :to="linkToRule" class="nav-link custom-nav-link custom-font">
                 RULES
               </RouterLink>
             </li>
@@ -133,6 +133,11 @@ const linkToRule = computed(() => {
 
 <style scoped>
 /* 모든 요소의 기본 여백과 패딩을 제거 */
+@font-face {
+  font-family: 'KBODiaGothic';
+  src: url('@/assets/fonts/KBO Dia Gothic_bold.ttf') format('truetype');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -163,8 +168,12 @@ html, body {
   margin-left: 120px;
   margin-right: 120px;
   color: white !important;
-  font-size: 30px; /* 글자 크기 조정 */
+  font-size: 24px; /* 글자 크기 조정 */
   font-weight: bold; /* 글자 굵게 */
+}
+
+.custom-font {
+  font-family: 'KBODiaGothic', sans-serif !important;
 }
 
 .custom-nav-link:hover {

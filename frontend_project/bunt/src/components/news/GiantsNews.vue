@@ -1,6 +1,6 @@
 <template>
   <div id="home" class="d-flex align-items-center justify-content-center min-vh-100">
-    <div class="container mt-5">
+    <div class="container mt-5 animate__animated animate__fadeInDown">
       <h1 class="mb-4">뉴스 목록</h1>
       <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
       <div v-else>
@@ -57,6 +57,8 @@ const totalPages = computed(() => newsStore.totalPages);
 </script>
 
 <style scoped>
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+
 #home {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
@@ -64,6 +66,10 @@ const totalPages = computed(() => newsStore.totalPages);
 
 .container {
   max-width: 800px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
 }
 
 .list-group-item {
@@ -78,7 +84,7 @@ const totalPages = computed(() => newsStore.totalPages);
 }
 
 .text-decoration-none {
-  color: #007bff; /* 링크 색상 */
+  color: midnightblue; /* 링크 색상 */
 }
 
 .text-decoration-none:hover {
@@ -100,5 +106,32 @@ const totalPages = computed(() => newsStore.totalPages);
 button:disabled {
   cursor: not-allowed;
   opacity: 0.65;
+  background-color: white;
+  border: white;
+  color: white;
+}
+
+.btn-outline-primary, .btn-primary {
+  margin: 0 5px;
+  border-color: midnightblue;
+}
+
+.btn-outline-primary {
+  color: midnightblue; /* 텍스트 색상 변경 */
+}
+
+.btn-outline-primary:hover {
+  background-color: midnightblue;
+  color: white;
+}
+
+.btn-primary {
+  background-color: midnightblue;
+  border-color: midnightblue;
+}
+
+.btn-primary:hover {
+  background-color: steelblue;
+  border-color: steelblue;
 }
 </style>
