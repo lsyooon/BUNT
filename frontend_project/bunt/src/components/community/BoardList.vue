@@ -7,7 +7,6 @@ import router from "@/router/index";
 import axios from "axios";
 
 const store = useCommunityStore();
-
 const route = useRoute();
 
 onMounted(async () => {
@@ -27,19 +26,25 @@ const clickPage = function(page) {
 
 const currentPageBoardList = computed(() => {
   return store.boardList.slice(
-      (currentPage.value - 1) * perPage,
-      currentPage.value * perPage
+    (currentPage.value - 1) * perPage,
+    currentPage.value * perPage
   );
 });
 
 const loginUser = ref(null);
 const loginUserName = ref('');
-onMounted(() => {
-  const storedUser = sessionStorage.getItem('loginUser');
-  if (storedUser) {
-    loginUser.value = JSON.parse(storedUser);
-    loginUserName.value = loginUser.value.id;
+
+const loadUserFromToken = () => {
+  const token = sessionStorage.getItem('access-token');
+  if (token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    loginUser.value = payload;
+    loginUserName.value = payload.id;
   }
+};
+
+onMounted(() => {
+  loadUserFromToken();
 });
 
 const linkToBoardDetail = (communityBoardId) => {
@@ -50,7 +55,6 @@ const linkToBoardCreate = () => {
   const teamId = route.params.teamId;
   router.push(`/${teamId}/community/create`);
 };
-
 </script>
 
 <template>
@@ -59,7 +63,7 @@ const linkToBoardCreate = () => {
       <div class="button-container" :style="{ visibility: loginUser === null ? 'hidden' : 'visible' }">
         <button class="btn btn-outline-primary" @click="linkToBoardCreate">글쓰기</button>
       </div>
-      <BoardSearchInput/>
+      <BoardSearchInput />
     </div>
     <table class="table table-hover text-center">
       <thead>
@@ -87,32 +91,32 @@ const linkToBoardCreate = () => {
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
           <a
-              class="page-link"
-              @click.prevent="currentPage--"
-              :class="{ disabled: currentPage <= 1 }"
-              href="#"
+            class="page-link"
+            @click.prevent="currentPage--"
+            :class="{ disabled: currentPage <= 1 }"
+            href="#"
           >&lt;</a>
         </li>
         <li
-            class="page-item"
-            :class="{ active: currentPage === page }"
-            v-for="page in pageCount"
-            :key="page"
+          class="page-item"
+          :class="{ active: currentPage === page }"
+          v-for="page in pageCount"
+          :key="page"
         >
           <a class="page-link" href="#" @click.prevent="clickPage(page)">{{ page }}</a>
         </li>
         <li class="page-item">
           <a
-              class="page-link"
-              @click.prevent="currentPage++"
-              :class="{ disabled: currentPage >= pageCount }"
-              href="#"
+            class="page-link"
+            @click.prevent="currentPage++"
+            :class="{ disabled: currentPage >= pageCount }"
+            href="#"
           >&gt;</a>
         </li>
       </ul>
     </nav>
   </div>
-  <RouterView/>
+  <RouterView />
 </template>
 
 <style scoped>
@@ -121,7 +125,7 @@ table, tr, td, th {
 }
 
 .container {
-  padding-top: 3%;
+  padding-top: 5%;
 }
 
 .bar {

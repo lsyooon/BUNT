@@ -47,5 +47,6 @@ const goBack = () => {
   max-width: 60%;
   width: 100%;
   margin-top: 1%;
+  padding-top: 5%;
 }
 </style>

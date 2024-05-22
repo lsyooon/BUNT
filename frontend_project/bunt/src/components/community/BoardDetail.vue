@@ -68,32 +68,33 @@ const moveUpdate = () => {
 const deleteBoard = () => {
   if (confirm("게시글을 삭제하시겠습니까?")) {
     axios
-        .delete(`http://localhost:8080/api/board/${route.params.teamId}/${route.params.id}`)
-        .then(() => {
-          router.push({name: "community"});
-        })
+      .delete(`http://localhost:8080/api/board/${route.params.teamId}/${route.params.id}`)
+      .then(() => {
+        router.push({name: "community"});
+      })
   }
 };
 
 const loginUser = ref(null);
 const loginUserName = ref("");
 onMounted(() => {
-  const storedUser = sessionStorage.getItem("loginUser");
-  if (storedUser) {
-    loginUser.value = JSON.parse(storedUser);
-    loginUserName.value = loginUser.value.id;
+  const token = sessionStorage.getItem("access-token");
+  if (token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    loginUser.value = payload;
+    loginUserName.value = payload.id;
   }
 });
 
 const boardId = route.params.id;
 const checkLiked = async () => {
-  const response = await axios.get(`http://localhost:8080/api/board/like/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
+  const response = await axios.get(`http://localhost:8080/api/board/like/${loginUserName.value}/${boardId}`);
   isLiked.value = response.data === 1;
   await likeCnt();
 };
 
 const toggleLike = async () => {
-  const response = await axios.post(`http://localhost:8080/api/board/like/${JSON.parse(sessionStorage.getItem("loginUser"))['id']}/${boardId}`);
+  const response = await axios.post(`http://localhost:8080/api/board/like/${loginUserName.value}/${boardId}`);
   const like = response.data;
 
   isLiked.value = like === 1;
@@ -122,9 +123,7 @@ const likeImage = () => {
 </script>
 
 <style scoped>
-
 .container {
-  padding-top: 3%;
+  padding-top: 5%;
 }
-
 </style>
