@@ -31,7 +31,7 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     axios.get(`${REST_USER_API}/logout`)
       .then(() => {
-        sessionStorage.removeItem('loginUser');
+        sessionStorage.removeItem('access-token');
         router.push('/'); // 로그아웃 후 메인 페이지로 이동
       })
       .catch((err) => {
