@@ -200,11 +200,6 @@ html, body {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.menu-icon {
-  border: none; /* 테두리 제거 */
-  filter: brightness(0) invert(1); /* 흰색 필터 적용 */
-  height: 70px; /* 높이 설정 */
-}
 
 .dropdown-menu {
   background-color: white; /* 드롭다운 메뉴 배경색 */
