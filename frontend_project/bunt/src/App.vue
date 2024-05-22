@@ -43,19 +43,13 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* 모든 요소의 기본 여백과 패딩을 제거 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 /* body와 html 요소의 여백과 패딩 제거 */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: auto; /* 전체 페이지에서 스크롤을 가능하게 설정 */
+  width: 100%;
+  overflow: hidden; /* 전체 페이지에서 스크롤을 가능하게 설정 */
 }
 
 /* TheHeaderNav 스타일 조정 */
@@ -70,14 +64,15 @@ TheHeaderNav {
 /* main 영역의 스타일 조정 */
 main {
   flex: 1;
-  padding-top: 50px; /* TheHeaderNav 높이만큼 패딩 추가 */
+  width: 100%; /* 전체 너비를 100%로 설정 */
+  overflow-y: auto; /* 세로 스크롤을 가능하게 설정 */
 }
 
 /* Footer 스타일 조정 */
 footer {
   position: fixed; /* 고정 위치 설정 */
   bottom: 0;
-  right: 0; /* 오른쪽 하단에 고정 */
+  left: 0; /* 왼쪽 하단에 고정 */
   width: 100%;
   height: 100px; /* Footer 높이 설정 */
   background-color: white; /* 필요에 따라 배경색 추가 */
@@ -89,5 +84,7 @@ footer {
   display: flex;
   flex-direction: column;
   height: 100vh; /* 전체 높이를 100vh로 설정 */
+  width: 100%; /* 전체 너비를 100vw로 설정 */
+  overflow: hidden; /* 내부에서 스크롤이 발생하지 않도록 설정 */
 }
 </style>

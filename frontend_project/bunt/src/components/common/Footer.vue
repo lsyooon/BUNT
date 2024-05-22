@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container"><p class="text-center text-white" style="font-size: 1em;">
-      &copy; 2024 SSAFY. 파이띵</p></div>
+      &copy; 2024 TEAM BUNT COOPERATION</p></div>
   </footer>
 </template>
 

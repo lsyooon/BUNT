@@ -1,10 +1,9 @@
 package com.baseball.bunt.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.baseball.bunt.model.dto.community.LikeList;
-import com.baseball.bunt.model.service.LikeListService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baseball.bunt.model.dto.common.User;
 import com.baseball.bunt.model.service.UserService;
+import com.baseball.bunt.util.JwtUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,17 +35,43 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+	private final JwtUtil jwtUtil;
+
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 
 	@Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
-		User loginUser = userService.login(user.getId(), user.getPassword());
-		if (loginUser != null) {
-			session.setAttribute("loginUser", loginUser);
-			return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
+		//service -> dao -> db
+		HttpStatus status = null;
+		Map<String, Object> result = new HashMap<>();
+		System.out.println(user);
+
+		//검증을 끝냄
+		if (user.getId() != null) {
+			//토큰 만들어서 줘야함
+			result.put("message", SUCCESS);
+			result.put("access-token", jwtUtil.createToken(user.getId()));
+			status = HttpStatus.ACCEPTED;
+		} else {
+			result.put("message", FAIL);
+			status = HttpStatus.NO_CONTENT;
 		}
-		return new ResponseEntity<>("로그인 실패", HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<>(result, status);
 	}
+
+	// @Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
+	// @PostMapping("/login")
+	// public ResponseEntity<String> login(@RequestBody User user, HttpSession session) {
+	// 	User loginUser = userService.login(user.getId(), user.getPassword());
+	// 	if (loginUser != null) {
+	// 		session.setAttribute("loginUser", loginUser);
+	// 		return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+	// 	}
+	// 	return new ResponseEntity<>("로그인 실패", HttpStatus.NOT_FOUND);
+	// }
 
 	@Operation(summary = "로그아웃")
 	@GetMapping("/logout")

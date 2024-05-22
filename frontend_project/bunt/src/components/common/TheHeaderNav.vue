@@ -1,5 +1,70 @@
+<template>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand" href="/">
+          <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="200px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <RouterLink :to="linkToNews" class="nav-link custom-nav-link">
+                NEWS
+              </RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">
+                COMMUNITY
+              </RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink :to="linkToRule" class="nav-link custom-nav-link">
+                RULES
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+        <ul class="navbar-nav align-items-center">
+          <li v-if="loginUserName" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false" style="font-size: 18px">
+              {{ loginUserName }}님 환영합니다
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" @click="goMyPage">
+                마이페이지
+              </a></li>
+              <li><a class="dropdown-item" @click="logout">
+                로그아웃
+              </a></li>
+            </ul>
+          </li>
+          <li v-else class="nav-item">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false" style="font-size: 18px">
+              로그인 후 이용해주세요
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" @click="goUserLogin">
+                로그인
+              </a></li>
+              <li><a class="dropdown-item" @click="goUserJoin">
+                회원가입
+              </a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+</template>
+
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watchEffect } from 'vue'
 import { useUserStore } from '@/stores/user.js'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -8,22 +73,30 @@ const router = useRouter()
 const route = useRoute()
 
 // 반응형 데이터 선언
-const loginUser = ref(null)
 const loginUserName = ref('')
 
 // 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
-onMounted(() => {
-  const storedUser = sessionStorage.getItem('loginUser')
-  if (storedUser) {
-    loginUser.value = JSON.parse(storedUser)
-    loginUserName.value = loginUser.value.id // 사용자 이름 속성 사용
+const loadUserFromSession = () => {
+  const token = sessionStorage.getItem('access-token')
+  if (token) {
+    const storedUser = token.split('.')
+    if (storedUser.length > 1) {
+      loginUserName.value = JSON.parse(atob(storedUser[1]))['id']
+    }
   }
+}
+
+onMounted(() => {
+  loadUserFromSession()
+})
+
+watchEffect(() => {
+  loadUserFromSession()
 })
 
 // 로그아웃 함수
 const logout = () => {
   store.logout()
-  loginUser.value = null
   loginUserName.value = ''
   router.push({ name: 'home' }) // 로그아웃 후 메인 페이지로 이동
 }
@@ -57,71 +130,6 @@ const linkToRule = computed(() => {
   return `/${route.params.teamId}/rule`
 })
 </script>
-
-<template>
-  <header class="header">
-    <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
-      <div class="container-fluid d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="/">
-          <img src="../../assets/image_logo/KBO_logo.png" alt="Logo" width="200px">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <RouterLink :to="linkToNews" class="nav-link custom-nav-link">
-                NEWS
-              </RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link">
-                COMMUNITY
-              </RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink :to="linkToRule" class="nav-link custom-nav-link">
-                RULES
-              </RouterLink>
-            </li>
-          </ul>
-        </div>
-        <ul class="navbar-nav align-items-center">
-          <li v-if="loginUser" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false" style="font-size: 18px">
-              {{ loginUserName }}님 환영합니다
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" @click="goMyPage">
-                마이페이지
-              </a></li>
-              <li><a class="dropdown-item" @click="logout">
-                로그아웃
-              </a></li>
-            </ul>
-          </li>
-          <li v-else class="nav-item">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false" style="font-size: 18px">
-              로그인 후 이용해주세요
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" @click="goUserLogin">
-                로그인
-              </a></li>
-              <li><a class="dropdown-item" @click="goUserJoin">
-                회원가입
-              </a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-</template>
 
 <style scoped>
 /* 모든 요소의 기본 여백과 패딩을 제거 */
@@ -198,12 +206,6 @@ html, body {
 
 .navbar-nav .btn-outline-light:hover {
   background-color: rgba(255, 255, 255, 0.2);
-}
-
-.menu-icon {
-  border: none; /* 테두리 제거 */
-  filter: brightness(0) invert(1); /* 흰색 필터 적용 */
-  height: 70px; /* 높이 설정 */
 }
 
 .dropdown-menu {
