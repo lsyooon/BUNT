@@ -17,6 +17,7 @@ import LionsNews from '@/components/news/LionsNews.vue';
 import MainView from '@/views/MainView.vue';
 import GiantsNewsDetail from '@/components/news/GiantsNewsDetail.vue';
 import LionsNewsDetail from '@/components/news/LionsNewsDetail.vue';
+import NumberBaseball from "@/components/game/NumberBaseball.vue";
 
 const DynamicComponentWrapper = {
   props: ['component'],
@@ -132,6 +133,11 @@ const routes = [
     name: 'mainView',
     component: MainView,
     meta: { hideHeader: true }
+  },
+  {
+    path: '/:teamId/num-baseball',
+    name: 'numberBaseball',
+    component: NumberBaseball
   }
 ];
 
