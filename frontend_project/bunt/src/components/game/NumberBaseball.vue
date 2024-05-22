@@ -239,7 +239,7 @@ onMounted(() => {
 <style>
 #cont {
   text-align: center;
-  margin-top: 4%;
+  padding-top: 5%;
 }
 
 input {
