@@ -1,60 +1,3 @@
-<script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useUserStore } from '@/stores/user.js'
-import { useRoute, useRouter } from 'vue-router'
-
-const store = useUserStore()
-const router = useRouter()
-const route = useRoute()
-
-// 반응형 데이터 선언
-const loginUserName = ref('')
-
-// 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
-onMounted(() => {
-  const storedUser = sessionStorage.getItem('access-token').split('.')
-  if (storedUser) {
-    loginUserName.value = JSON.parse(atob(storedUser[1]))['id'];
-  }
-})
-
-// 로그아웃 함수
-const logout = () => {
-  store.logout()
-  loginUserName.value = ''
-  router.push({ name: 'home' }) // 로그아웃 후 메인 페이지로 이동
-}
-
-const goUserLogin = () => {
-  router.push({ name: 'login' }) // 로그인 페이지로 이동
-}
-
-const goUserJoin = () => {
-  router.push({ name: 'join' }) // 회원가입 페이지로 이동
-}
-
-const goMyPage = () => {
-  console.log(loginUserName.value)
-  if (loginUserName.value) {
-    router.push(`/${route.params.teamId}/read/${loginUserName.value}`)
-  } else {
-    console.error('loginUserName이 설정되지 않았습니다.')
-  }
-}
-
-const linkToNews = computed(() => {
-  return `/${route.params.teamId}/news`
-})
-
-const linkToCommunity = computed(() => {
-  return `/${route.params.teamId}/community`
-})
-
-const linkToRule = computed(() => {
-  return `/${route.params.teamId}/rule`
-})
-</script>
-
 <template>
   <header class="header">
     <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
@@ -119,6 +62,74 @@ const linkToRule = computed(() => {
     </nav>
   </header>
 </template>
+
+<script setup>
+import { ref, onMounted, computed, watchEffect } from 'vue'
+import { useUserStore } from '@/stores/user.js'
+import { useRoute, useRouter } from 'vue-router'
+
+const store = useUserStore()
+const router = useRouter()
+const route = useRoute()
+
+// 반응형 데이터 선언
+const loginUserName = ref('')
+
+// 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
+const loadUserFromSession = () => {
+  const token = sessionStorage.getItem('access-token')
+  if (token) {
+    const storedUser = token.split('.')
+    if (storedUser.length > 1) {
+      loginUserName.value = JSON.parse(atob(storedUser[1]))['id']
+    }
+  }
+}
+
+onMounted(() => {
+  loadUserFromSession()
+})
+
+watchEffect(() => {
+  loadUserFromSession()
+})
+
+// 로그아웃 함수
+const logout = () => {
+  store.logout()
+  loginUserName.value = ''
+  router.push({ name: 'home' }) // 로그아웃 후 메인 페이지로 이동
+}
+
+const goUserLogin = () => {
+  router.push({ name: 'login' }) // 로그인 페이지로 이동
+}
+
+const goUserJoin = () => {
+  router.push({ name: 'join' }) // 회원가입 페이지로 이동
+}
+
+const goMyPage = () => {
+  console.log(loginUserName.value)
+  if (loginUserName.value) {
+    router.push(`/${route.params.teamId}/read/${loginUserName.value}`)
+  } else {
+    console.error('loginUserName이 설정되지 않았습니다.')
+  }
+}
+
+const linkToNews = computed(() => {
+  return `/${route.params.teamId}/news`
+})
+
+const linkToCommunity = computed(() => {
+  return `/${route.params.teamId}/community`
+})
+
+const linkToRule = computed(() => {
+  return `/${route.params.teamId}/rule`
+})
+</script>
 
 <style scoped>
 /* 모든 요소의 기본 여백과 패딩을 제거 */
@@ -196,7 +207,6 @@ html, body {
 .navbar-nav .btn-outline-light:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
-
 
 .dropdown-menu {
   background-color: white; /* 드롭다운 메뉴 배경색 */

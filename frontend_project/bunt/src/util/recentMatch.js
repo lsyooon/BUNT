@@ -6,13 +6,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const fetchData = async (gameMonth) => {
+const fetchData = async (gameId) => {
   const data = new URLSearchParams({
     'MIME Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     'leId': 1,
-    'srIdList': '0,1,3,4,5,7,9,6',
+    'srId': 0,
     'seasonId': 2024,
-    'gameMonth': gameMonth
+    'gameId': gameId
   });
 
   const urlBaseSc = 'https://www.koreabaseball.com/ws/Schedule.asmx/GetScoreBoardScroll';
@@ -118,6 +118,6 @@ const fetchData = async (gameMonth) => {
   }
 }
 
-// 외부에서 gameMonth를 받아서 fetchData 함수 호출
-const gameMonth = '05'; // 예제 gameMonth
-fetchData(gameMonth);
+// 외부에서 gameId를 받아서 fetchData 함수 호출
+const gameId = '20240501WOLT0'; // 예제 gameId
+fetchData(gameId);
