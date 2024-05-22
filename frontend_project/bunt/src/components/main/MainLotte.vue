@@ -3,17 +3,18 @@
     <div class="row">
       <div class="main-top">
         <div class="main-left">
-          <img src="@/assets/image_logo/LOTTE_logo.svg" class="background-img">
-          <div class="buttons">
-            <button v-for="player in players" :key="player.playerId" @click="searchPlayer(player)">
-              <p>{{ player.position }}　　　{{ player.name }}　　　{{ player.backNumber }}</p>
-            </button>
+          <div class="button-columns">
+            <div class="button-column" v-for="(column, columnIndex) in buttonColumns" :key="columnIndex">
+              <button v-for="player in column" :key="player.playerId" @click="searchPlayer(player)" style="width: 250px">
+                <p>{{ player.position }}　　　{{ player.name }}　　　{{ player.backNumber }}</p>
+              </button>
+            </div>
           </div>
         </div>
         <div class="main-center">
+          <VideoDetail v-if="youtubeStore.selectedVideo" :video="youtubeStore.selectedVideo" />
         </div>
         <div class="main-right">
-          <VideoDetail v-if="youtubeStore.selectedVideo" :video="youtubeStore.selectedVideo" />
         </div>
       </div>
       <team-rank></team-rank>
@@ -23,15 +24,16 @@
 
 <style scoped>
 .cont {
+  padding-top: 50px;
   margin-top: 30px;
 }
 
 .row {
   margin: 0;
   background-image: url('@/assets/image_background/LOTTE_BG7.jpeg');
-  background-size: cover; /* 추가 */
-  background-position: center; /* 추가 */
-  background-repeat: no-repeat; /* 추가 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .main-top {
@@ -48,14 +50,14 @@
   padding-left: 1%;
 }
 
-.background-img {
-  width: 100%;
-  height: 100%; /* 변경 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  opacity: 0.5; /* 필요에 따라 투명도 조절 */
+.button-columns {
+  display: flex;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
 }
 
 .main-left button {
@@ -64,7 +66,7 @@
   width: 300px;
   height: 30px;
   text-align: center;
-  margin-bottom: 5.5px;
+  margin-bottom: 6px;
   line-height: 40px;
   border: none;
   background-color: lightgray;
@@ -82,26 +84,28 @@
 
 .main-center {
   flex: 4;
-  position: relative; /* for background image positioning */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-right {
   flex: 4;
-  position: relative; /* for background image positioning */
+  position: relative;
 }
 
-.buttons {
+.button-column {
   margin-top: 5%;
   margin-bottom: 5%;
   flex: 2;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 </style>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { usePlayerStore } from '@/stores/player.js';
 import { useYoutubeStore } from '@/stores/youtube.js';
 import TeamRank from '@/components/main/teamRank.vue';
@@ -138,6 +142,15 @@ const searchPlayer = (player) => {
   search();
   playerStore.findPlayer(player);
 };
+
+// players를 10개 단위로 나누어 buttonColumns로 설정
+const buttonColumns = computed(() => {
+  const columns = [];
+  for (let i = 0; i < playerStore.players.length; i += 10) {
+    columns.push(playerStore.players.slice(i, i + 10));
+  }
+  return columns;
+});
 
 const { players } = playerStore;
 </script>

@@ -70,7 +70,6 @@ TheHeaderNav {
 /* main 영역의 스타일 조정 */
 main {
   flex: 1;
-  padding-top: 50px; /* TheHeaderNav 높이만큼 패딩 추가 */
 }
 
 /* Footer 스타일 조정 */

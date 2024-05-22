@@ -6,14 +6,21 @@ import router from '@/router';
 const REST_USER_API = 'http://localhost:8080/api';
 
 export const useUserStore = defineStore('user', () => {
-  const user = ref(null);
+  const loginUser = ref(null)
   const isDuplicateId = ref(false);
 
-  const login = (user) => {
-    axios.post(`${REST_USER_API}/login`, user)
-      .then(() => {
-        console.log(user);
-        sessionStorage.setItem('loginUser', JSON.stringify(user));
+  const login = function(id, password)  {
+    axios.post(`${REST_USER_API}/login`, {
+      id: id,
+      password: password
+    })
+      .then((res) => {
+        sessionStorage.setItem('access-token', res.data["access-token"])
+
+        const token = res.data['access-token'].split('.');
+        let id = JSON.parse(atob(token[1]))['id'];
+
+        loginUser.value = id;
         router.push('/'); // 이전 경로로 이동
       })
       .catch((err) => {
@@ -78,5 +85,5 @@ export const useUserStore = defineStore('user', () => {
   };
 
 
-  return { login, logout, join, getUserById, modifyUser, deleteUserById, user, isDuplicateId };
+  return { login, logout, join, getUserById, modifyUser, deleteUserById, loginUser, isDuplicateId };
 });

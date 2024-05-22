@@ -1,19 +1,15 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user.js";
-import { useRoute } from 'vue-router'
 
 const store = useUserStore();
-const route = useRoute();
-
-const user = ref({
-  id: '',
-  password: ''
-})
+const id = ref('')
+const password = ref('')
 
 const login = function() {
-  store.login(user.value);
+  store.login(id.value, password.value);
 }
+
 </script>
 
 <template>
@@ -28,11 +24,11 @@ const login = function() {
               <form>
                 <div class="mb-3">
                   <label for="id" class="form-label">아이디</label>
-                  <input type="text" name="id" v-model="user.id" class="form-control" placeholder="아이디를 입력하세요.">
+                  <input type="text" name="id" v-model.trim="id" class="form-control" placeholder="아이디를 입력하세요.">
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">비밀번호</label>
-                  <input type="password" name="password" v-model="user.password" class="form-control" placeholder="비밀번호를 입력하세요.">
+                  <input type="password" name="password" v-model.trim="password" class="form-control" placeholder="비밀번호를 입력하세요.">
                 </div>
                 <div class="d-grid">
                   <button @click.prevent="login" class="btn btn-primary">로그인</button>
@@ -49,7 +45,6 @@ const login = function() {
 <style scoped>
 .background-container {
   position: relative; /* 자식 요소의 위치를 기준으로 하도록 설정 */
-  background-image: url('@/assets/images/login_background2.jpg'); /* 배경 이미지 경로 */
   background-size: cover; /* 화면에 꽉 차도록 이미지 크기 조정 */
   background-position: center; /* 이미지를 화면 중앙에 위치시킵니다 */
   background-repeat: no-repeat; /* 이미지 반복 방지 */
