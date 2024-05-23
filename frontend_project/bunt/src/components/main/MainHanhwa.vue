@@ -1,10 +1,8 @@
-MainSamsung.vue<!-- MainSamsung.vue -->
 <template>
   <div class="cont">
     <div class="row">
-      <div class="main-top">
-        <div class="main-left">
-          <img src="@/assets/image_logo/SAMSUNG_logo.svg" class="background-img">
+      <div class="main-left">
+        <div class="top-section">
           <div class="button-columns">
             <div class="button-column" v-for="(column, columnIndex) in buttonColumns" :key="columnIndex">
               <button v-for="player in column" :key="player.playerId" @click="searchPlayer(player)" style="width: 250px">
@@ -12,14 +10,19 @@ MainSamsung.vue<!-- MainSamsung.vue -->
               </button>
             </div>
           </div>
+          <div class="video">
+            <VideoDetail v-if="youtubeStore.selectedVideo" :video="youtubeStore.selectedVideo" />
+          </div>
         </div>
-        <div class="main-center">
-        </div>
-        <div class="main-right">
-          <VideoDetail v-if="youtubeStore.selectedVideo" :video="youtubeStore.selectedVideo" />
+        <div class="bottom-section">
+          <team-rank></team-rank>
         </div>
       </div>
-      <team-rank></team-rank>
+      <div class="main-right">
+        <iframe class="chat"
+                :src="iframeSrc"
+                frameborder='no' scrolling='no' marginwidth='0' marginheight='0' width='100%' height='100%'></iframe>
+      </div>
     </div>
   </div>
 </template>
@@ -31,29 +34,31 @@ MainSamsung.vue<!-- MainSamsung.vue -->
 }
 
 .row {
-  margin: 0;
-  background-image: url('@/assets/image_background/SAMSUNG_BG.jpeg');
+  padding-top: 3%;
+  display: flex;
+  width: 100%;
+  background-image: url('@/assets/image_background/HH_BG.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.main-top {
-  display: flex;
-  margin-bottom: 0.5%;
-}
-
 .main-left {
-  flex: 4;
-  position: relative;
+  flex: 2;
   display: flex;
   flex-direction: column;
   padding-right: 3%;
   padding-left: 1%;
 }
 
+.top-section {
+  display: flex;
+}
+
 .button-columns {
   display: flex;
+  flex: 1;
+  margin-right: 20px;
 }
 
 .button-column {
@@ -62,14 +67,19 @@ MainSamsung.vue<!-- MainSamsung.vue -->
   margin-right: 10px;
 }
 
+.video {
+  flex: 2;
+  padding-top: 1%;
+}
+
 .main-left button {
   transform: skewX(-45deg);
   display: block;
-  width: 300px;
+  width: 250px;
   height: 30px;
   text-align: center;
   margin-bottom: 6px;
-  line-height: 40px;
+  line-height: 30px;
   border: none;
   background-color: lightgray;
   opacity: 0.8;
@@ -84,85 +94,75 @@ MainSamsung.vue<!-- MainSamsung.vue -->
   transform: skewX(45deg);
 }
 
-.background-img {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  opacity: 0.5;
-}
-
-.main-center {
-  flex: 4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.bottom-section {
+  margin-top: 20px;
 }
 
 .main-right {
-  flex: 4;
-  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
-.button-column {
-  margin-top: 5%;
-  margin-bottom: 5%;
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.chat {
+  margin-right: 1%;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 </style>
 
-<script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue';
-import { usePlayerStore } from '@/stores/player.js';
-import { useYoutubeStore } from '@/stores/youtube.js';
-import TeamRank from '@/components/main/teamRank.vue';
-import VideoDetail from '@/components/main/YoutubeDetail.vue';
+<script setup lang="js">
+import { ref, onMounted, watch, computed } from 'vue'
+import { usePlayerStore } from '@/stores/player.js'
+import { useYoutubeStore } from '@/stores/youtube.js'
+import TeamRank from '@/components/main/teamRank.vue'
+import VideoDetail from '@/components/main/YoutubeDetail.vue'
 
-const playerStore = usePlayerStore();
-const youtubeStore = useYoutubeStore();
-const keyword = ref('');
+const playerStore = usePlayerStore()
+const youtubeStore = useYoutubeStore()
+const keyword = ref('')
+
+const iframeSrc = `https://www.vchatcloud.com/chat-demo/iframe/iframe_pc/v4/index.html?channelKey=${import.meta.env.VITE_VCHAT_API_KEY}`
 
 const search = () => {
-  youtubeStore.youtubeSearch(keyword.value);
-};
+  youtubeStore.youtubeSearch(keyword.value)
+}
 
 // 페이지 처음 들어왔을 때
 onMounted(() => {
   // 초기 검색어 설정
-  keyword.value = '삼성라이온즈 치고 달려라 응원가';
+  keyword.value = '한화 이글스 구단 응원가'
   // 초기 검색 실행
-  search();
+  search()
   // 팀 ID를 사용하여 선수 목록 로드
-  const teamId = 2; // 예시로 팀 ID 2 사용
+  const teamId = 5 // 예시로 팀 ID 1 사용
   playerStore.findPlayersByTeamId(teamId).then(() => {
-    console.log('플레이어 목록 로드 완료:', playerStore.players);
-  });
-});
+    console.log('플레이어 목록 로드 완료:', playerStore.players)
+  })
+})
 
 // players 데이터가 변경될 때 콘솔 로그 추가
 watch(() => playerStore.players, (newPlayers) => {
-  console.log('플레이어 데이터 변경:', newPlayers);
-});
+  console.log('플레이어 데이터 변경:', newPlayers)
+})
 
 const searchPlayer = (player) => {
-  keyword.value = `삼성라이온즈 ${player.name} 응원가`;
-  search();
-  playerStore.findPlayer(player);
-};
+  keyword.value = `한화이글스 ${player.name} 응원가`
+  search()
+  playerStore.findPlayer(player)
+}
 
 // players를 10개 단위로 나누어 buttonColumns로 설정
 const buttonColumns = computed(() => {
-  const columns = [];
+  const columns = []
   for (let i = 0; i < playerStore.players.length; i += 10) {
-    columns.push(playerStore.players.slice(i, i + 10));
+    columns.push(playerStore.players.slice(i, i + 10))
   }
-  return columns;
-});
+  return columns
+})
 
-const { players } = playerStore;
+const { players } = playerStore
 </script>

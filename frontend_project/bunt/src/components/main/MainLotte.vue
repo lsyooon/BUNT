@@ -37,7 +37,7 @@
   padding-top: 3%;
   display: flex;
   width: 100%;
-  background-image: url('@/assets/image_background/LOTTE_BG7.jpeg');
+  background-image: url('@/assets/image_background/LT_BG.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -114,7 +114,7 @@
 }
 </style>
 
-<script setup lang="ts">
+<script setup lang="js">
 import { ref, onMounted, watch, computed } from 'vue'
 import { usePlayerStore } from '@/stores/player.js'
 import { useYoutubeStore } from '@/stores/youtube.js'
