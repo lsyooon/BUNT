@@ -18,6 +18,9 @@ import MainView from '@/views/MainView.vue';
 import GiantsNewsDetail from '@/components/news/GiantsNewsDetail.vue';
 import LionsNewsDetail from '@/components/news/LionsNewsDetail.vue';
 import NumberBaseball from "@/components/game/NumberBaseball.vue";
+import MainKia from '@/components/main/MainKia.vue'
+import MainDoosan from '@/components/main/MainDoosan.vue'
+import MainHanhwa from '@/components/main/MainHanhwa.vue'
 
 const DynamicComponentWrapper = {
   props: ['component'],
@@ -121,6 +124,12 @@ const routes = [
         to.meta.component = MainLotte;
       } else if (to.params.teamId === '2') {
         to.meta.component = MainSamsung;
+      } else if (to.params.teamId === '3') {
+        to.meta.component = MainKia;
+      } else if (to.params.teamId === '4') {
+        to.meta.component = MainDoosan;
+      } else if (to.params.teamId === '5') {
+        to.meta.component = MainHanhwa;
       } else {
         return next({ name: 'home' });
       }

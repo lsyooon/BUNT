@@ -2,9 +2,9 @@ import $ from 'jquery';
 
 const REST_BOARD_API = 'http://localhost:8080/api/board/comment';
 
-var replyService = (function() {
+const replyService = (function() {
     function add(comment, callback, error) {
-        console.log("add comment");
+        console.log('add comment')
         console.log(comment)
         $.ajax({
             type: 'post',
@@ -13,28 +13,28 @@ var replyService = (function() {
             contentType: 'application/json;charset=UTF-8',
             success: function(result) {
                 if (callback) {
-                    callback(result);
+                    callback(result)
                 }
             },
             error: function(xhr, status, er) {
                 if (error) {
-                    error(er);
+                    error(er)
                 }
             }
-        });
+        })
     }
 
     function getList(param, callback, error) {
-        var boardId = param.boardId;
+        var boardId = param.boardId
         $.getJSON(`${REST_BOARD_API}/${boardId}`, function(data) {
             if (callback) {
-                callback(data.length, data);
+                callback(data.length, data)
             }
         }).fail(function(xhr, status, er) {
             if (error) {
-                error(er);
+                error(er)
             }
-        });
+        })
     }
 
     function remove(commentId, callback, error) {
@@ -43,18 +43,18 @@ var replyService = (function() {
             url: `${REST_BOARD_API}/${commentId}`,
             success: function(result) {
                 if (callback) {
-                    callback(result);
+                    callback(result)
                 }
             },
             error: function(xhr, status, er) {
                 if (error) {
-                    error(er);
+                    error(er)
                 }
             }
-        });
+        })
     }
 
-    function update(comment, callback, error){
+    function update(comment, callback, error) {
         console.log(comment)
         $.ajax({
             type: 'put',
@@ -63,23 +63,23 @@ var replyService = (function() {
             contentType: 'application/json;charset=UTF-8',
             success: function(result) {
                 if (callback) {
-                    callback(result);
+                    callback(result)
                 }
             },
             error: function(xhr, status, er) {
                 if (error) {
-                    error(er);
+                    error(er)
                 }
             }
-        });
+        })
     }
-    
+
     return {
         add: add,
         getList: getList,
         remove: remove,
         update: update
-    };
-})();
+    }
+})()
 
 export default replyService;

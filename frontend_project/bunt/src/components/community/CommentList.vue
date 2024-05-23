@@ -2,7 +2,7 @@
   <div class="container">
     <div class="reply-title">
       <h4>댓글 목록</h4>
-      <div v-if="loginUser !== null">
+      <div v-if="loginUserName !== null">
         <button class="btn btn-outline-primary" @click="addComment">Add Comment</button>
       </div>
     </div>
@@ -48,14 +48,22 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-const loginUser = ref(null);
-const loginUserName = ref('');
-onMounted(() => {
-  const storedUser = sessionStorage.getItem('loginUser');
-  if (storedUser) {
-    loginUser.value = JSON.parse(storedUser);
-    loginUserName.value = loginUser.value.id; // 사용자 이름 속성 사용
+// 반응형 데이터 선언
+const loginUserName = ref('')
+
+// 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
+const loadUserFromSession = () => {
+  const token = sessionStorage.getItem('access-token')
+  if (token) {
+    const storedUser = token.split('.')
+    if (storedUser.length > 1) {
+      loginUserName.value = JSON.parse(atob(storedUser[1]))['id']
+    }
   }
+}
+
+onMounted(() => {
+  loadUserFromSession()
 });
 </script>
 
@@ -74,7 +82,7 @@ export default {
         communityBoardId: this.boardId,
         userId: ""
       },
-      user_id: sessionStorage.getItem('loginUser') ? JSON.parse(sessionStorage.getItem('loginUser')).id : null,
+      user_id: sessionStorage.getItem('access-token') ? JSON.parse(atob(sessionStorage.getItem('access-token').split('.')[1]))['id'] : null,
       boardId: this.$route.params.id
     };
   },
