@@ -47,7 +47,7 @@
   flex: 2;
   display: flex;
   flex-direction: column;
-  padding-right: 3%;
+  padding-right: 1%;
   padding-left: 1%;
 }
 
@@ -64,7 +64,7 @@
 .button-column {
   display: flex;
   flex-direction: column;
-  margin-right: 10px;
+  margin-left: 20px;
 }
 
 .video {
