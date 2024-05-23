@@ -86,7 +86,7 @@ const goBack = () => {
             </div>
             <div class="mb-3">
               <label for="email" class="form-label d-flex justify-content-start">이메일</label>
-              <input type="email" class="form-control" id="email" v-model="userInfo.email">
+              <input type="email" class="form-control" id="email" v-model="userInfo.email" readonly>
             </div>
             <div class="mb-3">
               <label for="name" class="form-label d-flex justify-content-start">이름</label>
@@ -94,7 +94,7 @@ const goBack = () => {
             </div>
             <div class="mb-3">
               <label for="nickname" class="form-label d-flex justify-content-start">닉네임</label>
-              <input type="text" class="form-control" id="nickname" v-model="userInfo.nickname">
+              <input type="text" class="form-control" id="nickname" v-model="userInfo.nickname" readonly>
             </div>
             <div class="mb-3">
               <label for="age" class="form-label d-flex justify-content-start">나이</label>
@@ -102,11 +102,11 @@ const goBack = () => {
             </div>
             <div class="mb-3">
               <label for="phoneNumber" class="form-label d-flex justify-content-start">전화번호</label>
-              <input type="text" class="form-control" id="phoneNumber" v-model="userInfo.phoneNumber">
+              <input type="text" class="form-control" id="phoneNumber" v-model="userInfo.phoneNumber" readonly>
             </div>
             <div class="mb-3">
               <label for="address" class="form-label d-flex justify-content-start">주소</label>
-              <input type="text" class="form-control" id="address" v-model="userInfo.address">
+              <input type="text" class="form-control" id="address" v-model="userInfo.address" readonly>
             </div>
             <div class="mb-3">
               <label for="joinDate" class="form-label d-flex justify-content-start">가입 날짜</label>
