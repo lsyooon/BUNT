@@ -22,7 +22,6 @@ import MainKia from '@/components/main/MainKia.vue'
 import MainDoosan from '@/components/main/MainDoosan.vue'
 import MainHanhwa from '@/components/main/MainHanhwa.vue'
 import AdminPage from '@/components/admin/AdminPage.vue'
-import KakaoJoin from '@/components/user/KakaoJoin.vue'
 
 const DynamicComponentWrapper = {
   props: ['component'],
