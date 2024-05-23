@@ -14,6 +14,7 @@
           <th>주소</th>
           <th>가입날짜</th>
           <th>수정날짜</th>
+          <th>회원추방</th>
         </tr>
         </thead>
         <tbody>
@@ -48,7 +49,6 @@ import { useUserStore } from '@/stores/user';
 let userStore = useUserStore();
 
 onMounted(() => {
-  console.log("Admin page mounted, fetching user list");
   init();
   userStore = useUserStore();
 });
@@ -60,11 +60,11 @@ const init = async () => {
 }
 
 const deleteUser = (id) => {
-  if (confirm('Are you sure you want to delete this user?')) {
+  if (confirm('이 회원을 정말로 추방하겠습니까?')) {
     userStore.deleteUserById(id).then(() => {
       userStore.getUserList(); // Refresh user list after deletion
     }).catch(err => {
-      console.error('Error deleting user:', err);
+      console.error('회원을 추방하는 과정에서 에러가 발생했습니다.:', err);
     });
   }
 };

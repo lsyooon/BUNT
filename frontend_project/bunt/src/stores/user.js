@@ -88,7 +88,11 @@ export const useUserStore = defineStore('user', () => {
   const getUserList = async () => {
     try {
       const response = await axios.get(`${REST_USER_API}/read/list`);
-      userList.value = response.data;
+      userList.value.splice(0);
+      // players.value = response.data;
+      for (let i = 0; i < response.data.length; i++) {
+        userList.value.push(response.data[i]);
+      }
       return userList.value
     } catch (error) {
       console.error('getUserList 오류:', error);
