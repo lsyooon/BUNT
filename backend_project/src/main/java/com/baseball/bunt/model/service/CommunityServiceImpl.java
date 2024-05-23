@@ -1,13 +1,15 @@
 package com.baseball.bunt.model.service;
 
-import com.baseball.bunt.model.dao.CommunityDao;
-import com.baseball.bunt.model.dto.community.CommunityBoard;
-import com.baseball.bunt.model.dto.community.SearchCondition;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.baseball.bunt.model.dao.CommunityDao;
+import com.baseball.bunt.model.dto.community.CommunityBoard;
+import com.baseball.bunt.model.dto.community.SearchCondition;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -26,8 +28,14 @@ public class CommunityServiceImpl implements CommunityService{
     }
 
     @Override
-    public int createBoard(final CommunityBoard board) {  // 게시글 생성
-        return dao.insertBoard(board);
+    public int createBoard(final CommunityBoard board) {
+        System.out.println("Creating board with userId: " + board.getUserId()); // 디버깅 로그
+        try {
+            return dao.insertBoard(board);
+        } catch (Exception e) {
+            e.printStackTrace(); // 오류 스택 트레이스 출력
+            throw e; // 예외 다시 던지기
+        }
     }
 
     @Override

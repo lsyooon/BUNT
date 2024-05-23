@@ -7,6 +7,7 @@ const REST_USER_API = 'http://localhost:8080/api';
 
 export const useUserStore = defineStore('user', () => {
   const loginUser = ref(null)
+  const userList = ref([]);
   const isDuplicateId = ref(false);
 
   const login = function(id, password)  {
@@ -84,6 +85,16 @@ export const useUserStore = defineStore('user', () => {
     }
   };
 
+  const getUserList = async () => {
+    try {
+      const response = await axios.get(`${REST_USER_API}/read/list`);
+      userList.value = response.data;
+      return userList.value
+    } catch (error) {
+      console.error('getUserList 오류:', error);
+      throw error;
+    }
+  };
 
-  return { login, logout, join, getUserById, modifyUser, deleteUserById, loginUser, isDuplicateId };
+  return { login, logout, join, getUserById, modifyUser, deleteUserById, loginUser, isDuplicateId, getUserList, userList };
 });

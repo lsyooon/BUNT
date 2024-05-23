@@ -41,6 +41,9 @@
               <li><a class="dropdown-item" @click="logout">
                 로그아웃
               </a></li>
+              <li v-if="loginUserName === 'admin'"><a class="dropdown-item" @click="goAdminPage">
+                회원관리
+              </a></li>
             </ul>
           </li>
           <li v-else class="nav-item">
@@ -110,12 +113,15 @@ const goUserJoin = () => {
 }
 
 const goMyPage = () => {
-  console.log(loginUserName.value)
   if (loginUserName.value) {
     router.push(`/${route.params.teamId}/read/${loginUserName.value}`)
   } else {
     console.error('loginUserName이 설정되지 않았습니다.')
   }
+}
+
+const goAdminPage = () => {
+  router.push('/admin')
 }
 
 const linkToNews = computed(() => {
