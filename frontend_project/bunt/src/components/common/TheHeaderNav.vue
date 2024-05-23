@@ -12,57 +12,40 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <RouterLink :to="linkToNews" class="nav-link custom-nav-link custom-font">
-                NEWS
-              </RouterLink>
+              <RouterLink :to="linkToNews" class="nav-link custom-nav-link custom-font">NEWS</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link custom-font">
-                COMMUNITY
-              </RouterLink>
+              <RouterLink :to="linkToCommunity" class="nav-link custom-nav-link custom-font">COMMUNITY</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="linkToRule" class="nav-link custom-nav-link custom-font">
-                RULES
-              </RouterLink>
+              <RouterLink :to="linkToRule" class="nav-link custom-nav-link custom-font">RULES</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink :to="linkToGame" class="nav-link custom-nav-link custom-font">GAME</RouterLink>
             </li>
           </ul>
         </div>
         <ul class="navbar-nav align-items-center">
           <li v-if="loginUserName" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false" style="font-size: 18px">
-              {{ loginUserName }}님 환영합니다
-            </a>
+               aria-expanded="false" style="font-size: 18px">{{ loginUserName }}님 환영합니다</a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" @click="goMyPage">
-                마이페이지
-              </a></li>
-              <li><a class="dropdown-item" @click="logout">
-                로그아웃
-              </a></li>
-              <li v-if="loginUserName === 'admin'"><a class="dropdown-item" @click="goAdminPage">
-                회원관리
-              </a></li>
+              <li><a class="dropdown-item" @click="goMyPage">마이페이지</a></li>
+              <li><a class="dropdown-item" @click="logout">로그아웃</a></li>
             </ul>
           </li>
           <li v-else class="nav-item">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false" style="font-size: 18px">
-              로그인 후 이용해주세요
-            </a>
+               aria-expanded="false" style="font-size: 18px">로그인 후 이용해주세요</a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" @click="goUserLogin">
-                로그인
-              </a></li>
-              <li><a class="dropdown-item" @click="goUserJoin">
-                회원가입
-              </a></li>
+              <li><a class="dropdown-item" @click="goUserLogin">로그인</a></li>
+              <li><a class="dropdown-item" @click="goUserJoin">회원가입</a></li>
             </ul>
           </li>
         </ul>
       </div>
     </nav>
+
   </header>
 </template>
 
@@ -113,15 +96,12 @@ const goUserJoin = () => {
 }
 
 const goMyPage = () => {
+  console.log(loginUserName.value)
   if (loginUserName.value) {
     router.push(`/${route.params.teamId}/read/${loginUserName.value}`)
   } else {
     console.error('loginUserName이 설정되지 않았습니다.')
   }
-}
-
-const goAdminPage = () => {
-  router.push('/admin')
 }
 
 const linkToNews = computed(() => {
@@ -134,6 +114,10 @@ const linkToCommunity = computed(() => {
 
 const linkToRule = computed(() => {
   return `/${route.params.teamId}/rule`
+})
+
+const linkToGame = computed(() => {
+  return `/${route.params.teamId}/num-baseball`
 })
 </script>
 
@@ -160,22 +144,27 @@ html, body {
 .header {
   width: 100%;
   height: 70px;
-  background-color: black; /* 헤더 배경색 */
+  background-color: midnightblue;
   position: fixed;
   top: 0;
-  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
+  z-index: 1000;
+}
+
+.container-fluid {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .custom-bg-color {
-  background-color: black !important;
+  background-color: midnightblue !important;
 }
 
 .custom-nav-link {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 30px;
+  margin-right: 30px;
   color: white !important;
-  font-size: 24px; /* 글자 크기 조정 */
-  font-weight: bold; /* 글자 굵게 */
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .custom-font {
@@ -194,13 +183,13 @@ html, body {
 .navbar-nav .btn {
   padding: 5px 10px; /* 버튼 패딩 조정 */
   font-size: 14px; /* 글자 크기 조정 */
-  background-color: black;
-  border-color: black;
+  background-color: midnightblue;
+  border-color: midnightblue;
 }
 
 .navbar-nav .btn:hover {
-  background-color: black;
-  border-color: black;
+  background-color: #1A2E5A;
+  border-color: #1A2E5A;
 }
 
 .navbar-nav .btn-warning {
@@ -231,11 +220,11 @@ html, body {
 }
 
 .dropdown-item {
-  color: black; /* 드롭다운 메뉴 항목 글자 색상 */
+  color: #24418E; /* 드롭다운 메뉴 항목 글자 색상 */
 }
 
 .dropdown-item:hover {
-  background-color: black; /* 드롭다운 메뉴 항목 hover 배경색 */
+  background-color: #1A2E5A; /* 드롭다운 메뉴 항목 hover 배경색 */
   color: #ffc107; /* 드롭다운 메뉴 항목 hover 글자 색상 */
 }
 
@@ -255,17 +244,17 @@ html, body {
   }
 
   .nav-item .nav-link {
-    color: black !important; /* 작은 화면에서는 링크 색상 변경 */
+    color: #24418E !important; /* 작은 화면에서는 링크 색상 변경 */
   }
 }
 
 .nav-tabs .nav-link {
-  color: black;
+  color: #24418E;
 }
 
 .nav-tabs .nav-link.active {
   color: #fff;
-  background-color: black;
-  border-color: black;
+  background-color: #24418E;
+  border-color: #24418E;
 }
 </style>
