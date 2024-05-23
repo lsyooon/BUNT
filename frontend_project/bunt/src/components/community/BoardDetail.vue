@@ -52,11 +52,6 @@ const store = useCommunityStore();
 const isLiked = ref(false);
 const likeCount = ref(0);
 
-onMounted(() => {
-  store.getBoard(route.params.teamId, route.params.id);
-  checkLiked();
-});
-
 const goBack = () => {
   router.back();
 };
@@ -75,16 +70,19 @@ const deleteBoard = () => {
   }
 };
 
-const loginUser = ref(null);
-const loginUserName = ref("");
-onMounted(() => {
-  const token = sessionStorage.getItem("access-token");
+// 반응형 데이터 선언
+const loginUserName = ref('')
+
+// 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
+const loadUserFromSession = () => {
+  const token = sessionStorage.getItem('access-token')
   if (token) {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    loginUser.value = payload;
-    loginUserName.value = payload.id;
+    const storedUser = token.split('.')
+    if (storedUser.length > 1) {
+      loginUserName.value = JSON.parse(atob(storedUser[1]))['id']
+    }
   }
-});
+}
 
 const boardId = route.params.id;
 const checkLiked = async () => {
@@ -120,6 +118,13 @@ import emptyLikeImage from "@/assets/image_icons/emptyLike.png";
 const likeImage = () => {
   return isLiked.value ? fullLikeImage : emptyLikeImage;
 };
+
+
+onMounted(() => {
+  loadUserFromSession();
+  store.getBoard(route.params.teamId, route.params.id);
+  checkLiked();
+});
 </script>
 
 <style scoped>

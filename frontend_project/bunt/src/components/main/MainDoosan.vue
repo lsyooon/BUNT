@@ -37,7 +37,7 @@
   padding-top: 3%;
   display: flex;
   width: 100%;
-  background-image: url('@/assets/image_background/SS_BG.svg');
+  background-image: url('@/assets/image_background/DS_BG.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -134,11 +134,11 @@ const search = () => {
 // 페이지 처음 들어왔을 때
 onMounted(() => {
   // 초기 검색어 설정
-  keyword.value = '삼성라이온즈 구단 응원가'
+  keyword.value = '두산베어스 구단 응원가'
   // 초기 검색 실행
   search()
   // 팀 ID를 사용하여 선수 목록 로드
-  const teamId = 2
+  const teamId = 4;
   playerStore.findPlayersByTeamId(teamId).then(() => {
     console.log('플레이어 목록 로드 완료:', playerStore.players)
   })
@@ -150,7 +150,7 @@ watch(() => playerStore.players, (newPlayers) => {
 })
 
 const searchPlayer = (player) => {
-  keyword.value = `삼성라이온즈 ${player.name} 응원가`
+  keyword.value = `두산베어스 ${player.name} 응원가`
   search()
   playerStore.findPlayer(player)
 }

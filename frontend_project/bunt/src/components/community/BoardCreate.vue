@@ -7,7 +7,7 @@
         <input type="text" class="form-control" id="title" placeholder="제목" v-model="board.title">
         <label for="title">Title</label>
       </div>
-      <div class="form-floating mb-3" v-if="loginUser">
+      <div class="form-floating mb-3" v-if="loginUserName">
         <input type="text" :value="loginUserName" class="form-control" id="userId" readonly>
         <label for="userId">writer</label>
       </div>
@@ -33,18 +33,23 @@ const goBack = () => {
   router.back();
 };
 
-// writer = 로그인 유저 아이디
-const loginUser = ref(null);
-const loginUserName = computed(() => {
-  return loginUser.value;
-});
+// 반응형 데이터 선언
+const loginUserName = ref('')
+
+// 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
+const loadUserFromSession = () => {
+  const token = sessionStorage.getItem('access-token')
+  if (token) {
+    const storedUser = token.split('.')
+    if (storedUser.length > 1) {
+      loginUserName.value = JSON.parse(atob(storedUser[1]))['id']
+      board.value.userId = loginUserName.value
+    }
+  }
+}
 
 onMounted(() => {
-  const user = JSON.parse(sessionStorage.getItem('loginUser'));
-  if (user) {
-    board.value.userId = user.id;
-    loginUser.value = user.id;
-  }
+  loadUserFromSession()
 });
 
 const route = useRoute();

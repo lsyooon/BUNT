@@ -25,8 +25,10 @@ export const useCommunityStore = defineStore('community', () => {
     }
 
     const createBoard = function (board) {
+        console.log("createBoard")
         axios.post(REST_BOARD_API, board)
             .then(() => {
+                console.log(board)
                 const teamId = router.currentRoute.value.params.teamId;
                 router.push(`/${teamId}/community`);
             })
