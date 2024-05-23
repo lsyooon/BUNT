@@ -1,6 +1,5 @@
 package com.baseball.bunt.model.dao;
 
-import com.baseball.bunt.model.dto.community.Community;
 import com.baseball.bunt.model.dto.community.CommunityBoardComment;
 import org.springframework.stereotype.Repository;
 
