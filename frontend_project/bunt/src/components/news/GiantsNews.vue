@@ -1,7 +1,6 @@
 <template>
   <div id="home" class="d-flex align-items-center justify-content-center min-vh-100">
     <div class="container mt-5 animate__animated animate__fadeInDown">
-      <h1 class="mb-4">뉴스 목록</h1>
       <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
       <div v-else>
         <ul class="list-group">

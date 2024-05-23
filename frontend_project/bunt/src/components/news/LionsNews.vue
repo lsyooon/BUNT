@@ -1,22 +1,21 @@
 <template>
   <div id="home" class="d-flex align-items-center justify-content-center min-vh-100">
-    <div class="container mt-5">
-      <h1 class="mb-4">라이온즈 뉴스 목록</h1>
+    <div class="container mt-5 animate__animated animate__fadeInDown">
       <div v-if="loading" class="alert alert-info">응답을 기다리는 중...</div>
       <div v-else>
         <ul class="list-group">
-          <li v-for="(item, index) in newsItems" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
-            <router-link :to="{ name: 'newsDetail', params: { teamId: '2' }, query: { link: item.link } }" class="text-decoration-none">
+          <li v-for="(item, index) in newsItems" :key="index" class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
+            <router-link :to="{ name: 'newsDetail', params: { teamId: '2' }, query: { link: item.link } }" class="text-decoration-none custom-link">
               <strong>{{ item.title }}</strong>
             </router-link>
-            <span class="badge bg-secondary">{{ item.date }}</span>
+            <span class="badge bg-secondary custom-badge">{{ item.date }}</span>
           </li>
         </ul>
       </div>
       <div class="mt-3 d-flex justify-content-between">
-        <button @click="goToPreviousPage" :disabled="currentPage === 1" class="btn btn-outline-primary">&lt; 이전 페이지</button>
-        <button @click="fetchNews" class="btn btn-primary">뉴스 가져오기</button>
-        <button @click="goToNextPage" :disabled="currentPage === totalPages" class="btn btn-outline-primary">다음 페이지 &gt;</button>
+        <button @click="goToPreviousPage" :disabled="currentPage === 1" class="btn btn-outline-primary custom-btn">&lt; 이전 페이지</button>
+        <button @click="fetchNews" class="btn btn-primary custom-btn">뉴스 가져오기</button>
+        <button @click="goToNextPage" :disabled="currentPage === totalPages" class="btn btn-outline-primary custom-btn">다음 페이지 &gt;</button>
       </div>
     </div>
   </div>
@@ -57,6 +56,8 @@ const totalPages = computed(() => newsStore.totalPages);
 </script>
 
 <style scoped>
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+
 #home {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
@@ -64,29 +65,34 @@ const totalPages = computed(() => newsStore.totalPages);
 
 .container {
   max-width: 800px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
 }
 
-.list-group-item {
-  background-color: #f8f9fa; /* 리스트 아이템 배경색 */
+.list-group-item.custom-list-item {
+  background-color: #f5f8fc; /* 부드러운 파스텔 블루 */
   border: 1px solid #dee2e6; /* 리스트 아이템 경계선 색 */
   border-radius: 0.25rem; /* 리스트 아이템 모서리 둥글게 */
   transition: transform 0.2s; /* 호버 효과 추가 */
 }
 
-.list-group-item:hover {
+.list-group-item.custom-list-item:hover {
   transform: scale(1.02); /* 호버 시 살짝 확대 */
 }
 
-.text-decoration-none {
-  color: #007bff; /* 링크 색상 */
+.text-decoration-none.custom-link {
+  color: #4c6ef5; /* 부드러운 파스텔 블루 */
 }
 
-.text-decoration-none:hover {
+.text-decoration-none.custom-link:hover {
   text-decoration: underline; /* 호버 시 밑줄 */
 }
 
-.badge {
+.badge.custom-badge {
   font-size: 0.9em;
+  background-color: #4c6ef5; /* 부드러운 파스텔 블루 */
 }
 
 .mt-5 {
@@ -100,5 +106,22 @@ const totalPages = computed(() => newsStore.totalPages);
 button:disabled {
   cursor: not-allowed;
   opacity: 0.65;
+}
+
+.custom-btn {
+  background-color: #4c6ef5 !important; /* 부드러운 파스텔 블루 */
+  color: white !important; /* 텍스트 색상 */
+  border-color: #4c6ef5 !important; /* 테두리 색상 */
+  transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: #364fc7 !important; /* 호버 상태에서 약간 더 진한 파스텔 블루 */
+}
+
+.custom-btn.disabled {
+  background-color: lightgray !important;
+  border-color: lightgray !important;
+  color: white !important;
 }
 </style>

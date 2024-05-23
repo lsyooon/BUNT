@@ -43,40 +43,46 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+/* 모든 요소의 기본 여백과 패딩을 제거 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* body와 html 요소의 여백과 패딩 제거 */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
-  overflow: hidden; /* 전체 페이지에서 스크롤을 가능하게 설정 */
+  overflow: auto; /* 전체 페이지에서 스크롤을 가능하게 설정 */
 }
 
 /* TheHeaderNav 스타일 조정 */
 TheHeaderNav {
-  height: 50px; /* TheHeaderNav 높이 설정 */
-  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 설정 */
+  height: 50px; /* TheHeaderNav 높이 조정 */
+  background-color: white; /* 필요에 따라 배경색 추가 */
+  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
   width: 100%;
-  position: fixed; /* 고정 위치 설정 */
+  position: fixed; /* 고정 위치 */
   top: 0;
 }
 
 /* main 영역의 스타일 조정 */
 main {
   flex: 1;
-  width: 100%; /* 전체 너비를 100%로 설정 */
-  overflow-y: auto; /* 세로 스크롤을 가능하게 설정 */
+  padding-top: 0; /* TheHeaderNav 높이만큼 패딩 추가 */
 }
 
 /* Footer 스타일 조정 */
-footer {
-  position: fixed; /* 고정 위치 설정 */
+Footer {
+  position: fixed; /* 고정 위치 */
   bottom: 0;
-  left: 0; /* 왼쪽 하단에 고정 */
+  right: 0; /* 오른쪽 하단에 고정 */
   width: 100%;
-  height: 100px; /* Footer 높이 설정 */
+  height: 10vh; /* Footer 높이 */
   background-color: white; /* 필요에 따라 배경색 추가 */
-  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 설정 */
+  z-index: 1000; /* 다른 요소보다 위에 오도록 z-index 추가 */
 }
 
 /* 추가 스타일 */
@@ -84,7 +90,5 @@ footer {
   display: flex;
   flex-direction: column;
   height: 100vh; /* 전체 높이를 100vh로 설정 */
-  width: 100%; /* 전체 너비를 100vw로 설정 */
-  overflow: hidden; /* 내부에서 스크롤이 발생하지 않도록 설정 */
 }
 </style>

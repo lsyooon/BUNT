@@ -144,7 +144,7 @@ html, body {
 .header {
   width: 100%;
   height: 70px;
-  background-color: midnightblue;
+  background-color: black;
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -156,12 +156,12 @@ html, body {
 }
 
 .custom-bg-color {
-  background-color: midnightblue !important;
+  background-color: black !important;
 }
 
 .custom-nav-link {
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 15px;
+  margin-right: 15px;
   color: white !important;
   font-size: 24px;
   font-weight: bold;
@@ -183,13 +183,13 @@ html, body {
 .navbar-nav .btn {
   padding: 5px 10px; /* 버튼 패딩 조정 */
   font-size: 14px; /* 글자 크기 조정 */
-  background-color: midnightblue;
-  border-color: midnightblue;
+  background-color: black;
+  border-color: black;
 }
 
 .navbar-nav .btn:hover {
-  background-color: #1A2E5A;
-  border-color: #1A2E5A;
+  background-color: black;
+  border-color: black;
 }
 
 .navbar-nav .btn-warning {
@@ -204,8 +204,8 @@ html, body {
 }
 
 .navbar-nav .btn-outline-light {
-  color: #fff;
-  border-color: #fff;
+  color: black;
+  border-color: black;
 }
 
 .navbar-nav .btn-outline-light:hover {
@@ -220,7 +220,7 @@ html, body {
 }
 
 .dropdown-item {
-  color: #24418E; /* 드롭다운 메뉴 항목 글자 색상 */
+  color: black; /* 드롭다운 메뉴 항목 글자 색상 */
 }
 
 .dropdown-item:hover {
@@ -244,17 +244,17 @@ html, body {
   }
 
   .nav-item .nav-link {
-    color: #24418E !important; /* 작은 화면에서는 링크 색상 변경 */
+    color: black !important; /* 작은 화면에서는 링크 색상 변경 */
   }
 }
 
 .nav-tabs .nav-link {
-  color: #24418E;
+  color: black;
 }
 
 .nav-tabs .nav-link.active {
   color: #fff;
-  background-color: #24418E;
-  border-color: #24418E;
+  background-color: black;
+  border-color: black;
 }
 </style>

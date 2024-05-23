@@ -1,23 +1,23 @@
-import { createRouter, createWebHistory} from 'vue-router';
-import {h} from 'vue';
-import HomeView from '../views/HomeView.vue';
-import UserLogin from '@/components/user/UserLogin.vue';
-import UserJoin from '@/components/user/UserJoin.vue';
-import BoardList from '@/components/community/BoardList.vue';
-import BoardCreate from '@/components/community/BoardCreate.vue';
-import BoardDetail from '@/components/community/BoardDetail.vue';
-import MainSamsung from '@/components/main/MainSamsung.vue';
-import MainLotte from '@/components/main/MainLotte.vue';
-import BoardModify from '@/components/community/BoardModify.vue';
-import MyPage from '@/components/user/MyPage.vue';
-import CommentList from '@/components/community/CommentList.vue';
-import Rule from '@/components/main/Rule.vue';
-import GiantsNews from '@/components/news/GiantsNews.vue';
-import LionsNews from '@/components/news/LionsNews.vue';
-import MainView from '@/views/MainView.vue';
-import GiantsNewsDetail from '@/components/news/GiantsNewsDetail.vue';
-import LionsNewsDetail from '@/components/news/LionsNewsDetail.vue';
-import NumberBaseball from "@/components/game/NumberBaseball.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import { h } from 'vue'
+import HomeView from '../views/HomeView.vue'
+import UserLogin from '@/components/user/UserLogin.vue'
+import UserJoin from '@/components/user/UserJoin.vue'
+import BoardList from '@/components/community/BoardList.vue'
+import BoardCreate from '@/components/community/BoardCreate.vue'
+import BoardDetail from '@/components/community/BoardDetail.vue'
+import MainSamsung from '@/components/main/MainSamsung.vue'
+import MainLotte from '@/components/main/MainLotte.vue'
+import BoardModify from '@/components/community/BoardModify.vue'
+import MyPage from '@/components/user/MyPage.vue'
+import CommentList from '@/components/community/CommentList.vue'
+import Rule from '@/components/main/Rule.vue'
+import GiantsNews from '@/components/news/GiantsNews.vue'
+import LionsNews from '@/components/news/LionsNews.vue'
+import MainView from '@/views/MainView.vue'
+import GiantsNewsDetail from '@/components/news/GiantsNewsDetail.vue'
+import LionsNewsDetail from '@/components/news/LionsNewsDetail.vue'
+import NumberBaseball from '@/components/game/NumberBaseball.vue'
 import MainKia from '@/components/main/MainKia.vue'
 import MainDoosan from '@/components/main/MainDoosan.vue'
 import MainHanhwa from '@/components/main/MainHanhwa.vue'
@@ -26,9 +26,9 @@ import AdminPage from '@/components/admin/AdminPage.vue'
 const DynamicComponentWrapper = {
   props: ['component'],
   render() {
-    return h(this.component);
+    return h(this.component)
   }
-};
+}
 
 const routes = [
   {
@@ -40,7 +40,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: AdminPage,
+    component: AdminPage
   },
   {
     path: '/:teamId/login',
@@ -68,13 +68,13 @@ const routes = [
     component: DynamicComponentWrapper,
     beforeEnter: (to, from, next) => {
       if (to.params.teamId === '1') {
-        to.meta.component = GiantsNews;
+        to.meta.component = GiantsNews
       } else if (to.params.teamId === '2') {
-        to.meta.component = LionsNews;
+        to.meta.component = LionsNews
       } else {
-        return next({ name: 'home' });
+        return next({ name: 'home' })
       }
-      next();
+      next()
     },
     props: route => ({ component: route.meta.component })
   },
@@ -84,13 +84,13 @@ const routes = [
     component: DynamicComponentWrapper,
     beforeEnter: (to, from, next) => {
       if (to.params.teamId === '1') {
-        to.meta.component = GiantsNewsDetail;
+        to.meta.component = GiantsNewsDetail
       } else if (to.params.teamId === '2') {
-        to.meta.component = LionsNewsDetail;
+        to.meta.component = LionsNewsDetail
       } else {
-        return next({ name: 'home' });
+        return next({ name: 'home' })
       }
-      next();
+      next()
     },
     props: route => ({ component: route.meta.component })
   },
@@ -127,19 +127,19 @@ const routes = [
     component: DynamicComponentWrapper,
     beforeEnter: (to, from, next) => {
       if (to.params.teamId === '1') {
-        to.meta.component = MainLotte;
+        to.meta.component = MainLotte
       } else if (to.params.teamId === '2') {
-        to.meta.component = MainSamsung;
+        to.meta.component = MainSamsung
       } else if (to.params.teamId === '3') {
-        to.meta.component = MainKia;
+        to.meta.component = MainKia
       } else if (to.params.teamId === '4') {
-        to.meta.component = MainDoosan;
+        to.meta.component = MainDoosan
       } else if (to.params.teamId === '5') {
-        to.meta.component = MainHanhwa;
+        to.meta.component = MainHanhwa
       } else {
-        return next({ name: 'home' });
+        return next({ name: 'home' })
       }
-      next();
+      next()
     },
     props: route => ({ component: route.meta.component })
   },
@@ -154,13 +154,13 @@ const routes = [
     name: 'numberBaseball',
     component: NumberBaseball
   }
-];
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
-});
+})
 
 // 글로벌 가드 설정은 필요 없음
 
-export default router;
+export default router
