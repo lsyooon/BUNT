@@ -1,17 +1,30 @@
 package com.baseball.bunt.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.baseball.bunt.model.dto.community.CommunityBoard;
 import com.baseball.bunt.model.dto.community.LikeList;
 import com.baseball.bunt.model.dto.community.SearchCondition;
 import com.baseball.bunt.model.service.CommunityService;
 import com.baseball.bunt.model.service.LikeListService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @Tag(name = "Community Controller", description = "커뮤니티를 관리하는 컨트롤러")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
@@ -48,6 +61,7 @@ public class CommunityController {
     @Operation(summary = "게시글 생성")
     @PostMapping()
     public ResponseEntity<?> createBoard(@RequestBody CommunityBoard board) {
+        System.out.println("Creating board with userId: " + board.getUserId()); // 디버깅 로그
         int result = communityService.createBoard(board);
         if (result == -1) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
