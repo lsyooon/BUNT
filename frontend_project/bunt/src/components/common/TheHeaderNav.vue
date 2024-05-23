@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <a class="navbar-brand" href="/">
-          <img src="../../assets/image_icons/main_logo_icon.png" alt="Logo" width="70px">
+          <img src="../../assets/image_icons/main_logo_baseball.png" style="margin: 15px" alt="Logo" width="70px">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
