@@ -21,6 +21,7 @@ import NumberBaseball from "@/components/game/NumberBaseball.vue";
 import MainKia from '@/components/main/MainKia.vue'
 import MainDoosan from '@/components/main/MainDoosan.vue'
 import MainHanhwa from '@/components/main/MainHanhwa.vue'
+import AdminPage from '@/components/admin/AdminPage.vue'
 
 const DynamicComponentWrapper = {
   props: ['component'],
@@ -35,6 +36,11 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: { hideHeaderFooter: true }
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminPage,
   },
   {
     path: '/:teamId/login',
