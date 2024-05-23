@@ -12,7 +12,7 @@ export const useYoutubeStore = defineStore('youtube', {
             try {
                 const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
                     params: {
-                        // key: import.meta.env.VITE_YOUTUBE_API_KEY,
+                        key: import.meta.env.VITE_YOUTUBE_API_KEY,
                         // key: import.meta.env.VITE_YOUTUBE_API_KEY2,
                         part: 'snippet',
                         maxResults: 10,

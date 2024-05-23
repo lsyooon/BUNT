@@ -68,7 +68,9 @@ onMounted(() => {
   max-width: 880px;
 }
 
+
 h1 {
+  padding-top: 5%;
   text-align: left;
   color: #0056b3;
 }
