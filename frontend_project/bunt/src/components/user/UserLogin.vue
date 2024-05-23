@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useUserStore } from "@/stores/user.js";
+import KakaoImage from '@/assets/kakao/kakao_login_medium_narrow.png'
 
 const store = useUserStore();
 const id = ref('')
@@ -8,6 +9,14 @@ const password = ref('')
 
 const login = function() {
   store.login(id.value, password.value);
+}
+
+//카카오톡 로그인 하기
+const kakaoLogin = function() {
+  const redirect_uri = import.meta.env.VITE_VUE_APP_KAKAO_REDIRECT_URL;
+  const clientId = import.meta.env.VITE_VUE_APP_KAKAO_REST_API_KEY;
+  const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+  window.location.href = Auth_url;
 }
 
 </script>

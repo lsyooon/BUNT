@@ -45,6 +45,7 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  margin: 0;
 }
 
 .logo {

@@ -37,7 +37,7 @@
   padding-top: 3%;
   display: flex;
   width: 100%;
-  background-image: url('@/assets/image_background/HH_BG.webp');
+  background-image: url('@/assets/image_background/HH_BG.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
