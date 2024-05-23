@@ -64,19 +64,6 @@ CREATE TABLE `COMMUNITY_BOARD_COMMENT`
     FOREIGN KEY (community_board_id) REFERENCES COMMUNITY_BOARD (community_board_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS `COMMUNITY_BOARD_COMMENT`;
-CREATE TABLE `COMMUNITY_BOARD_COMMENT`
-(
-    `community_board_comment_id` INT         NOT NULL AUTO_INCREMENT,
-    `community_board_id`         INT         NOT NULL,
-    `user_id`                    VARCHAR(20) NOT NULL,
-    `content`                    TEXT        NOT NULL,
-    `reg_date`                   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `mod_date`                   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`community_board_comment_id`),
-    FOREIGN KEY (community_board_id) REFERENCES COMMUNITY_BOARD (community_board_id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 -- 24.05.20 추가
 DROP TABLE IF EXISTS `BOARD_LIKE_LIST`;
 CREATE TABLE `BOARD_LIKE_LIST`

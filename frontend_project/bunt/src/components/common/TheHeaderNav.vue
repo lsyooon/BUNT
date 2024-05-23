@@ -26,6 +26,11 @@
                 RULES
               </RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink :to="linkToGame" class="nav-link custom-nav-link custom-font">
+                RULES
+              </RouterLink>
+            </li>
           </ul>
         </div>
         <ul class="navbar-nav align-items-center">
@@ -128,6 +133,10 @@ const linkToCommunity = computed(() => {
 
 const linkToRule = computed(() => {
   return `/${route.params.teamId}/rule`
+})
+
+const linkToGame = computed(() => {
+  return `/${route.params.teamId}/num-baseball`
 })
 </script>
 
