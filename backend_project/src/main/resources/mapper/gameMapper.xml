@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baseball.bunt.model.dao.BaseballGameDao">
+    <!-- 랭킹 목록 -->
+    <select id="getBaseballGames" resultType="BaseballGame">
+        SELECT nick_name, score,
+            DENSE_RANK() OVER (ORDER BY score DESC) AS 'rank'
+        FROM GAME_NUM_BASEBALL
+        ORDER BY score DESC
+    </select>
+
+    <!-- 기록 등록 -->
+    <insert id="insertScore" parameterType="BaseballGame">
+        INSERT INTO GAME_NUM_BASEBALL(nick_name, score) VALUES(#{nickName}, #{score})
+    </insert>
+
+
+</mapper>

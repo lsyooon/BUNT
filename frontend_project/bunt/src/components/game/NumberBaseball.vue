@@ -12,7 +12,7 @@
         <span style="font-size: 20px">랭킹</span><img src="@/assets/image_icons/rank.png" style="width: 25px; margin-left: 2px"></button>
       <div class="modal-wrap" v-show="modalCheck">
         <div class="modal-container">
-          <div v-if="ranking.length">
+          <div v-if="rankData.length">
             <h2>랭킹</h2>
             <table>
               <thead>
@@ -23,9 +23,9 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="(rank, index) in sortedRanking" :key="index">
-                <td>{{ index + 1 }}</td>
-                <td>{{ rank.nickname }}</td>
+              <tr v-for="(rank) in rankData">
+                <td>{{ rank.rank}}</td>
+                <td>{{ rank.nickName }}</td>
                 <td>{{ rank.score }}</td>
               </tr>
               </tbody>
@@ -65,13 +65,12 @@
         <button @click="resetGame"><img src="@/assets/image_icons/restart.png" style="width: 25px">다시하기</button>
       </div>
     </div>
-
-
   </div>
 </template>
 
 <script setup>
-import {ref, onMounted, computed} from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from "axios";
 
 // 모달
 const modalCheck = ref(false);
@@ -102,26 +101,33 @@ const nickname = ref('');
 const userInput = ref('');
 const results = ref([]);
 const message = ref('');
-const ranking = ref([]);
 const gameOver = ref(false);
 
-const saveRanking = () => {
-  localStorage.setItem('ranking', JSON.stringify(ranking.value));
-  localStorage.setItem('lastUpdated', new Date().toISOString().split('T')[0]);
+const saveGameData = async () => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/game', {
+      nickName: nickname.value,
+      score: calculateScore(results.value.length)
+      // 다른 필요한 데이터 추가
+    });
+    console.log('게임 데이터 저장 성공:', response.data)
+    getRankData()
+    modalOpen()
+  } catch (error) {
+    console.error('게임 데이터 저장 실패:', error);
+  }
 };
 
-const loadRanking = () => {
-  const storedRanking = localStorage.getItem('ranking');
-  const lastUpdated = localStorage.getItem('lastUpdated');
-  const today = new Date().toISOString().split('T')[0];
-
-  if (lastUpdated !== today) {
-    ranking.value = [];
-    localStorage.removeItem('ranking');
-    localStorage.setItem('lastUpdated', today);
-  } else if (storedRanking) {
-    ranking.value = JSON.parse(storedRanking);
-  }
+const rankData = ref([])
+const getRankData = () => { // 데이터를 가져오는 함수 정의
+  axios.get('http://localhost:8080/api/game')
+      .then(response => {
+        rankData.value = response.data;
+        console.log('게임 데이터 불러오기 성공:', response.data);
+      })
+      .catch(error => {
+        console.error('게임 데이터 불러오기 실패:', error);
+      });
 };
 
 const startGame = () => {
@@ -172,33 +178,9 @@ const checkNumber = () => {
 
   results.value.push({userNumber, result: `${strikes} 스트라이크, ${balls} 볼`});
 
-  // const index = ref(1);
-  // const cnt = ref(1);
-  // const rankArr = ref([]);
-  // const calculateIndex = async() => {
-  //   const sorted = ref([])
-  //   sorted.value = sortedRanking2();
-  //   console.log(sorted)
-  //   for(let i = 0; i < sorted.value.length; i++) {
-  //     // sorted.value[i] = sorted.value[i].userNumber;
-  //     if(sorted.value[i] === sorted.value[i+1]){
-  //       cnt.value += 1;
-  //     }
-  //     else {
-  //       index.value += cnt.value;
-  //       cnt.value = 1;
-  //     }
-  //     rankArr.value[i] = index.value;
-  //   }
-  //   console.log(sorted)
-  // }
-
   if (strikes === 4) {
-    const score = calculateScore(results.value.length);
-    // const arr = calculateIndex();
-    ranking.value.push({nickname: nickname.value, score});
-    saveRanking();
-    message.value = `와아아아! 정답입니다! ${nickname.value}님의 점수는 ${score}점입니다.`;
+    saveGameData(); // 게임이 끝나면 데이터를 저장합니다.
+    message.value = `와아아아! 정답입니다! ${nickname.value}님의 점수는 ${calculateScore(results.value.length)}점입니다.`;
     gameOver.value = true;
   } else {
     message.value = `${strikes} 스트라이크, ${balls} 볼`;
@@ -214,23 +196,8 @@ const resetGame = () => {
   gameOver.value = false;
 };
 
-const sortRankingByScore = () => {
-  ranking.value.sort((a, b) => b.score - a.score);
-};
-
-// 템플릿에서 사용할 ranking 배열을 정렬된 상태로 가져옴
-const sortedRanking = computed(() => {
-  sortRankingByScore();
-  return ranking.value;
-});
-
-// const sortedRanking2 = async () => {
-//   sortRankingByScore();
-//   return ranking;
-// };
-
 onMounted(() => {
-  loadRanking();
+  getRankData();
   resetGame();
 });
 
