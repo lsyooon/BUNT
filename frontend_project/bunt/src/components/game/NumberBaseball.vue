@@ -209,6 +209,10 @@ onMounted(() => {
   padding-top: 5%;
 }
 
+h1 {
+  padding-top: 3%;
+}
+
 input {
   width: 20%;
   margin-top: 2%;

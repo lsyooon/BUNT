@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark custom-bg-color">
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <a class="navbar-brand" href="/">
-          <img src="../../assets/image_icons/main_logo_baseball.png" style="margin: 15px" alt="Logo" width="70px">
+          <img src="../../assets/image_logo/bb.gif" style="margin: 15px" alt="Logo" width="70px">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                aria-expanded="false" style="font-size: 18px">{{ loginUserName }}님 환영합니다</a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li v-if="loginUserName === 'admin'"><a class="dropdown-item" @click="goAdminPage">회원관리</a></li>
               <li><a class="dropdown-item" @click="goMyPage">마이페이지</a></li>
               <li><a class="dropdown-item" @click="logout">로그아웃</a></li>
             </ul>
@@ -104,6 +105,10 @@ const goMyPage = () => {
   }
 }
 
+const goAdminPage = () => {
+  router.push({ name: 'admin' })
+}
+
 const linkToNews = computed(() => {
   return `/${route.params.teamId}/news`
 })
@@ -119,6 +124,7 @@ const linkToRule = computed(() => {
 const linkToGame = computed(() => {
   return `/${route.params.teamId}/num-baseball`
 })
+
 </script>
 
 <style scoped>

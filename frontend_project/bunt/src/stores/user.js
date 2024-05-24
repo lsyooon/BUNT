@@ -54,10 +54,10 @@ export const useUserStore = defineStore('user', () => {
     try {
       const response = await axios.get(`${REST_USER_API}/read/${id}`);
       if (response.data) {
-        user.value = response.data;
+        loginUser.value = response.data;
         isDuplicateId.value = true;
       } else {
-        user.value = null;
+        loginUser.value = null;
         isDuplicateId.value = false;
       }
     } catch (error) {
