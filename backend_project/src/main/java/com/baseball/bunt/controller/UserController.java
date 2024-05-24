@@ -43,14 +43,11 @@ public class UserController {
 	@Operation(summary = "로그인", description = "id, password를 받아서 로그인 처리")
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
-		//service -> dao -> db
 		HttpStatus status = null;
 		Map<String, Object> result = new HashMap<>();
 		System.out.println(user);
 
-		//검증을 끝냄
 		if (user.getId() != null) {
-			//토큰 만들어서 줘야함
 			result.put("message", SUCCESS);
 			result.put("access-token", jwtUtil.createToken(user.getId()));
 			status = HttpStatus.ACCEPTED;

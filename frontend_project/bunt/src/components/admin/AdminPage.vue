@@ -1,7 +1,8 @@
 <template>
   <div class="container mt-5">
+    <h2>회원 관리</h2>
     <div v-if="userList">
-      <table class="table table-hover">
+      <table class="table table-hover text-center">
         <thead>
         <tr>
           <th>회원번호</th>
@@ -30,7 +31,7 @@
           <td>{{ user.joinDate }}</td>
           <td>{{ user.modDate }}</td>
           <td>
-            <button class="btn btn-danger btn-sm" @click="deleteUser(user.id)">Delete</button>
+            <button class="btn btn-danger btn-sm" @click="deleteUser(user.id)">추방</button>
           </td>
         </tr>
         </tbody>
@@ -75,11 +76,14 @@ watchEffect(() => {
 });
 </script>
 
-
 <style scoped>
 .container {
   max-width: 80%;
+  margin: 0 auto;
   margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h2 {
@@ -93,5 +97,16 @@ h2 {
 
 .btn-danger {
   font-size: 0.8rem;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th, td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

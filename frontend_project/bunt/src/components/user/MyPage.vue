@@ -9,20 +9,28 @@ const userInfo = ref(null);
 const store = useUserStore();
 const router = useRouter();
 
+// 반응형 데이터 선언
+const loginUserName = ref('')
+
+// 컴포넌트 마운트 시 sessionStorage에서 loginUser 값 로드
+const loadUserFromSession = () => {
+  const token = sessionStorage.getItem('access-token')
+  if (token) {
+    const storedUser = token.split('.')
+    if (storedUser.length > 1) {
+      loginUserName.value = JSON.parse(atob(storedUser[1]))['id']
+    }
+  }
+}
+
 // 컴포넌트 마운트 시 사용자 정보 로드
 onMounted(async () => {
-  const storedUser = sessionStorage.getItem('loginUser');
-  if (storedUser) {
-    const parsedUser = JSON.parse(storedUser);
-    const userId = parsedUser.id; // 사용자 id 추출
+  loadUserFromSession()
+  if (loginUserName) {
+    const userId = loginUserName.value; // 사용자 id 추출
     try {
       await store.getUserById(userId);
-      if (store.user) {
-        userInfo.value = store.user;
-      } else {
-        console.error('올바른 사용자 데이터를 받지 못했습니다.');
-        router.push({name: 'home'});
-      }
+        userInfo.value = store.loginUser;
     } catch (error) {
       console.error('사용자 정보를 불러오는 중 오류가 발생했습니다.', error);
       router.push({name: 'home'});
